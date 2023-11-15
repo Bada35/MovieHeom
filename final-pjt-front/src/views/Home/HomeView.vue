@@ -7,19 +7,23 @@
     </div>
     <div class="navigation">
       <button @click="selectCard('Netflix')">Netflix</button>
-    <button @click="selectCard('Watcha')">Watcha</button>
-    <button @click="selectCard('BoxOffice')">BoxOffice</button>
+      <button @click="selectCard('Watcha')">Watcha</button>
+      <button @click="selectCard('BoxOffice')">BoxOffice</button>
     </div>
-    <NetflixCard v-if="selectedCard === 'Netflix'"/>
-    <WatchaCard v-if="selectedCard === 'Watcha'"/>
-    <BoxOfficeCard v-if="selectedCard === 'BoxOffice'"/>
+    <NetflixCard v-if="selectedCard === 'Netflix'" />
+    <WatchaCard v-if="selectedCard === 'Watcha'" />
+    <BoxOfficeCard v-if="selectedCard === 'BoxOffice'" />
     <div class="top-right-menu">
-      <button class="auth-button" @click="toggleModal">로그인</button>
-      <button class="auth-button" @click="signUp">회원가입</button>
+      <button class="auth-button" @click="toggleLoginModal">로그인</button>
+      <button class="auth-button" @click="toggleSignUpModal">회원가입</button>
     </div>
-    <div class="modal-overlay" v-if="showModal" @click="toggleModal"></div>
-    <LoginModal v-if="showModal" />
-  </div>
+    <div class="modal-overlay" v-if="showLoginModal" @click="toggleLoginModal">
+      <LoginModal @click.stop />
+    </div>
+    <div class="modal-overlay" v-if="showSignUpModal" @click="toggleSignUpModal">
+      <SignUpModal @click.stop />
+    </div>
+    </div>
 </template>
 
 
@@ -29,6 +33,7 @@ import NetflixCard from '@/components/HomeCards/NetflixCard.vue';
 import WatchaCard from '@/components/HomeCards/WatchaCard.vue';
 import BoxOfficeCard from '@/components/HomeCards/BoxOfficeCard.vue';
 import LoginModal from '@/components/Modal/LoginModal.vue';
+import SignUpModal from '@/components/Modal/SignUpModal.vue';
 
 export default {
   name: 'HomeView',
@@ -37,24 +42,32 @@ export default {
     WatchaCard,
     BoxOfficeCard,
     LoginModal,
+    SignUpModal,
   },
   setup() {
     const selectedCard = ref(null);
-    const showModal = ref(false);
+    const showLoginModal = ref(false);
+    const showSignUpModal = ref(false);
 
     function selectCard(card) {
       selectedCard.value = card;
     }
 
-    function toggleModal() {
-      showModal.value = !showModal.value;
+    function toggleLoginModal() {
+      showLoginModal.value = !showLoginModal.value;
+    }
+    
+    function toggleSignUpModal() {
+      showSignUpModal.value = !showSignUpModal.value;
     }
 
     return {
       selectedCard,
       selectCard,
-      showModal,
-      toggleModal,
+      showLoginModal,
+      toggleLoginModal,
+      showSignUpModal,
+      toggleSignUpModal,
     };
   }
 };
@@ -130,7 +143,7 @@ h1 {
   padding: 5px 10px;
   font-family: 'Nanum Gothic', sans-serif;
   font-size: 0.8em;
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
   color: #333;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -142,6 +155,7 @@ h1 {
   background-color: #e0e0e0;
   border-color: #ccc;
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
