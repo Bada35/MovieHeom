@@ -1,9 +1,9 @@
 <template>
     <div class="login-modal" @click.self="closeModal">
         <div class="login-form">
-            <input type="text" placeholder="아이디" />
-            <input type="password" placeholder="비밀번호" />
-            <button>로그인</button>
+            <input type="text" v-model.trim="username" placeholder="아이디" />
+            <input type="password" v-model.trim="password" placeholder="비밀번호" />
+            <button type="button" @click="logIn">로그인</button>
             <div class="signup-link">
                 <span>비밀번호를 잊어버리셨나요?</span>
                 <a href="#"><br>계정이 없으신가요? 회원가입</a>
@@ -14,12 +14,23 @@
   
 
 <script setup>
-
+import { useCounterStore } from '@/stores/counter'
 import { defineEmits } from 'vue'
 const emit = defineEmits(['closeModal'])
+const store = useCounterStore()
+const username = ref(null)
+const password = ref(null)
 
 function closeModal() {
     emit('close-modal')
+}
+
+const logIn = function () {
+  const payload = {
+    username: username.value,
+    password: password.value
+  }
+  store.logIn(payload)
 }
 
 </script>

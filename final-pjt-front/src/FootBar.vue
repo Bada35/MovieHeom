@@ -30,7 +30,6 @@
       color: rgb(26, 26, 26);
       border-radius: 5px;
       display: inline-block;
-    
     }
     
     @keyframes hue-rotate {
