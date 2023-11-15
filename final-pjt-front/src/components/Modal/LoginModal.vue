@@ -14,6 +14,7 @@
   
 
 <script setup>
+import { ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import { defineEmits } from 'vue'
 const emit = defineEmits(['closeModal'])
