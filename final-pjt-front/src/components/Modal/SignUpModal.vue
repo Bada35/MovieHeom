@@ -2,13 +2,15 @@
     <div class="signup-modal" @click.self="closeModal">
         <h2 class="modal-title">회원가입</h2>
         <div class="signup-form">
-            <input type="text" placeholder="이름" />
-            <input type="email" placeholder="이메일" />
-            <input type="password" placeholder="비밀번호" />
-            <button>회원가입</button>
+            <form @submit.prevent="signUp">
+                <input type="text" v-model.trim="username" placeholder="이름" />
+                <input type="password" v-model.trim="password1" placeholder="비밀번호" />
+                <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
+                <button type="submit">회원가입</button>
+            </form>
             <div class="login-link">
                 <span>이미 가입하셨나요?</span>
-                <a href="#">로그인</a>
+                <a href="#" @click="toggleSignUpModal">로그인</a>
             </div>
         </div>
     </div>
@@ -16,8 +18,33 @@
   
 
 <script setup>
-import { defineEmits } from 'vue'
+import { ref } from 'vue'
+import { useCounterStore } from '@/stores/counter'
+
 const emit = defineEmits(['closeModal'])
+
+const store = useCounterStore()
+const username = ref(null)
+const password1 = ref(null)
+const password2 = ref(null)
+const showSignUpModal = ref(false) // 회원가입 -> 로그인
+
+function toggleSignUpModal() {
+    showSignUpModal.value = !showSignUpModal.value
+}
+
+const signUp = function () {
+    if (password1.value !== password2.value) {
+        alert('패스워드가 일치하지 않아요!')
+        return
+    }
+    const payload = {
+        username: username.value,
+        password1: password1.value,
+        password2: password2.value
+    }
+    store.signUp(payload)
+}
 
 function closeModal() {
     emit('close-modal')
