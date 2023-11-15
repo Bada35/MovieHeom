@@ -12,37 +12,21 @@
 </template>
   
   
-<script>
+<script setup>
 import { ref } from 'vue';
 import LoginModal from '@/components/Modal/LoginModal.vue';
 import SignUpModal from '@/components/Modal/SignUpModal.vue';
 
-export default {
-    name: 'HomeLogin',
-    components: {
-        LoginModal,
-        SignUpModal,
-    },
-    setup() {
-        const showLoginModal = ref(false);
-        const showSignUpModal = ref(false);
+const showLoginModal = ref(false);
+const showSignUpModal = ref(false);
 
-        function toggleLoginModal() {
-            showLoginModal.value = !showLoginModal.value;
-        }
+function toggleLoginModal() {
+    showLoginModal.value = !showLoginModal.value;
+}
 
-        function toggleSignUpModal() {
-            showSignUpModal.value = !showSignUpModal.value;
-        }
-
-        return {
-            showLoginModal,
-            toggleLoginModal,
-            showSignUpModal,
-            toggleSignUpModal,
-        };
-    }
-};
+function toggleSignUpModal() {
+    showSignUpModal.value = !showSignUpModal.value;
+}
 </script>
   
   
