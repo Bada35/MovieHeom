@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link>
       <router-link to="/profile">Profile</router-link>
       <router-link to="/search">Search</router-link>
+      <router-link to="/movieId">Movie</router-link>
     </nav>
   </header>
 </template>
