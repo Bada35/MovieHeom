@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export const useCounterStore = defineStore('counter', () => {
   const router = useRouter()
-  const articles = ref([])
+  // const articles = ref([])
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
   const isLogin = computed(() => {
@@ -16,42 +16,50 @@ export const useCounterStore = defineStore('counter', () => {
     }
   })
 
-  // DRF에 article 조회 요청을 보내는 action
-  const getArticles = function () {
-    axios({
-      method: 'get',
-      url: `${API_URL}/api/v1/articles/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-      .then((res) =>{
-        // console.log(res)
-        articles.value = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  // // DRF에 article 조회 요청을 보내는 action
+  // const getArticles = function () {
+  //   axios({
+  //     method: 'get',
+  //     url: `${API_URL}/api/v1/articles/`,
+  //     headers: {
+  //       Authorization: `Token ${token.value}`
+  //     }
+  //   })
+  //     .then((res) =>{
+  //       // console.log(res)
+  //       articles.value = res.data
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
 
   const signUp = function (payload) {
-    const { username, password1, password2 } = payload
-
+    const { username, password1, password2 } = payload;
+  
+    // 비밀번호 일치 확인
+    if (password1 !== password2) {
+      alert('비밀번호가 일치하지 않습니다!');
+      return;
+    }
+  
     axios({
       method: 'post',
       url: `${API_URL}/accounts/signup/`,
       data: {
-        username, password1, password2
+        username, 
+        password1, 
+        password2
       }
     })
-      .then((res) => {
-        console.log(res)
-        const password = password1
-        logIn({ username, password })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    .then((res) => {
+      console.log('회원가입 성공', res.data);
+      token.value = res.data.key; // API가 키를 토큰으로 반환한다고 가정
+      // router.push({ name: 'Home' }); // 회원가입 후 홈이나 다른 페이지로 리다이렉트
+    })
+    .catch((err) => {
+      console.error('회원가입 오류', err);
+    });
   }
 
   const logIn = function (payload) {
@@ -67,7 +75,7 @@ export const useCounterStore = defineStore('counter', () => {
       .then((res) => {
         console.log(res.data)
         token.value = res.data.key
-        router.push({ name: 'ArticleView' })
+        // router.push({ name: 'ArticleView' })
       })
       .catch((err) => {
         console.log(err)
@@ -86,7 +94,6 @@ export const useCounterStore = defineStore('counter', () => {
       .catch((err) => {
         console.log(err)
       })
-  }
-
-  return { articles, API_URL, getArticles, signUp, logIn, token, isLogin, logOut }
+  } 
+  return { API_URL, signUp, logIn, token, isLogin, logOut }
 }, { persist: true })
