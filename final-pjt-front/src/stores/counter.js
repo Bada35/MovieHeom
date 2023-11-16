@@ -34,66 +34,43 @@ export const useCounterStore = defineStore('counter', () => {
   //     })
   // }
 
-  const signUp = function (payload) {
-    const { username, password1, password2 } = payload;
-  
-    // 비밀번호 일치 확인
+  const signUp = async (payload) => {
+    const { username, email, password1, password2, nickname, birth_date } = payload;
+
     if (password1 !== password2) {
       alert('비밀번호가 일치하지 않습니다!');
       return;
     }
-  
-    axios({
-      method: 'post',
-      url: `${API_URL}/accounts/signup/`,
-      data: {
-        username, 
-        password1, 
-        password2
-      }
-    })
-    .then((res) => {
-      console.log('회원가입 성공', res.data);
-      token.value = res.data.key; // API가 키를 토큰으로 반환한다고 가정
-      // router.push({ name: 'Home' }); // 회원가입 후 홈이나 다른 페이지로 리다이렉트
-    })
-    .catch((err) => {
+
+    try {
+      const response = await axios.post(`${API_URL}/accounts/signup/`, {
+        username, email, password1, password2, nickname, birth_date
+      });
+      console.log('회원가입 성공', response.data);
+      token.value = response.data.key;
+    } catch (err) {
       console.error('회원가입 오류', err);
-    });
-  }
+    }
+  };
 
-  const logIn = function (payload) {
-    const { username, password } = payload
+  const logIn = async (payload) => {
+    try {
+      const response = await axios.post(`${API_URL}/accounts/login/`, payload);
+      console.log(response.data);
+      token.value = response.data.key;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    axios({
-      method: 'post',
-      url: `${API_URL}/accounts/login/`,
-      data: {
-        username, password
-      }
-    })
-      .then((res) => {
-        console.log(res.data)
-        token.value = res.data.key
-        // router.push({ name: 'ArticleView' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  const logOut = function () {
-    axios({
-      method: 'post',
-      url: `${API_URL}/accounts/logout/`,
-    })
-      .then((res) => {
-        token.value = null
-        router.push({ name: 'ArticleView' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  } 
+  const logOut = async () => {
+    try {
+      await axios.post(`${API_URL}/accounts/logout/`);
+      token.value = null;
+      router.push({ name: 'ArticleView' });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return { API_URL, signUp, logIn, token, isLogin, logOut }
 }, { persist: true })

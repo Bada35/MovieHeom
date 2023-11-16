@@ -18,7 +18,7 @@
             </div>
             <!-- 평가한 영화 -->
             <div class="rated-films">
-                <h3>Films you've rated</h3>
+                <h3>🎬{{ username }}님의 바다에 떠다니는 영화들</h3>
                 <div class="comments-container">
                     <!-- 코멘트 목록 -->
                 </div>
@@ -29,23 +29,23 @@
             </div>
             <!-- 남긴 코멘트 -->
             <div class="user-comments">
-                <h3>Comments I've left</h3>
+                <h3>💬{{ username }}님이 남긴 코멘트</h3>
                 <div class="comments-container">
                     <!-- 코멘트 목록 -->
                 </div>
             </div>
             <!-- 좋아하는 키워드 -->
             <div class="favourite-keywords">
-                <h3>My favourite keywords</h3>
+                <h3>🏷️{{ username }}님이 좋아하는 키워드</h3>
                 <div class="comments-container">
                     <div class="keywords-grid">
-                    <!-- 키워드 목록 -->
-                    <span class="keyword">드라마</span>
-                    <span class="keyword">액션</span>
-                    <!-- ... -->
+                        <!-- 키워드 목록 -->
+                        <span class="keyword">드라마</span>
+                        <span class="keyword">액션</span>
+                        <!-- ... -->
+                    </div>
                 </div>
-                </div>
-                
+
             </div>
         </div>
     </div>
@@ -115,21 +115,25 @@ const followerCount = ref(0)
 .profile-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 전체 이미지가 보이도록 조정 */
-    object-position: center; /* 이미지가 중앙에 위치하도록 */
+    object-fit: cover;
+    /* 전체 이미지가 보이도록 조정 */
+    object-position: center;
+    /* 이미지가 중앙에 위치하도록 */
 }
 
 .user-info h2 {
     color: #333;
-    /* 글자색 */
+    font-family: 'Gowun Dodum', sans-serif;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 .user-info p {
     color: #666;
-    /* 글자색 */
+    font-family: 'Nanum Gothic', sans-serif;
     font-size: 1rem;
+    text-align: center;
 }
 
 .rated-films,
@@ -181,5 +185,12 @@ const followerCount = ref(0)
     /* 글자색 */
     font-size: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}</style>
+}
+
+
+h3 {
+    color: #333;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+</style>
   

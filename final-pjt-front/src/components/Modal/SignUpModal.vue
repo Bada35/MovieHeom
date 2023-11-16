@@ -2,8 +2,11 @@
     <div class="signup-modal" @click.self="closeModal">
         <h2 class="modal-title">회원가입</h2>
         <div class="signup-form">
-            <form @submit.prevent="signUp"> <!-- 이벤트 리스너 추가 -->
+            <form @submit.prevent="signUp">
                 <input type="text" v-model.trim="username" placeholder="이름" />
+                <input type="email" v-model.trim="email" placeholder="이메일" />
+                <input type="text" v-model.trim="nickname" placeholder="닉네임" />
+                <input type="date" v-model.trim="birthDate" placeholder="생년월일" />
                 <input type="password" v-model.trim="password1" placeholder="비밀번호" />
                 <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
                 <button type="submit">회원가입</button>
@@ -24,8 +27,11 @@ import { useCounterStore } from '@/stores/counter'
 const emit = defineEmits(['closeModal'])
 const store = useCounterStore()
 const username = ref('')
+const email = ref('')
 const password1 = ref('')
 const password2 = ref('')
+const nickname = ref('')
+const birth_date = ref('')
 const showSignUpModal = ref(false)
 
 function toggleSignUpModal() {
@@ -35,8 +41,11 @@ function toggleSignUpModal() {
 const signUp = function () {
     const payload = {
         username: username.value,
+        email: email.value,
         password1: password1.value,
-        password2: password2.value
+        password2: password2.value,
+        nickname: nickname.value,
+        birth_date: birth_date.value
     };
     store.signUp(payload);
 }
@@ -116,6 +125,12 @@ function closeModal() {
 
 .login-link a:hover {
     text-decoration: underline;
+}
+
+.signup-form input[type='date']::-webkit-datetime-edit-fields-wrapper {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 0.9em;
+    color: #333;
 }
 </style>
   
