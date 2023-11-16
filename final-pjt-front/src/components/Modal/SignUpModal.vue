@@ -6,7 +6,7 @@
                 <input type="text" v-model.trim="username" placeholder="이름" />
                 <input type="email" v-model.trim="email" placeholder="이메일" />
                 <input type="text" v-model.trim="nickname" placeholder="닉네임" />
-                <input type="date" v-model.trim="birthDate" placeholder="생년월일" />
+                <input type="date" v-model.trim="birth_date" placeholder="생년월일" />
                 <input type="password" v-model.trim="password1" placeholder="비밀번호" />
                 <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
                 <button type="submit">회원가입</button>
@@ -39,6 +39,7 @@ function toggleSignUpModal() {
 }
 
 const signUp = function () {
+    console.log(birth_date.value)
     const payload = {
         username: username.value,
         email: email.value,
