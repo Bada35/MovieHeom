@@ -49,11 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5173',
-    'http://localhost:5173',
-]
+SITE_ID = 1
 
 REST_FRAMEWORK = {
     # Authentication
@@ -70,11 +66,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Add the account middleware:
+    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -151,3 +148,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+AUTHENTICATION_BACKENDS = (
+    # django 기본 인증 백엔드
+    "django.contrib.auth.backends.ModelBackend",
+    # django-allauth 패키지에서 제공하는 인증 백엔드 클래스.
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+# REST-AUTH 회원가입 기본 Serailizer 재정의
+REST_AUTH = {
+'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+ACCOUNT_ADAPTER = 'accounts.models.CustomAccountAdapter'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
