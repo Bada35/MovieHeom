@@ -5,28 +5,17 @@
       <input type="text" placeholder="어떤 영화로 헤엄치고 싶으세요?" />
       <button>Search</button>
     </div>
-    <HomeNavigation />
     <HomeLogin />
+    <HomeNavigation />
     </div>
 </template>
 
 
-<script>
+<script setup>
 import { ref } from 'vue';
+import HomeLogin from '@/views/Home/HomeLogin.vue'
 import HomeNavigation from '@/views/Home/HomeNavigation.vue';
-import HomeLogin from '@/views/Home/HomeLogin.vue';
 
-export default {
-  name: 'HomeView',
-  components: {
-    HomeNavigation,
-    HomeLogin,
-  },
-  setup() {
-    return {
-    };
-  }
-};
 </script>
 
 
