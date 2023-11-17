@@ -1,7 +1,9 @@
 <template>
     <div class="movie-card" @click="goToMovieDetail">
         <div class="movie-hashtags">
-            <span>#애니메이션</span> <span>#드라마</span>
+            <span v-for="genre in movieDetail.genres?.slice(0, 3)" :key="genre.id">
+                #{{ genre.name }}
+            </span>
         </div>
         <div class="movie-poster">
             <img :src="getPosterImg(movieDetail.poster_path)" alt="Poster img" />
@@ -50,7 +52,7 @@ onMounted(() => fetchMovieDetails(props.movieId));
   
 <style scoped>
 .movie-card {
-    max-width: 300px;
+    max-width: 280px;
     border-radius: 10px;
     background-color: #fff;
     color: #333;
@@ -60,7 +62,7 @@ onMounted(() => fetchMovieDetails(props.movieId));
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-basis: calc(33.333% - 20px);
+    flex-basis: calc(20% - 20px);
 }
 
 .movie-hashtags {
@@ -74,9 +76,11 @@ onMounted(() => fetchMovieDetails(props.movieId));
 
 .movie-poster img {
     width: 100%;
-    border-radius: 10px;
+    height: 400px;
+    object-fit: cover;
     border-radius: 10px;
 }
+
 
 .movie-title {
     font-family: 'Gowun Dodum', sans-serif;

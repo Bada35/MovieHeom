@@ -1,5 +1,6 @@
 <template>
     <div class="login-modal" @click.self="closeModal">
+        <h2 class="modal-title">로그인</h2>
         <div class="login-form">
             <input type="text" v-model.trim="username" placeholder="아이디" />
             <input type="password" v-model.trim="password" placeholder="비밀번호" />
@@ -39,6 +40,13 @@ const logIn = function () {
 
 
 <style scoped>
+
+.modal-title {
+    color: #333;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
 .login-modal {
     display: flex;
     flex-direction: column;

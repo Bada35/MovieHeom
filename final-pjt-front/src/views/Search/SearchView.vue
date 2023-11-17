@@ -23,7 +23,7 @@ const movie_ids = ref([])
 
 // 검색 결과를 URL 쿼리에 저장
 const searchMovies = () => {
-  movie_ids.value = [545611, 19913, 313369]
+  movie_ids.value = [545611, 19913, 313369, 122906]
   router.push({ name: 'search', query: { ids: movie_ids.value.join(',') } })
 }
 
@@ -79,11 +79,14 @@ watch(() => route.query.ids, (newIds) => {
 
 .movie-cards {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: flex-start; /* Align items to the top */
     width: 100%;
-    max-width: 800px;
+    padding: 0 20px; /* Add horizontal padding */
+    padding-top: 50px;
 }
+
 
 .search-box button img {
     width: 40px;
