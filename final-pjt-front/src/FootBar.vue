@@ -4,7 +4,7 @@
           <div style="text-align:center;  margin-top:20px; color:grey">
             <div style="padding-top: 5px; padding-bottom: 2px;">무비헤엄🌊</div>
             <div style="padding-bottom: 2px;">SSAFY 10기</div>
-            <div class="name" style="width:12.5%; font-size: 15px;">Yeongjun Ryu | Jisu Seo</div>
+            <div class="name" style="width:12.5%; font-size: 15px;">Youngjun Ryu | Jisu Seo</div>
             <div style="padding-top: 2px; padding-bottom: 10px;">© 2023 All Rights Reserved.</div>
           </div>
         </div>

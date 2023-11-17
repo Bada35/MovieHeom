@@ -21,8 +21,8 @@ const router = createRouter({
       component: () => import('@/views/Search/SearchView.vue')
     },
     {
-      path: '/movieId',
-      name:'movieDetail',
+      path: '/movie/:movie_id',
+      name: 'movieDetail',
       component: () => import('@/views/Movie/MovieDetailView.vue')
     }
   ]
