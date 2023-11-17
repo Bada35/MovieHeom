@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/Home/HomeView.vue';
-import ProfileView from '@/views/Profile/ProfileView.vue';
-import SearchView from '@/views/Search/SearchView.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,21 +13,18 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: () => import('@/views/Profile/ProfileView.vue')
     },
     {
       path: '/search',
       name: 'search',
-      component: SearchView
+      component: () => import('@/views/Search/SearchView.vue')
+    },
+    {
+      path: '/movie/:movie_id',
+      name: 'movieDetail',
+      component: () => import('@/views/Movie/MovieDetailView.vue')
     }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
   ]
 });
 
