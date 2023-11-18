@@ -1,10 +1,14 @@
-from django.shortcuts import render
-from rest_framework import viewsets, filters
-from .models import Movie, Genre
+from django.shortcuts import render, get_object_or_404
+from rest_framework import viewsets, filters ,status
+from .models import Movie, Genre, Review
 from .serializers import MovieSerializer, GenreSerializer
-import operator
-from functools import reduce
-from django.db.models import Q
+from rest_framework.generics import ListAPIView
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+# import operator
+# from functools import reduce
+# from django.db.models import Q
 # Create your views here.
 
 

@@ -17,6 +17,9 @@ class User(AbstractUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
+    # 팔로우
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='followings')
+
     USERNAME_FIELD = 'username'
 
 from allauth.account.adapter import DefaultAccountAdapter

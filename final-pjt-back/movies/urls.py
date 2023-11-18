@@ -6,6 +6,8 @@ router = DefaultRouter()
 router.register(r'movies', MovieViewSet)
 router.register(r'genres', GenreViewSet)
 
+
 urlpatterns = [
     path('', include(router.urls)),
+
 ]
