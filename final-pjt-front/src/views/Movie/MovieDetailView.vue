@@ -30,7 +30,6 @@ const movie_id = ref(route.params.movie_id);  // Grave of the Fireflies (1988)
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const YT_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
-const KMDB_API_KEY = import.meta.env.VITE_KMDB_API_KEY
 
 
 const fetchMovieDetails = async () => {

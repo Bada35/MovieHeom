@@ -87,6 +87,6 @@ onMounted(() => fetchMovieDetails(props.movieId));
     font-weight: bold;
     font-size: 18px;
     margin: 5px 0;
-    padding: 10px 0;
+    text-align: left;
 }
 </style>

@@ -1,0 +1,1033 @@
+{
+    "Query": "",
+    "KMAQuery": "박찬욱",
+    "TotalCount": 23,
+    "Data": [
+        {
+            "CollName": "kmdb_new2",
+            "TotalCount": 23,
+            "Count": 10,
+            "Result": [
+                {
+                    "DOCID": "K06391",
+                    "movieId": "K",
+                    "movieSeq": "06391",
+                    "title": " 심판",
+                    "titleEng": "Judgement (Simpan)",
+                    "titleOrg": "",
+                    "titleEtc": "심판^심판^Judgement (Simpan)",
+                    "prodYear": "1999",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "기주봉",
+                                "actorEnNm": "Key Joo-bong",
+                                "actorId": "00008101"
+                            },
+                            {
+                                "actorNm": "고인배",
+                                "actorEnNm": "Koh In-bae",
+                                "actorId": "00000632"
+                            },
+                            {
+                                "actorNm": "권남희",
+                                "actorEnNm": "Kwon Nam-hee",
+                                "actorId": "00000478"
+                            },
+                            {
+                                "actorNm": "박지일",
+                                "actorEnNm": "Park Ji-il",
+                                "actorId": "00000755"
+                            },
+                            {
+                                "actorNm": "최학락",
+                                "actorEnNm": "Choi Hak-rak",
+                                "actorId": "00010073"
+                            },
+                            {
+                                "actorNm": "명순미",
+                                "actorEnNm": "Myeong Ji-yeon",
+                                "actorId": "00009295"
+                            },
+                            {
+                                "actorNm": "이종용",
+                                "actorEnNm": "Lee Jong-yong",
+                                "actorId": "00009314"
+                            },
+                            {
+                                "actorNm": "김태령",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "영화마을,STUDIO BOX!",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "죽음을 일상으로 접하는 병원의 영안실에 대형참사로 얼굴이 훼손된 20대 여자의 시신이 안치된다. 죽은 여자가 서로 자신의 딸이라 주장하는 한 쌍의 부부와 염사. 여기에 사고 담당 공무원과 취재차 온 기자까지 죽은 여인의 신원을 밝히는 데 증인이 된다. 사실 확인을 위한 유일한 증거인 흉터는 다리 잘린 시신으로는 확인할 길이 없고 진실을 밝히려는 기자의 질문에 부부는 교묘한 대답으로 얼버무린다. 그러나 갑작스런 여자의 등장으로 이 모든 사건이 보상금을 노린 사기극으로 밝혀지고, 이 때 천형(天刑)처럼 일어난 지진으로 거짓말을 한 사람들은 마치 심판을 받듯 사고를 당한다.위선과 타락으로 얼룩져 가는 오늘날의 사회와 타락한 인간상을 단순 명쾌하게 보여주는 블랙 코미디. 흑백영상과 다큐멘터리적 기법 그리고 마지막 반전에서 현실의 색깔을 보여주는 재기발랄한 단편영화. (KBS 소개글 인용)연출의도. 종암동 가구점 지하창고를 빌려 촬영하는 동안의 한달여는 내 인생 최고의 절정기였다. 비록 적은 예산으로 빛의 암전을 검은 옷으로 가려야 했지만 한국영화 최고의 스탭과 배우들은 이해를 따지지 않았고 영화작업에 즐거이 푹 빠져주었다. 이는 아마 단편만이 갖고 있는 '순수함'에 매료되었기 때문일 것이다."
+                            }
+                        ]
+                    },
+                    "runtime": "26",
+                    "rating": "",
+                    "genre": "드라마",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/06391"
+                },
+                {
+                    "DOCID": "K13348",
+                    "movieId": "K",
+                    "movieSeq": "13348",
+                    "title": " 청출어람",
+                    "titleEng": "Blue Comes from Indigo (Cheongchureoram)",
+                    "titleOrg": "",
+                    "titleEtc": "청출어람^Blue Comes from Indigo (Cheongchureoram)",
+                    "prodYear": "2012",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": "박찬경",
+                                "directorEnNm": "Park Chan-gyeong",
+                                "directorId": "00017346"
+                            },
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "송강호",
+                                "actorEnNm": "Song Kang-ho",
+                                "actorId": "00000776"
+                            },
+                            {
+                                "actorNm": "전효정",
+                                "actorEnNm": "Jeong Hyojeong",
+                                "actorId": "00133530"
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "㈜모호필름,㈜모그인터렉티브",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "“3등이면 잘한 거지, 뭘 그런 걸 가지고 울고 불고 야단이야?어허, 이래가지고서야… 청출어람은 무슨…”경연대회에서 1등상을 받지 못한 소녀는 한껏 우울해 있다. 소녀를 달래주고 싶지만, 그런 방면으로는 영 소질이 없는 나이든 스승. 두 사람은 하던 대로 득음 연습을 위해 초겨울 산을 오르고, 스승의 가르침에 조금씩 제 실력을 보여주던 소녀 앞에 놀라운 일이 벌어지는데… . 득음 연습을 위해 산행에 나선, 고집불통 스승과 철부지 소녀 제자, 각각 자신만의 방법으로 서로를 위로하고, 배려하면서 특별한 하루를 보내게 된다."
+                            },
+                            {
+                                "plotLang": "영어",
+                                "plotText": " 3rd place is good enough. Why are you crying? Geez, how frustrating… outdoing a teacher is impossible… The girl is very disappointed after failing to win first prize in the contest. The old teacher wants to comfort her, but he has no such talent. As usual, they climbed a mountain in early winter to practice singing, and a wonderful thing happens to the girl, who is improving due to the lesson of her teacher… . A stubborn teacher and a young student who climb a mountain to practice singing have a special day by comforting and caring for each other in their own way."
+                            }
+                        ]
+                    },
+                    "runtime": "19",
+                    "rating": "전체관람가",
+                    "genre": "드라마,판타지",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/13348"
+                },
+                {
+                    "DOCID": "A06035",
+                    "movieId": "A",
+                    "movieSeq": "06035",
+                    "title": " 고진감래",
+                    "titleEng": "Bitter, Sweet, Seoul",
+                    "titleOrg": "",
+                    "titleEtc": "고진감래^우리의영화,서울^Bitter, Sweet, Seoul^Seoul, Our Movie^우리의 영화, 서울^苦盡甘來",
+                    "prodYear": "2014",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": "박찬경",
+                                "directorEnNm": "Park Chan-gyeong",
+                                "directorId": "00017346"
+                            },
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "㈜모호필름",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "서울시의 ‘우리의 영화, 서울’ 프로젝트를 통해 완성된 작품. 2013년 8월부터 11월까지 공모된 1만 1천여개의 ‘서울’ 관련 UCC 영상을 박찬욱, 박찬경 감독이 편집을 거쳐 한 편의 영화로 만들었다. 파킹찬스는 흔한 도시 홍보 영상이 될법한 프로젝트를, 거대 도시 서울의 다양한 속살을 드러내는 인상적인 다큐멘터리로 완성했다."
+                            },
+                            {
+                                "plotLang": "영어",
+                                "plotText": "BITTER, SWEET, SEOUL is part of the Seoul Metropolitan Government’s global brand marketing effort in which people participate in a film production process by sharing their own unique experiences and feelings of Seoul. Clips of Seoul were submitted by the residents of Seoul, visitors to Seoul and the fans of Seoul from all over the world. Then the directing team PARKing CHANce (PARK CHAN-WOOK + PARK CHAN-KYONG) selected the best clips from the entire submissions and made them into one documentary and promotion film about Seoul. (KOFIC)"
+                            }
+                        ]
+                    },
+                    "runtime": "63",
+                    "rating": "전체관람가",
+                    "genre": "문화,지역",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/A/06035"
+                },
+                {
+                    "DOCID": "K14382",
+                    "movieId": "K",
+                    "movieSeq": "14382",
+                    "title": " 아가씨",
+                    "titleEng": "The Handmaiden (A-ga-ssi)",
+                    "titleOrg": "",
+                    "titleEtc": "아가씨^The Handmaiden (A-ga-ssi)^핑거스미스^Fingersmith^MADEMOISELLE",
+                    "prodYear": "2016",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "김민희",
+                                "actorEnNm": "Kim Min-hee",
+                                "actorId": "00004131"
+                            },
+                            {
+                                "actorNm": "김태리",
+                                "actorEnNm": "Kim Tae-ri",
+                                "actorId": "00026224"
+                            },
+                            {
+                                "actorNm": "하정우",
+                                "actorEnNm": "Ha Jung-woo",
+                                "actorId": "00003904"
+                            },
+                            {
+                                "actorNm": "조진웅",
+                                "actorEnNm": "Jo Jin-woong",
+                                "actorId": "00025995"
+                            },
+                            {
+                                "actorNm": "김해숙",
+                                "actorEnNm": "Kim Hae-sook",
+                                "actorId": "00009672"
+                            },
+                            {
+                                "actorNm": "이용녀",
+                                "actorEnNm": "Lee Yong-nyu",
+                                "actorId": "00009367"
+                            },
+                            {
+                                "actorNm": "유민채",
+                                "actorEnNm": "Kwak Eun Jin",
+                                "actorId": "00197123"
+                            },
+                            {
+                                "actorNm": "이동휘",
+                                "actorEnNm": "Lee Dong-hui",
+                                "actorId": "00179395"
+                            },
+                            {
+                                "actorNm": "타카기 리나",
+                                "actorEnNm": "Rina Takagi",
+                                "actorId": "00162130"
+                            },
+                            {
+                                "actorNm": "한하나",
+                                "actorEnNm": "Han Ha-na",
+                                "actorId": "00197697"
+                            },
+                            {
+                                "actorNm": "이규정",
+                                "actorEnNm": "Lee Gyu-jeong",
+                                "actorId": "00015711"
+                            },
+                            {
+                                "actorNm": "김시은",
+                                "actorEnNm": "Kim Si-eun",
+                                "actorId": "00197698"
+                            },
+                            {
+                                "actorNm": "하시연",
+                                "actorEnNm": "Ha Si Yeon",
+                                "actorId": "00201512"
+                            },
+                            {
+                                "actorNm": "김은영",
+                                "actorEnNm": "Kim Eun-yeong",
+                                "actorId": "00010334"
+                            },
+                            {
+                                "actorNm": "원근희",
+                                "actorEnNm": "Won Geun-hui",
+                                "actorId": "00013214"
+                            },
+                            {
+                                "actorNm": "김종대",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "장한순",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김리우",
+                                "actorEnNm": "Gim liwu",
+                                "actorId": "00197124"
+                            },
+                            {
+                                "actorNm": "후지모토 신스케",
+                                "actorEnNm": "Shinsuke Fujimoto",
+                                "actorId": "00177282"
+                            },
+                            {
+                                "actorNm": "長野 克弘",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "이지하",
+                                "actorEnNm": "Lee ji-ha",
+                                "actorId": "00081630"
+                            },
+                            {
+                                "actorNm": "足立 智充",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "柿澤 隆史",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "황서윤",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "박신혜",
+                                "actorEnNm": "Park Sinhye",
+                                "actorId": "00211273"
+                            },
+                            {
+                                "actorNm": "조은형",
+                                "actorEnNm": "Jo Eum-hyung",
+                                "actorId": "00209670"
+                            },
+                            {
+                                "actorNm": "문소리",
+                                "actorEnNm": "Moon Sori",
+                                "actorId": "00000462"
+                            },
+                            {
+                                "actorNm": "이지혜",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "허소연",
+                                "actorEnNm": "Heo Soyeon",
+                                "actorId": "00045558"
+                            },
+                            {
+                                "actorNm": "이윤재",
+                                "actorEnNm": "Lee Yoon Jae",
+                                "actorId": "00200637"
+                            },
+                            {
+                                "actorNm": "최종률",
+                                "actorEnNm": "Choi Jong Ryul",
+                                "actorId": "00039364"
+                            },
+                            {
+                                "actorNm": "김준우",
+                                "actorEnNm": "Kim Junwoo",
+                                "actorId": "00216866"
+                            },
+                            {
+                                "actorNm": "배일혁",
+                                "actorEnNm": "Bae Il-hyeok",
+                                "actorId": "00045607"
+                            },
+                            {
+                                "actorNm": "김수웅",
+                                "actorEnNm": "Kim Su-ung",
+                                "actorId": "00038559"
+                            },
+                            {
+                                "actorNm": "조용현",
+                                "actorEnNm": "Jo Yonghyeon",
+                                "actorId": "00145284"
+                            },
+                            {
+                                "actorNm": "박기륭",
+                                "actorEnNm": "Park kee ryung",
+                                "actorId": "00007649"
+                            },
+                            {
+                                "actorNm": "최병모",
+                                "actorEnNm": "Choe Byeong-mo",
+                                "actorId": "00017513"
+                            },
+                            {
+                                "actorNm": "한창현",
+                                "actorEnNm": "Han Chang-hyeon",
+                                "actorId": "00007387"
+                            },
+                            {
+                                "actorNm": "김인우",
+                                "actorEnNm": "Kim Inwoo",
+                                "actorId": "00145814"
+                            },
+                            {
+                                "actorNm": "권혁",
+                                "actorEnNm": "Gwon Hyeok",
+                                "actorId": "00015802"
+                            },
+                            {
+                                "actorNm": "임형태",
+                                "actorEnNm": "Im Hyeong-tae",
+                                "actorId": "00042046"
+                            },
+                            {
+                                "actorNm": "정하담",
+                                "actorEnNm": "Jeong Hadam",
+                                "actorId": "00194496"
+                            },
+                            {
+                                "actorNm": "오만석",
+                                "actorEnNm": "O Man-seok",
+                                "actorId": "00044209"
+                            },
+                            {
+                                "actorNm": "김병귀",
+                                "actorEnNm": "Kim Byeong Gwi",
+                                "actorId": "00201171"
+                            },
+                            {
+                                "actorNm": "김인수",
+                                "actorEnNm": "Kim In-su",
+                                "actorId": "00040788"
+                            },
+                            {
+                                "actorNm": "ALEXANDER SCARBOROUGH",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김진철",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김도형",
+                                "actorEnNm": "Kim Do-hyeong",
+                                "actorId": "00206865"
+                            },
+                            {
+                                "actorNm": "홍은지",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "송다은",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "정인겸",
+                                "actorEnNm": "Jeong In-gyeom",
+                                "actorId": "00034416"
+                            },
+                            {
+                                "actorNm": "남경민",
+                                "actorEnNm": "Nam kyung min",
+                                "actorId": "00194287"
+                            },
+                            {
+                                "actorNm": "선욱현",
+                                "actorEnNm": "Seon Uk-hyeon",
+                                "actorId": "00016921"
+                            },
+                            {
+                                "actorNm": "이인철",
+                                "actorEnNm": "Lee In-chul",
+                                "actorId": "00000828"
+                            },
+                            {
+                                "actorNm": "하시연",
+                                "actorEnNm": "Ha Si Yeon",
+                                "actorId": "00201512"
+                            },
+                            {
+                                "actorNm": "김시은",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "안성봉",
+                                "actorEnNm": "Ahn seong-bong",
+                                "actorId": "00205635"
+                            },
+                            {
+                                "actorNm": "안성봉",
+                                "actorEnNm": "Ahn seong-bong",
+                                "actorId": "00205635"
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "㈜모호필름,㈜용필름,유한회사 아가씨에프에스INc.",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "어릴 적 부모를 잃고 후견인 이모부(조진웅)의 엄격한 보호 아래 살아가는 귀족 아가씨(김민희). 그녀에게 백작이 추천한 새로운 하녀가 찾아온다. 매일 이모부의 서재에서 책을 읽는 것이 일상의 전부인 외로운 아가씨는 순박해 보이는 하녀에게 조금씩 의지하기 시작한다. 하지만 하녀의 정체는 유명한 여도둑의 딸로, 장물아비 손에서 자란 소매치기 고아 소녀 숙희(김태리). 막대한 재산을 상속받게 될 아가씨를 유혹하여 돈을 가로채겠다는 사기꾼 백작(하정우)의 제안을 받고 아가씨가 백작을 사랑하게 만들기 위해 하녀가 된 것. 드디어 백작이 등장하고, 백작과 숙희는 자신만의 방식으로 아가씨의 마음을 흔들기 시작하는데… 돈과 마음을 뺏기 위해 서로 속고 속이는 매혹적인 그들의 이야기가 시작된다!"
+                            },
+                            {
+                                "plotLang": "영어",
+                                "plotText": "1930s Korea, in the period of Japanese occupation, a new girl (Sookee) is hired as a handmaiden to a Japanese heiress (Hideko) who lives a secluded life on a large countryside estate with her domineering Uncle (Kouzuki). But the maid has a secret. She is a pickpocket recruited by a swindler posing as a Japanese Count to help him seduce the Lady to elope with him, rob her of her fortune, and lock her up in a madhouse. The plan seems to proceed according to plan until Sookee and Hideko discover some unexpected emotions."
+                            }
+                        ]
+                    },
+                    "runtime": "145",
+                    "rating": "18세관람가(청소년관람불가)",
+                    "genre": "스릴러,드라마",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/14382"
+                },
+                {
+                    "DOCID": "F30265",
+                    "movieId": "F",
+                    "movieSeq": "30265",
+                    "title": " 스토커",
+                    "titleEng": "Stoker",
+                    "titleOrg": "Stoker",
+                    "titleEtc": "스토커^Stoker^Stoker^Stoker",
+                    "prodYear": "2013",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "미아 와시코우스카",
+                                "actorEnNm": "Mia Wasikowska",
+                                "actorId": "00146694"
+                            },
+                            {
+                                "actorNm": "매튜 굿",
+                                "actorEnNm": "Matthew Goode",
+                                "actorId": "00101291"
+                            },
+                            {
+                                "actorNm": "더모트 멀로니",
+                                "actorEnNm": "Dermot Mulroney",
+                                "actorId": "00048936"
+                            },
+                            {
+                                "actorNm": "잭키 웨버",
+                                "actorEnNm": "Jacki Weaver",
+                                "actorId": "00085456"
+                            },
+                            {
+                                "actorNm": "니콜 키드먼",
+                                "actorEnNm": "Nicole Kidman",
+                                "actorId": "00048950"
+                            },
+                            {
+                                "actorNm": "루카스 틸",
+                                "actorEnNm": "Lucas Till",
+                                "actorId": "00097786"
+                            },
+                            {
+                                "actorNm": "알덴 에렌리히",
+                                "actorEnNm": "Alden Ehrenreich",
+                                "actorId": "00165851"
+                            }
+                        ]
+                    },
+                    "nation": "미국,영국",
+                    "company": "Scott Free Productions",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "18살 생일, 아빠가 죽고 삼촌이 찾아왔다.18살 생일날 갑작스런 사고로 아빠를 잃은 소녀 인디아(미아 바시코브스카). 그녀 앞에 존재조차 몰랐던 삼촌 찰리(매튜 구드)가 찾아온다. 남편의 죽음으로 신경이 곤두서있던 인디아의 엄마 이블린(니콜 키드먼)은 젊고 다정한 찰리에게 호감을 느끼며 반갑게 맞아주고 인디아는 자신에게 친절한 삼촌 찰리를 경계하면서도 점점 더 그에게 이끌린다. 매력적이지만 수수께끼 같은 존재인 찰리의 등장으로 스토커가(家)에 묘한 긴장감이 감도는 가운데 인디아 주변의 사람들이 하나 둘씩 사라지기 시작하고 인디아 자신도 미처 깨닫지 못한 충격적인 비밀들이 드러나는데...2013년 2월, 전세계를 사로잡을 매혹적인 스릴러가 온다!"
+                            },
+                            {
+                                "plotLang": "영어",
+                                "plotText": "After India’s father dies in an auto accident, her Uncle Charlie, whom she never knew existed, comes to live with her and her emotionally unstable mother, Evelyn. Soon after his arrival, India begins to suspect this mysterious, charming man has disturbing ulterior motives, but instead of feeling outrage or horror, the friendless girl becomes increasingly infatuated with him. - KOFIC"
+                            }
+                        ]
+                    },
+                    "runtime": "98",
+                    "rating": "18세관람가(청소년관람불가)",
+                    "genre": "공포,드라마,스릴러",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/F/30265"
+                },
+                {
+                    "DOCID": "K21849",
+                    "movieId": "K",
+                    "movieSeq": "21849",
+                    "title": " 격세지감",
+                    "titleEng": "Decades Apart (Gyeoksejigam)",
+                    "titleOrg": "",
+                    "titleEtc": "격세지감^격세지감^Decades Apart (Gyeoksejigam)",
+                    "prodYear": "2017",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            },
+                            {
+                                "directorNm": "박찬경",
+                                "directorEnNm": "Park Chan-gyeong",
+                                "directorId": "00017346"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "㈜모호필름",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "박찬욱 감독의 영화 공동경비구역 JSA 의 오픈 세트를 3D영상으로 촬영하고, 소리를 입체적으로 다루어 제작한 단편영화. 영화 공동경비구역 JSA 가 상영될었을 당시의 희망적이었던 남북간 화해 분위기와는 반대로 지금 남북 관계는 17년 이전의 냉전상황 그대로이다. 마치 이러한 상황을 비유하듯이 영화 제작 당시에 만들어졌던 판문점 세트는 황폐한 풍경으로 변해버렸으며 이마저 곧 철거될 예정이다. 이 세트를 찍은 입체영상과 오리지날 사운드 트랙의 몽타주를 통해, 우리는 현실 같기도 하고 꿈 같기도 한 유령의 집에서 현재와 17년 전 사이의 어딘가를 배회하게 될 것이다."
+                            }
+                        ]
+                    },
+                    "runtime": "17",
+                    "rating": "",
+                    "genre": "문화",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/21849"
+                },
+                {
+                    "DOCID": "F47593",
+                    "movieId": "F",
+                    "movieSeq": "47593",
+                    "title": " 리틀 드러머 걸: 감독판",
+                    "titleEng": "The Little Drummer Girl: Director's Cut",
+                    "titleOrg": "The Little Drummer Girl: Director's Cut",
+                    "titleEtc": "리틀드러머걸:감독판^리틀 드러머 걸: 감독판^The Little Drummer Girl: Director's Cut^리틀드러머 걸, 리틀 드러머걸, 리틀드러머걸감독판, 리틀드러머 걸 감독판, 리틀 드러머걸 감독판^The Little Drummer Girl: Director's Cut^The Little Drummer Girl: Director's Cut",
+                    "prodYear": "2018",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "플로렌스 퓨",
+                                "actorEnNm": "Florence Pugh",
+                                "actorId": "00202645"
+                            },
+                            {
+                                "actorNm": "알렉산더 스카스가드",
+                                "actorEnNm": "Alexander Skarsgard",
+                                "actorId": "00053689"
+                            },
+                            {
+                                "actorNm": "마이클 섀넌",
+                                "actorEnNm": "Michael Shannon",
+                                "actorId": "00102900"
+                            },
+                            {
+                                "actorNm": "시모나 브라운",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "클레어 홀먼",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "마이클 모쉬노브",
+                                "actorEnNm": "Michael Moshonov",
+                                "actorId": "00175985"
+                            }
+                        ]
+                    },
+                    "nation": "영국,미국",
+                    "company": "BBC,AMC,The Ink Factory,Endeavor Content,㈜모호필름",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "유혹하라, 침투하라, 그리고 진짜가 되어라1979년 독일, 이스라엘의 대사관 관저에서 폭탄 테러가 발생하자 정보국 고위 요원 ‘마틴 쿠르츠’(마이클 섀넌)는 조사에 착수한다.지난 몇 주간 유럽 전역에서 행해진 국제적 테러 사건의 중심에 팔레스타인 혁명군이 있다고 결론 내린 ‘마틴 쿠르츠’는 테러리스트 조직의 깊은 곳으로 침투하기 위한 대담한 작전을 기획한다. 한편 영국 런던, 열정과 재능을 가진 무명 배우 ‘찰리’(플로렌스 퓨)는 자신의 이름을 알릴 기회를 잡기 위해 연극 무대와 오디션장을 전전하고 있다. 평범하고 무료한 일상에 지친 어느 날, 익명의 후원자가 ‘찰리’의 극단을 그리스로 초청하고 ‘찰리’는 그곳에서 정체불명의 남자에게 매력을 느낀다. 하지만 둘만의 여행을 떠난 ‘찰리’는 그가 이스라엘 정보국 모사드의 비밀 요원 ‘가디 베커’(알렉산더 스카스가드)임을 알게 된다. 그리고 이 모든 작전을 기획한 ‘마틴 쿠르츠’는 그녀에게 일생일대의 역할을 제안한다.바로 현실 세계의 스파이가 되어 테러리스트를 연기하라는 것. 위험천만한 작전에 알 수 없는 끌림을 느낀 ‘찰리’는 임무를 수행하기로 결심하고, 현실과 허구, 진실과 거짓, 첩보와 사랑을 오가는 목숨을 건 연기를 시작하는데…"
+                            },
+                            {
+                                "plotLang": "영어",
+                                "plotText": "A bomb, delivered in a suitcase, goes off inside the house of an Israeli attaché in West Germany. A team of Israelis seek to put an end to the increasing number of bombings, all of which are masterfully thought out by an elusive Palestinian. The Israelis identify an eccentric English actress and manage to turn her into one of their agents, with whose help she brilliantly wins the confidence of the Palestinian network until she is accepted as one of their own. Written by r_tripleus"
+                            }
+                        ]
+                    },
+                    "runtime": "364",
+                    "rating": "",
+                    "genre": "드라마,스릴러",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/F/47593"
+                },
+                {
+                    "DOCID": "A08454",
+                    "movieId": "A",
+                    "movieSeq": "08454",
+                    "title": " V",
+                    "titleEng": "V",
+                    "titleOrg": "",
+                    "titleEtc": "V^브이 브이 브이 브이 브이 브이 브이 브이 브이 브이 브이 브이 브이 브이^V",
+                    "prodYear": "2013",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            },
+                            {
+                                "directorNm": "박찬경",
+                                "directorEnNm": "Park Chan-gyeong",
+                                "directorId": "00017346"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "이정현",
+                                "actorEnNm": "Lee Jung Hyun",
+                                "actorId": "00203172"
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": " 파란만장 으로 인연을 맺었던 가수 겸 배우 이정현이 2013년 발표한 ‘V’의 뮤직비디오. 우연히 자신의 집에 찾아온 남자에게 구애를 펼치는 좀비 신부의 이야기를 초현실적인 비주얼로 담아냈다."
+                            }
+                        ]
+                    },
+                    "runtime": "7",
+                    "rating": "",
+                    "genre": "예술",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/A/08454"
+                },
+                {
+                    "DOCID": "K28651",
+                    "movieId": "K",
+                    "movieSeq": "28651",
+                    "title": " 일장춘몽",
+                    "titleEng": "Life Is But a Dream (Iljangchunmong)",
+                    "titleOrg": "",
+                    "titleEtc": "일장춘몽^Life Is But a Dream (Iljangchunmong)",
+                    "prodYear": "2022",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "유해진",
+                                "actorEnNm": "Yoo Hae-jin",
+                                "actorId": "00013060"
+                            },
+                            {
+                                "actorNm": "김옥빈",
+                                "actorEnNm": "Kim Ok-vin",
+                                "actorId": "00024917"
+                            },
+                            {
+                                "actorNm": "박정민",
+                                "actorEnNm": "Park Jeong-min",
+                                "actorId": "00045706"
+                            },
+                            {
+                                "actorNm": "우상기",
+                                "actorEnNm": "U Sang-gi",
+                                "actorId": "00150017"
+                            },
+                            {
+                                "actorNm": "권지훈",
+                                "actorEnNm": "Gwon Ji-hun",
+                                "actorId": "00164572"
+                            },
+                            {
+                                "actorNm": "이보람",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "방원식",
+                                "actorEnNm": "Bang Won-sik",
+                                "actorId": "00217865"
+                            },
+                            {
+                                "actorNm": "김도담",
+                                "actorEnNm": "Kim Dodam",
+                                "actorId": "00213575"
+                            },
+                            {
+                                "actorNm": "백경민",
+                                "actorEnNm": "Baek Do-gyeom",
+                                "actorId": "00207308"
+                            },
+                            {
+                                "actorNm": "정민주",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김기진",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "이강산",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "박성근",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "황진하",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김민경",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "신정후",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "신해수",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "최기량",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "성민경",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김소원",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김정선",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "김민지",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "강한별",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "권주혁",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "이도건",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "이세준",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "서동욱",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "양석진",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "정중엽",
+                                "actorEnNm": "Jeong Jungyeop",
+                                "actorId": "00163005"
+                            },
+                            {
+                                "actorNm": "이종민",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "전일준",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "박수범",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "전효정",
+                                "actorEnNm": "Jeong Hyojeong",
+                                "actorId": "00133530"
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "㈜모호필름",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "비명에 스러진 고을의 은인, 여협 흰담비를 묻어줄 관을 만들 나무를 구하기 위해 장의사는 버려진 무덤 하나를 파헤친다. 그 바람에 무덤의 주인인 검객의 혼백이 깨어나 자신의 관을 되찾으려 소란을 피우고, 덕분에 죽은 지 얼마 안 되는 흰담비의 영혼마저 깨어나게 되는데… 삶과 죽음이 만나고 결혼식과 장례식이 어우러지는 모던 판소리 한마당. iPhone 13 Pro로 찍은 거장 박찬욱 감독의 저세상 무협 로맨스."
+                            }
+                        ]
+                    },
+                    "runtime": "21",
+                    "rating": "전체관람가",
+                    "genre": "무협,멜로/로맨스,판타지",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/28651"
+                },
+                {
+                    "DOCID": "K18838",
+                    "movieId": "K",
+                    "movieSeq": "18838",
+                    "title": " 믿거나 말거나, 찬드라의 경우",
+                    "titleEng": "Never Ending Peace And Love (Mitgeona malgeona, chandeuraui gyeongu)",
+                    "titleOrg": "",
+                    "titleEtc": "믿거나말거나,찬드라의경우^믿거나 말거나, 찬드라의 경우^믿거나 말거나 찬드라의 경우, 믿거나말거나찬드라의경우^Never Ending Peace And Love (Mitgeona malgeona, chandeuraui gyeongu)",
+                    "prodYear": "2003",
+                    "directors": {
+                        "director": [
+                            {
+                                "directorNm": " !HS 박찬욱 !HE ",
+                                "directorEnNm": "Park Chan-wook",
+                                "directorId": "00001274"
+                            }
+                        ]
+                    },
+                    "actors": {
+                        "actor": [
+                            {
+                                "actorNm": "오달수",
+                                "actorEnNm": "Oh Dal-soo",
+                                "actorId": "00010180"
+                            },
+                            {
+                                "actorNm": "백지원",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            },
+                            {
+                                "actorNm": "구자홍",
+                                "actorEnNm": "Jahong Koo",
+                                "actorId": "00019145"
+                            },
+                            {
+                                "actorNm": "오영림",
+                                "actorEnNm": "",
+                                "actorId": ""
+                            }
+                        ]
+                    },
+                    "nation": "대한민국",
+                    "company": "국가인권위원회,필모어엔터테인먼트",
+                    "plots": {
+                        "plot": [
+                            {
+                                "plotLang": "한국어",
+                                "plotText": "한국에서 이주노동자로 온 네팔 여성 찬드라는 라면을 시켜 먹다가 뒤늦게 지갑이 없다는 사실을 안다. 식당 주인의 신고로 달려온 경찰은 한국어를 더듬는 찬드라는 행려병자로 취급해, 정신병원에 수감한다. 정신 병원에서 6년 동안 수감된 찬드라의 시선을 따라가는 이 영화는 실제 인물과 실제 인물 같은 사람들의 모습과 함께 논픽션과 픽션을 오간다. 그러나 ‘믿거나 말거나’ 이지만 충격적인 이 이야기는 실화이다. 언어와 소통 문제에서부터 사업주가 노동자의 여권을 보관하는 관행에 대한 문제까지 이주노동자들의 가슴 아픈 현실을 고발하는 작품. 인권을 주제로 옴니버스 형식으로 풀어나간 여섯 개의 시선 중 여섯 번째 이야기이다."
+                            },
+                            {
+                                "plotLang": "영어",
+                                "plotText": "In 1999 Seoul, Chandra Gureung who came from Nepal was working at a sweat shop as an assistant. In a nearby diner he orders ramen. Later he discovers that he doesn’t have his wallet, and the owner reports him to the police. The police think he is a sick homeless person when he stutters trying to speak in Korean, and he is committed to a mental institution for six years and four months."
+                            }
+                        ]
+                    },
+                    "runtime": "27",
+                    "rating": "",
+                    "genre": "드라마",
+                    "kmdbUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/18838"
+                }
+            ]
+        }
+    ]
+}
