@@ -33,4 +33,16 @@ class CustomRegisterSerializer(RegisterSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['nickname',]
+        fields = '__all__'
+
+# 프로필 조회용
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['nickname', 'email', 'password', 'username', 'birth_date',]
+
+# 프로필 수정용
+class UserProfileEditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['nickname', 'email',]

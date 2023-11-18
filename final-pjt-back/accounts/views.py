@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserProfileSerializer, UserProfileEditSerializer
 
 # 팔로우 기능
 class FollowUserView(APIView):
@@ -39,3 +39,30 @@ class FollowingListView(APIView):
         followings = user.followings.all()
         serializer = UserSerializer(followings, many=True)
         return Response(serializer.data)
+
+# 프로필    
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    # 정보 조회
+    def get(self, request):
+        serializer = UserProfileSerializer(request.user)
+        return Response(serializer.data)
+    # 정보 수정
+    # def put(self, request):
+    #     serializer = UserSerializer(request.user, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# 프로필 수정
+class UserProfileEditView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request):
+        serializer = UserProfileEditSerializer(request.user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
