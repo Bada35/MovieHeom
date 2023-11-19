@@ -46,3 +46,8 @@ class UserProfileEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['nickname', 'email',]
+
+class UserProfileTestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['nickname', 'email']
