@@ -57,8 +57,10 @@
 import { ref } from 'vue'
 import coverImg from '@/assets/cover1.png'
 import userProfileImg from '@/assets/userProfileImg.png'
+import { useCounterStore } from '@/stores/counter'
 
-const username = ref('박수빈')
+const store = useCounterStore()
+const username = store.username
 const followingCount = ref(0)
 const followerCount = ref(0)
 
