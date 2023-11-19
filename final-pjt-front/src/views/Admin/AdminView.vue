@@ -5,9 +5,9 @@
             <li v-for="movie in movies" :key="movie.movieId" class="movie-item">
                 <h3 class="movie-title">{{ movie.title }}</h3>
                 <p class="movie-title-eng">{{ movie.titleEng }}</p>
-                <p class="movie-year">{{ movie.prodYear }}년도 영화</p>
-                <p class="movie-nation">국가 : {{ movie.nation }}</p>
-                <p class="movie-plot">줄거리 : {{ movie.plots.plot[0].plotText }}</p>
+                <p class="movie-runtime">{{ movie.prodYear }}년도 영화</p>
+                <p class="movie-runtime">국가 : {{ movie.nation }}</p>
+                <p class="movie-runtime">줄거리 : {{ movie.plots.plot[0].plotText }}</p>
                 <p class="movie-runtime">러닝타임 : {{ movie.runtime }}</p>
                 <a :href="movie.kmdbUrl" class="movie-link">KMDB링크</a>
             </li>
@@ -17,7 +17,7 @@
   
   
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import axios from 'axios';
 
 const movies = ref([]);
@@ -35,6 +35,10 @@ const fetchMovies = async () => {
     }
 };
 
+const directorNames = computed(() => {
+  return movies.value.directors?.director[0].directorNm.split()
+})
+
 fetchMovies();
 </script>
 
@@ -46,6 +50,7 @@ fetchMovies();
 }
 
 .title {
+    font-family: 'Gowun Dodum', sans-serif;
     text-align: center;
     color: #333;
     margin-bottom: 30px;
@@ -65,6 +70,7 @@ fetchMovies();
 }
 
 .movie-title {
+    font-family: 'Gowun Dodum', sans-serif;
     color: #2a71d0;
     margin-top: 0;
 }
@@ -72,12 +78,14 @@ fetchMovies();
 .movie-title-eng {
     font-style: italic;
     color: #666;
+    margin-top: -15px
 }
 
 .movie-year,
 .movie-nation,
 .movie-plot,
 .movie-runtime {
+    font-family: 'Nanum Gothic', sans-serif;
     color: #333;
     margin: 10px 0;
 }
