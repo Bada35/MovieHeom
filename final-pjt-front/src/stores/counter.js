@@ -8,6 +8,8 @@ export const useCounterStore = defineStore('counter', () => {
   // const articles = ref([])
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
+  const username = ref('')
+
   const isLogin = computed(() => {
     if (token.value === null) {
       return false
@@ -16,7 +18,7 @@ export const useCounterStore = defineStore('counter', () => {
     }
   })
 
-  // // DRF에 article 조회 요청을 보내는 action
+  // DRF에 article 조회 요청을 보내는 action
   // const getArticles = function () {
   //   axios({
   //     method: 'get',
@@ -33,6 +35,25 @@ export const useCounterStore = defineStore('counter', () => {
   //       console.log(err)
   //     })
   // }
+
+  const getUsername = function () {
+    axios({
+      method: 'get',
+      url: `${API_URL}/accounts/profile/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((res) => {
+      console.log(res);
+      username.value = res.data.username; // 'username'은 응답의 실제 필드명에 따라 조정해야 할 수 있음
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+
 
   const signUp = async (payload) => {
     const { username, email, password1, password2, nickname, birth_date } = payload;
@@ -58,6 +79,8 @@ export const useCounterStore = defineStore('counter', () => {
       const response = await axios.post(`${API_URL}/accounts/login/`, payload);
       console.log(response.data);
       token.value = response.data.key;
+      // username.value = response.data.username;
+      // console.log(response.data)
     } catch (err) {
       console.error(err);
     }
@@ -72,5 +95,5 @@ export const useCounterStore = defineStore('counter', () => {
       console.error(err);
     }
   };
-  return { API_URL, signUp, logIn, token, isLogin, logOut }
+  return { API_URL, signUp, logIn, token, isLogin, logOut, username, getUsername }
 }, { persist: true })
