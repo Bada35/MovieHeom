@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .models import User
 from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer
+from dj_rest_auth.views import LoginView
 
 # 팔로우 기능
 class FollowUserView(APIView):
@@ -88,3 +89,10 @@ class UserProfileTotalView(APIView):
 #             serializer.save()  # 검증된 데이터를 사용하여 프로필 정보 업데이트
 #             return Response(serializer.data)  # 업데이트된 데이터를 응답으로 반환
 #         return Response(serializer.errors, status=400)  # 데이터 검증 실패 시 에러 응답 반환
+
+class CustomLoginView(LoginView):
+    def get_response(self):
+        original_response = super().get_response()
+        mydata = {"username": self.user.username}
+        original_response.data.update(mydata)
+        return original_response

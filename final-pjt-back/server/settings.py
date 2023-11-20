@@ -175,3 +175,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:5173',     # 특정 도메인
 ]
 
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/media/'
