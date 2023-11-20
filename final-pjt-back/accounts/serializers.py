@@ -4,6 +4,8 @@ from allauth.utils import get_username_max_length
 from allauth.account.adapter import get_adapter
 from .models import User
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from django.contrib.auth import get_user_model
+from movies.serializers import ReviewSerializer, MovieLikeSerializer
 
 class CustomRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField(max_length=20, required=False, allow_blank=False)
@@ -47,7 +49,21 @@ class UserProfileEditSerializer(serializers.ModelSerializer):
         model = User
         fields = ['nickname', 'email',]
 
+User = get_user_model()
+# 남의 프로필 구경가기
 class UserProfileTestSerializer(serializers.ModelSerializer):
+    reviews = serializers.SerializerMethodField()
+    liked_movies = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['nickname', 'email']
+        fields = ['nickname', 'email', 'reviews', 'liked_movies']
+
+    def get_reviews(self, obj):
+        from movies.models import Review
+        reviews = Review.objects.filter(user=obj)
+        return ReviewSerializer(reviews, many=True).data
+    
+    def get_liked_movies(self, obj):
+        from movies.models import MovieLike
+        liked_movies = MovieLike.objects.filter(user=obj)
+        return MovieLikeSerializer(liked_movies, many=True).data
