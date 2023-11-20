@@ -9,9 +9,10 @@ from movies.serializers import ReviewSerializer, MovieLikeSerializer
 
 class CustomRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField(max_length=20, required=False, allow_blank=False)
-    email = serializers.EmailField(max_length=254, required=False, allow_blank=True)
+    email = serializers.EmailField(max_length=50, required=False, allow_blank=True)
     birth_date = serializers.DateField(required=False, allow_null=True)
-    # profile_picture = serializers.ImageField(required=False, allow_null=True, use_url=True)
+    profile_picture = serializers.ImageField(required=False, allow_null=True, use_url=True)
+    favorite_quote = serializers.CharField(max_length=50, required=False, allow_null=True)
 
     def get_cleaned_data(self):
         return {
@@ -20,7 +21,8 @@ class CustomRegisterSerializer(RegisterSerializer):
             'nickname': self.validated_data.get('nickname', ''),
             'email': self.validated_data.get('email', ''),
             'birth_date': self.validated_data.get('birth_date', None),
-            # 'profile_picture': self.validated_data.get('profile_picture', None),
+            'profile_picture': self.validated_data.get('profile_picture', None),
+            'favorite_quote': self.validated_data.get('favorite_quote', None),
         }
 
     def save(self, request):
@@ -35,28 +37,37 @@ class CustomRegisterSerializer(RegisterSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['nickname',]
 
 # 프로필 조회용
-class UserProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['nickname', 'email', 'password', 'username', 'birth_date',]
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['nickname', 'email', 'password', 'username', 'birth_date',]
 
 # 프로필 수정용
 class UserProfileEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['nickname', 'email',]
+        fields = ['nickname', 'email', 'favorite_quote', 'profile_picture']
+
+    def update(self, instance, validated_data):
+        instance.nickname = validated_data.get('nickname', instance.nickname)
+        instance.email = validated_data.get('email', instance.email)
+        instance.favorite_quote = validated_data.get('favorite_quote', instance.favorite_quote)
+        instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+
+        instance.save()
+        return instance
 
 User = get_user_model()
 # 남의 프로필 구경가기
-class UserProfileTestSerializer(serializers.ModelSerializer):
+class UserProfileTotalSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField()
     liked_movies = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['nickname', 'email', 'reviews', 'liked_movies']
+        fields = ['nickname', 'email', 'birth_date', 'reviews', 'liked_movies', 'favorite_quote', 'profile_picture']
 
     def get_reviews(self, obj):
         from movies.models import Review
@@ -67,3 +78,10 @@ class UserProfileTestSerializer(serializers.ModelSerializer):
         from movies.models import MovieLike
         liked_movies = MovieLike.objects.filter(user=obj)
         return MovieLikeSerializer(liked_movies, many=True).data
+    
+# 영화 명대사와 프로필 이미지
+
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UserProfile
+#         fields = ['favorite_quote', 'profile_image']
