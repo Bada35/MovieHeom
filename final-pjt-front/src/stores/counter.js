@@ -15,13 +15,15 @@ export const useCounterStore = defineStore('counter', () => {
   const liked_movies = ref([])
 
 
-  const isLogin = computed(() => {
-    if (token.value === null) {
-      return false
-    } else {
-      return true
-    }
-  })
+  const isLogin = ref(false)
+
+  // const isLogin = computed(() => {
+  //   if (token.value === null) {
+  //     return false
+  //   } else {
+  //     return true
+  //   }
+  // })
 
   // DRF에 article 조회 요청을 보내는 action
   // const getArticles = function () {
@@ -55,18 +57,23 @@ export const useCounterStore = defineStore('counter', () => {
       const response = await axios.post(`${API_URL}/accounts/signup/`, {
         username, email, password1, password2, nickname, birth_date
       });
-      console.log('회원가입 성공', response.data);
+      alert('회원가입 성공!');
       token.value = response.data.key;
+      return true;
     } catch (err) {
       console.error('회원가입 오류', err);
+      return false
     }
   };
 
   const logIn = async (payload) => {
     try {
       const response = await axios.post(`${API_URL}/accounts/login/`, payload);
-      console.log(response.data);
+      // console.log(response.data);
+      // console.log(payload)
       token.value = response.data.key;
+      isLogin.value = ref(true)
+      // router.push({ name: 'home' })
       // console.log(response.data)
     } catch (err) {
       console.error(err);
@@ -77,7 +84,8 @@ export const useCounterStore = defineStore('counter', () => {
     try {
       await axios.post(`${API_URL}/accounts/logout/`);
       token.value = null;
-      router.push({ name: 'ArticleView' });
+      isLogin.value = ref(false)
+      // router.push({ name: 'home' });
     } catch (err) {
       console.error(err);
     }

@@ -51,25 +51,30 @@
 
 <script setup>
 
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+
 import { ref, onMounted } from 'vue'
 import coverImg from '@/assets/cover1.png'
 import userProfileImg from '@/assets/userProfileImg.png'
-import { useCounterStore } from '@/stores/counter'
+import { useCounterStore } from '@/stores/counter.js'
 
 const store = useCounterStore()
-const username = store.username
+const route = useRoute();
+const username = ref(route.params.username)
+
 const followingCount = ref(0)
 const followerCount = ref(0)
 
 
 onMounted(() => {
   if (store.isLogin) {
-    alert('로그인이 된상태입니다.')
+    alert('로그인이 된 상태입니다.')
     store.getUsername();
   } else {
     alert('로그인이 되어있지 않습니다.')
   }
-});
+})
 
 
 </script>

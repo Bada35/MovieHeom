@@ -5,17 +5,26 @@
       <input type="text" placeholder="어떤 영화로 헤엄치고 싶으세요?" />
       <button>Search</button>
     </div>
-    <HomeLogin />
+    <HomeAuth v-if="!isLoggedIn"/>
+    <HomeProfile v-if="isLoggedIn"/>
     <HomeNavigation />
     </div>
 </template>
 
 
 <script setup>
-import { ref } from 'vue';
-import HomeLogin from '@/views/Home/HomeLogin.vue'
-import HomeNavigation from '@/views/Home/HomeNavigation.vue';
+import { ref, watch } from 'vue';
+import HomeAuth from '@/views/Home/HomeAuth.vue'
+import HomeProfile from '@/views/Home/HomeProfile.vue'
+import HomeNavigation from '@/views/Home/HomeNavigation.vue'
+import { useCounterStore } from '@/stores/counter.js'
 
+const store = useCounterStore();
+const isLoggedIn = ref(store.isLogin.value);
+
+watch(() => store.isLogin, (newValue) => {
+  isLoggedIn.value = !isLoggedIn.value; // 로그인 상태가 변경될 때 isLoggedIn을 업데이트
+});
 </script>
 
 
