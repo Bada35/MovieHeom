@@ -1,5 +1,3 @@
-<!-- ProfileView.vue -->
-
 <template>
     <div class="profile-container">
         <div class="profile-background">
@@ -63,8 +61,6 @@ const username = store.username
 const followingCount = ref(0)
 const followerCount = ref(0)
 
-
-const printToken = () => console.log(store.token)
 
 onMounted(() => {
   if (store.isLogin) {

@@ -9,6 +9,11 @@ export const useCounterStore = defineStore('counter', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const token = ref(null)
   const username = ref('')
+  const nickname = ref('')
+  const email = ref('')
+  const reviews = ref([])
+  const liked_movies = ref([])
+
 
   const isLogin = computed(() => {
     if (token.value === null) {
@@ -36,23 +41,6 @@ export const useCounterStore = defineStore('counter', () => {
   //     })
   // }
 
-  const getUsername = function () {
-    axios({
-      method: 'get',
-      url: `${API_URL}/accounts/profile/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      username.value = res.data.username; // 'username'은 응답의 실제 필드명에 따라 조정해야 할 수 있음
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  };
-
 
 
   const signUp = async (payload) => {
@@ -79,7 +67,6 @@ export const useCounterStore = defineStore('counter', () => {
       const response = await axios.post(`${API_URL}/accounts/login/`, payload);
       console.log(response.data);
       token.value = response.data.key;
-      // username.value = response.data.username;
       // console.log(response.data)
     } catch (err) {
       console.error(err);
@@ -95,5 +82,80 @@ export const useCounterStore = defineStore('counter', () => {
       console.error(err);
     }
   };
-  return { API_URL, signUp, logIn, token, isLogin, logOut, username, getUsername }
+
+  const getReviews = function (movie_id) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/movies/reviews/?movie_id=${movie_id}`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const getFollowers = function (username) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/accounts/users/${username}/followers/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((res) => {
+      return res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const getFollowings = function (username) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/accounts/users/${username}/followings/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((res) => {
+      return res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const getUserInfo = function (username) {
+    axios({
+      method: 'get',
+      url: `${API_URL}/accounts/users/${username}/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then((res) => {
+      const user = {
+        'username': username,
+        'nickname': res.data.nickname,
+        'email': res.data.email,
+        'birth_date': res.data.birth_date,
+        'reviews': res.data.reviews,
+        'liked_movies': res.data.liked_movies,
+        'favorite_quotes': res.data.favorite_quotes,
+        'profile_picture': res.data.profile_picture
+      }
+      return user
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  return { API_URL, signUp, logIn, token, isLogin, logOut, username, getReviews, getFollowers, getFollowings, nickname, email, reviews, liked_movies, getUserInfo }
 }, { persist: true })

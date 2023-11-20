@@ -7,6 +7,7 @@
         <p>TMDB 평점: {{ movieDetail.vote_average }}</p>
         <p>장르: {{ genreNames }}</p>
         <p>줄거리 <br>{{ movieDetail.overview }}</p>
+        <p>코멘트 {{  }}</p>
         <p>공식 예고편</p>
         <button @click="showTrailerModal">
             <img src="@/assets/youtube.png" alt="유튜브 아이콘" />
@@ -17,11 +18,13 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { useCounterStore } from '@/stores/counter'
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import TrailerModal from '@/components/TrailerModal.vue';
 
 
+const store = useCounterStore()
 const route = useRoute();
 const movieDetail = ref({});
 const showModal = ref(false);
@@ -35,7 +38,6 @@ const YT_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
 const fetchMovieDetails = async () => {
     const url = `https://api.themoviedb.org/3/movie/${movie_id.value}?api_key=${TMDB_API_KEY}&language=ko-KR&append_to_response=credits`;
     console.log("Requesting URL:", url);
-    console.log(import.meta.env.VITE_TMDB_API_KEY)
 
     try {
         const response = await axios.get(url);
@@ -59,16 +61,19 @@ const showTrailerModal = async () => {
 };
 
 const getPosterImg = (backURL) => {
-    return `https://www.themoviedb.org/t/p/w220_and_h330_face${backURL}`
+    return backURL? `https://www.themoviedb.org/t/p/w220_and_h330_face${backURL}` : ''
 }
 
 const getBackdropImg = (backURL) => {
-    return `https://www.themoviedb.org/t/p/w533_and_h300_bestv2${backURL}`
+    return backURL? `https://www.themoviedb.org/t/p/w533_and_h300_bestv2${backURL}` : ''
 }
 
 const genreNames = computed(() => {
   return movieDetail.value.genres?.map(genre => genre.name).join(', ') || '';
 })
+
+
+store.getReviews(movie_id)
 
 // https://api.themoviedb.org/3/movie/12477?api_key=0c29fadf6f60100379e8867c18df1169&language=ko-KR&append_to_response=credits
 
