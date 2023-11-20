@@ -1,10 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from .models import User
-from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer
+from .models import User, Guestbook
+from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer
 from dj_rest_auth.views import LoginView
 
 # 팔로우 기능
@@ -90,9 +90,15 @@ class UserProfileTotalView(APIView):
 #             return Response(serializer.data)  # 업데이트된 데이터를 응답으로 반환
 #         return Response(serializer.errors, status=400)  # 데이터 검증 실패 시 에러 응답 반환
 
+# 로그인할 때 토큰 값과 username이 같이 넘어가도록
 class CustomLoginView(LoginView):
     def get_response(self):
         original_response = super().get_response()
         mydata = {"username": self.user.username}
         original_response.data.update(mydata)
         return original_response
+    
+# 방명록 처리 view
+class GuestbookViewSet(viewsets.ModelViewSet):
+    queryset = Guestbook.objects.all()
+    serializer_class = GuestbookSerializer
