@@ -1,6 +1,7 @@
 from django.conf import settings
 import django.contrib.auth.models
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -39,6 +40,16 @@ class Migration(migrations.Migration):
             },
             managers=[
                 ('objects', django.contrib.auth.models.UserManager()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Guestbook',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('content', models.TextField()),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='guestbook', to=settings.AUTH_USER_MODEL)),
+                ('target_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='received_guestbook', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

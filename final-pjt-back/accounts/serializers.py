@@ -2,7 +2,7 @@ from rest_framework import serializers
 from allauth.account import app_settings as allauth_settings
 from allauth.utils import get_username_max_length
 from allauth.account.adapter import get_adapter
-from .models import User
+from .models import User, Guestbook
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth import get_user_model
 from movies.serializers import ReviewSerializer, MovieLikeSerializer
@@ -85,3 +85,9 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = UserProfile
 #         fields = ['favorite_quote', 'profile_image']
+
+# 방명록
+class GuestbookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Guestbook
+        fields = '__all__'
