@@ -88,11 +88,16 @@ class ReviewViewSet(viewsets.ModelViewSet):
     
     # 특정 영화의 리뷰만 찾고 싶을 때
     # movies/reviews/?movie_id=<movie_id>로 검색 가능
+    # movies/reviews/?user_id=<user_id>로 검색 가능
     def get_queryset(self):
         queryset = Review.objects.all()
         movie_id = self.request.query_params.get('movie_id')
+        user_id = self.request.query_params.get('user_id')
 
         if movie_id is not None:
             queryset = queryset.filter(movie_id=movie_id)
+
+        if user_id is not None:
+            queryset = queryset.filter(user_id=user_id)
         
         return queryset
