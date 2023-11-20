@@ -19,6 +19,15 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+    
+# 영화 좋아요
+class MovieLike(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    class Meta:
+        # 각 사용자와 영화의 조합은 유일하도록
+        unique_together = ('user', 'movie')
 
 # 영화에 대한 리뷰
 class Review(models.Model):
