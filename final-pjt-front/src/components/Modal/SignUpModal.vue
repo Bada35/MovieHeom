@@ -38,8 +38,7 @@ function toggleSignUpModal() {
     showSignUpModal.value = !showSignUpModal.value
 }
 
-const signUp = function () {
-    console.log(birth_date.value)
+const signUp = async function () {
     const payload = {
         username: username.value,
         email: email.value,
@@ -48,7 +47,8 @@ const signUp = function () {
         nickname: nickname.value,
         birth_date: birth_date.value
     };
-    store.signUp(payload);
+    await store.signUp(payload); // signUp이 Promise를 반환하므로 await 사용
+    emit('close-modal')
 }
 
 function closeModal() {
