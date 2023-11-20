@@ -3,7 +3,6 @@
     <nav>
       <router-link to="/">Home</router-link>
       <router-link :to="{ name: 'movieDetail', params: { movie_id: 637 } }">Movie</router-link>
-      <router-link to="/profile">Profile</router-link>
       <router-link to="/search">Search</router-link>
       <router-link to="/admin">Admin</router-link>
     </nav>

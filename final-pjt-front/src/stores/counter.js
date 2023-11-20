@@ -68,10 +68,13 @@ export const useCounterStore = defineStore('counter', () => {
 
   const logIn = async (payload) => {
     try {
-      const response = await axios.post(`${API_URL}/accounts/login/`, payload);
-      // console.log(response.data);
+      const response = await axios.post(`${API_URL}/accounts/auth/login/`, payload);
+      console.log(response.data);
       // console.log(payload)
-      token.value = response.data.key;
+      token.value = response.data.key
+      username.value = response.data.username
+      console.log(token.value? token.value : '토큰없어');
+      console.log(username.value? username.value : '없어')
       isLogin.value = ref(true)
       // router.push({ name: 'home' })
       // console.log(response.data)

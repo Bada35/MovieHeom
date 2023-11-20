@@ -59,23 +59,31 @@ import coverImg from '@/assets/cover1.png'
 import userProfileImg from '@/assets/userProfileImg.png'
 import { useCounterStore } from '@/stores/counter.js'
 
-const store = useCounterStore()
+const { token } = useCounterStore()
 const route = useRoute();
 const username = ref(route.params.username)
+const user = ref({})
 
 const followingCount = ref(0)
 const followerCount = ref(0)
 
+const fetchUser = async () => {
+    const url = `http://127.0.0.1:8000/accounts/users/${username.value}/`;
+    console.log(token)
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        });
+        user.value = response.data;
+        console.log(user.value);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
-onMounted(() => {
-  if (store.isLogin) {
-    alert('로그인이 된 상태입니다.')
-    store.getUsername();
-  } else {
-    alert('로그인이 되어있지 않습니다.')
-  }
-})
-
+onMounted(fetchUser)
 
 </script>
 
