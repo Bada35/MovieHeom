@@ -54,3 +54,11 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 #     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
 #     favorite_quote = models.TextField(blank=True, null=True)
 #     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
+
+# 방명록
+class Guestbook(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='guestbook')
+    target_user_nickname = models.TextField(editable=False)
+    target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_guestbook')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

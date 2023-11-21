@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 # from functools import reduce
 # from django.db.models import Q
 # Create your views here.
-
+User = get_user_model()
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
@@ -60,11 +60,11 @@ class LikedMoviesView(APIView):
 class UserLikedMoviesView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, username):
+    def get(self, request, nickname):
         # user = get_object_or_404(User, username=username)
         # 커스텀 사용자 모델을 사용한다면 이 방법이 더 적절하다고 한다,,,
-        User = get_user_model()
-        user = get_object_or_404(User, username=username)
+        # User = get_user_model()
+        user = get_object_or_404(User, nickname=nickname)
         likes = MovieLike.objects.filter(user=user)
         liked_movies = [like.movie for like in likes]
         serializer = MovieSerializer(liked_movies, many=True)
@@ -82,22 +82,23 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     # 현재 로그인한 사용자를 리뷰 작성자로
     def perform_create(self, serializer):
+        user=self.request.user
         movie_id = self.request.data.get('movie_id')
         movie = get_object_or_404(Movie, pk=movie_id)
-        serializer.save(user=self.request.user, movie=movie)
+        serializer.save(user=user, movie=movie, user_nickname=user.nickname)
     
     # 특정 영화의 리뷰만 찾고 싶을 때
     # movies/reviews/?movie_id=<movie_id>로 검색 가능
-    # movies/reviews/?user_id=<user_id>로 검색 가능
+    # movies/reviews/?user_nickname=<nickname>로 검색 가능
     def get_queryset(self):
         queryset = Review.objects.all()
         movie_id = self.request.query_params.get('movie_id')
-        user_id = self.request.query_params.get('user_id')
+        nickname = self.request.query_params.get('nickname')
 
         if movie_id is not None:
             queryset = queryset.filter(movie_id=movie_id)
 
-        if user_id is not None:
-            queryset = queryset.filter(user_id=user_id)
+        if nickname is not None:
+            queryset = queryset.filter(user__nickname=nickname)
         
         return queryset

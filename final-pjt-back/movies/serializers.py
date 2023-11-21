@@ -14,7 +14,8 @@ class GenreSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['content', 'rating', 'movie_id', 'user_id']
+        fields = ['user_nickname', 'content', 'rating', 'movie_id', 'user_id', 'created_at']
+        read_only_fields = ['user_nickname']
 
 class MovieLikeSerializer(serializers.ModelSerializer):
     movie = MovieSerializer(read_only=True)

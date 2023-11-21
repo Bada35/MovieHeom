@@ -2,10 +2,12 @@ from rest_framework import serializers
 from allauth.account import app_settings as allauth_settings
 from allauth.utils import get_username_max_length
 from allauth.account.adapter import get_adapter
-from .models import User
+from .models import User, Guestbook
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth import get_user_model
 from movies.serializers import ReviewSerializer, MovieLikeSerializer
+
+User = get_user_model()
 
 class CustomRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField(max_length=20, required=False, allow_blank=False)
@@ -60,14 +62,14 @@ class UserProfileEditSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-User = get_user_model()
+
 # 남의 프로필 구경가기
 class UserProfileTotalSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField()
     liked_movies = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['nickname', 'email', 'birth_date', 'reviews', 'liked_movies', 'favorite_quote', 'profile_picture']
+        fields = ['id', 'nickname', 'email', 'birth_date', 'reviews', 'liked_movies', 'favorite_quote', 'profile_picture']
 
     def get_reviews(self, obj):
         from movies.models import Review
@@ -85,3 +87,10 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = UserProfile
 #         fields = ['favorite_quote', 'profile_image']
+
+# 방명록
+class GuestbookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Guestbook
+        fields = ['id', 'user', 'target_user', 'target_user_nickname', 'content', 'created_at']
+        read_only_fields = ['target_user_nickname']
