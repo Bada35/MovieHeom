@@ -57,7 +57,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 
 # 방명록
 class Guestbook(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='guestbook')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='guestbook')
+    target_user_nickname = models.TextField(editable=False)
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_guestbook')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
