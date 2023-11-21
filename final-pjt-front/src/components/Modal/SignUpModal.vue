@@ -3,7 +3,7 @@
         <h2 class="modal-title">회원가입</h2>
         <div class="signup-form">
             <form @submit.prevent="signUp">
-                <input type="text" v-model.trim="username" placeholder="이름" />
+                <input type="text" v-model.trim="username" placeholder="아이디" />
                 <input type="email" v-model.trim="email" placeholder="이메일" />
                 <input type="text" v-model.trim="nickname" placeholder="닉네임" />
                 <input type="date" v-model.trim="birth_date" placeholder="생년월일" />

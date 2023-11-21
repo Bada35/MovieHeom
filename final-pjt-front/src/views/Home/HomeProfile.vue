@@ -1,7 +1,9 @@
 <template>
     <div class="top-right-menu">
         <button class="auth-button" @click="logOut">로그아웃</button>
-        <router-link :to="{ name: 'profile', params: { username: 637 } }">Movie</router-link>
+        <router-link :to="{ name: 'profile', params: { username } }">
+      <img :src="userProfileImg" alt="ProfileImg" class="profile-img"/>
+    </router-link>
     </div>
 </template>
 
@@ -10,7 +12,7 @@ import { useCounterStore } from '@/stores/counter.js'
 import userProfileImg from '@/assets/userProfileImg.png' 
 
 
-const { logOut } = useCounterStore()
+const { logOut, username } = useCounterStore()
 
 </script>
 
@@ -39,5 +41,11 @@ const { logOut } = useCounterStore()
     background-color: #e0e0e0;
     border-color: #ccc;
 }
-
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
 </style>
