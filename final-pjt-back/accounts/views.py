@@ -6,15 +6,16 @@ from django.shortcuts import get_object_or_404
 from .models import User, Guestbook
 from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer
 from dj_rest_auth.views import LoginView
+from rest_framework import permissions
 
 # 팔로우 기능
 class FollowUserView(APIView):
-    def post(self, request, username):
-        target_user = get_object_or_404(User, username=username)
+    def post(self, request, nickname):
+        target_user = get_object_or_404(User, nickname=nickname)
         if request.user == target_user:
             return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
         
-        if request.user.followers.filter(username=username).exists():
+        if request.user.followers.filter(nickname=nickname).exists():
             request.user.followers.remove(target_user)
             return Response({"status": "unfollowed"})
         else:
@@ -22,21 +23,21 @@ class FollowUserView(APIView):
             return Response({"status": "followed"})
 
 # 팔로워 목록        
-class FollowersListView(APIView):
+class FollowingsListView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, username):
-        user = get_object_or_404(User, username=username)
+    def get(self, request, nickname):
+        user = get_object_or_404(User, nickname=nickname)
         followers = user.followers.all()
         serializer = UserSerializer(followers, many=True)
         return Response(serializer.data)
 
 # 팔로잉 목록
-class FollowingListView(APIView):
+class FollowersListView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, username):
-        user = get_object_or_404(User, username=username)
+    def get(self, request, nickname):
+        user = get_object_or_404(User, nickname=nickname)
         followings = user.followings.all()
         serializer = UserSerializer(followings, many=True)
         return Response(serializer.data)
@@ -70,8 +71,8 @@ class UserProfileEditView(APIView):
 
 # 프로필 요청시 필요 데이터 전부 전송   
 class UserProfileTotalView(APIView):
-    def get(self, request, username):
-        user = get_object_or_404(User, username=username)
+    def get(self, request, nickname):
+        user = get_object_or_404(User, nickname=nickname)
         serializer = UserProfileTotalSerializer(user)
         return Response(serializer.data)
     
@@ -94,7 +95,10 @@ class UserProfileTotalView(APIView):
 class CustomLoginView(LoginView):
     def get_response(self):
         original_response = super().get_response()
-        mydata = {"username": self.user.username}
+        mydata = {
+            "nickname": self.user.nickname,
+            "user_id": self.user.id,
+            }
         original_response.data.update(mydata)
         return original_response
     
@@ -102,3 +106,22 @@ class CustomLoginView(LoginView):
 class GuestbookViewSet(viewsets.ModelViewSet):
     queryset = Guestbook.objects.all()
     serializer_class = GuestbookSerializer
+    # 인증된 사용자만 리뷰 작성
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        target_user_id = self.request.data.get('target_user')
+        target_user = User.objects.get(id=target_user_id)
+        
+        serializer.save(user=user, target_user=target_user, target_user_nickname=target_user.nickname)
+
+    # 방명록 목록
+    def get_queryset(self):
+        queryset = Guestbook.objects.all()
+        nickname = self.request.query_params.get('nickname')
+
+        if nickname is not None:
+            queryset = queryset.filter(target_user__nickname=nickname)
+
+        return queryset

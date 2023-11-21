@@ -33,6 +33,7 @@ class MovieLike(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    user_nickname = models.TextField(editable=False)
 
     content = models.TextField(max_length=200)
     # 최솟값과 최대값 설정

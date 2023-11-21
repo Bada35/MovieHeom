@@ -10,8 +10,8 @@ router.register(r'reviews', ReviewViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('liked/', LikedMoviesView.as_view(), name='liked-movies-list'),
+    # path('liked/', LikedMoviesView.as_view(), name='liked-movies-list'),
     path('<int:movie_id>/liked/', movie_liked, name='liked-movie'),
-    path('liked/<str:username>/', UserLikedMoviesView.as_view(), name='user-liked-movies-list'),
+    path('liked/<str:nickname>/', UserLikedMoviesView.as_view(), name='user-liked-movies-list'),
 
 ]
