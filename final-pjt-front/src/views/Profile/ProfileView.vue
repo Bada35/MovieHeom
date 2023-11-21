@@ -5,36 +5,76 @@
             <img :src="coverImg" alt="User background" />
         </div>
         <div class="profile-content">
+            <button class="settings-button" @click="toggleSettingModal">
+                <img :src="gearImg" alt="Settings" />
+            </button>
+            <div class="modal-overlay" v-if="showSettingModal" @click="toggleSettingModal">
+                <SettingModal @click.stop @update-successful="handleUpdateSuccess" />
+            </div>
             <!-- 프로필 이미지 -->
             <div class="profile-image">
                 <img :src="userProfileImg" alt="${username}의 프로필" />
             </div>
             <!-- 사용자 정보 -->
             <div class="user-info">
-                <h2>{{ username }}의 바다</h2>
-                <p>{{ followingCount }} Following {{ followerCount }} Followers</p>
+
+                <h2>{{ user.nickname }}의 바다</h2>
+                <button @click="toggleFollowingModal">
+                    <p>{{ followingCount }} Following </p>
+                </button>
+                <button @click="toggleFollowerModal">
+                    <p>{{ followerCount }} Followers</p>
+                </button>
+                <div class="modal-overlay" v-if="showFollowingModal" @click="toggleFollowingModal">
+                    <FollowingModal @click.stop />
+                </div>
+                <div class="modal-overlay" v-if="showFollowerModal" @click="toggleFollowerModal">
+                    <FollowerModal @click.stop />
+                </div>
             </div>
             <!-- 평가한 영화 -->
             <div class="rated-films">
-                <h3>🎬{{ username }}님의 바다에 떠다니는 영화들</h3>
+                <h3>🎬{{ user.nickname }}님의 바다에 떠다니는 영화들</h3>
                 <div class="comments-container">
-                    <!-- 코멘트 목록 -->
+                    <div v-if="user.liked_movies && user.liked_movies.length > 0" class="films-grid">
+                        <!-- 영화 목록 -->
+                        <div class="film" v-for="film in user.liked_movies" :key="film.liked_movies">
+                            {{ film.movie.title }}
+                        </div>
+
+                    </div>
+                    <div v-else>
+                        <h2> 평가한 영화가 없어요ㅠㅠ</h2>
+                    </div>
                 </div>
-                <div class="films-grid">
-                    <!-- 영화 목록 -->
-                    <div class="film" v-for="film in ratedFilms" :key="film.id">filming</div>
-                </div>
+
             </div>
             <!-- 남긴 코멘트 -->
             <div class="user-comments">
-                <h3>💬{{ username }}님이 남긴 코멘트</h3>
+                <h3>💬{{ user.nickname }}님이 남긴 코멘트</h3>
                 <div class="comments-container">
-                    <!-- 코멘트 목록 -->
+                    <div v-if="user.reviews && user.reviews.length > 0" class="films-grid">
+                        <!-- 영화 목록 -->
+                        <div class="film" v-for="review in user.reviews" :key="review.movie_id">
+                            {{ review.content }}
+                        </div>
+
+                    </div>
+                    <div v-else>
+                        <h2> 남긴 코멘트가 없어요😥</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="user-comments">
+                <h3>🌠{{ user.nickname }}님의 명대사</h3>
+                <div class="comments-container">
+                    <!-- <p>{{ user.favorite_quote? user.favorite_quote : '기본인용구문'}}</p> -->
+                    <p v-html="defaultQuote" :style="{ 'font-family': '\'Nanum Gothic\', sans-serif' }"></p>
                 </div>
             </div>
             <!-- 좋아하는 키워드 -->
             <div class="favourite-keywords">
-                <h3>🏷️{{ username }}님이 좋아하는 키워드</h3>
+                <h3>🏷️{{ user.nickname }}님이 좋아하는 키워드</h3>
                 <div class="comments-container">
                     <div class="keywords-grid">
                         <!-- 키워드 목록 -->
@@ -59,17 +99,41 @@ import coverImg from '@/assets/cover1.png'
 import userProfileImg from '@/assets/userProfileImg.png'
 import { useCounterStore } from '@/stores/counter.js'
 
+import gearImg from '@/assets/gear.png'
+import FollowingModal from '@/views/Profile/FollowingModal.vue'
+import FollowerModal from '@/views/Profile/FollowerModal.vue'
+import SettingModal from '@/views/Profile/SettingModal.vue'
+
+
 const { token } = useCounterStore()
 const route = useRoute();
 const username = ref(route.params.username)
 const user = ref({})
 
+const showFollowingModal = ref(false);
+const showFollowerModal = ref(false);
+const showSettingModal = ref(false);
+
+
+function toggleFollowingModal() {
+    showFollowingModal.value = !showFollowingModal.value;
+}
+
+function toggleFollowerModal() {
+    showFollowerModal.value = !showFollowerModal.value;
+}
+
+function toggleSettingModal() {
+    showSettingModal.value = !showSettingModal.value;
+}
+
 const followingCount = ref(0)
 const followerCount = ref(0)
 
+const defaultQuote = '에블린을 수천 명 봤지만 당신 같은 사람은 없었어.<br>이루지 못한 목표와 버린 꿈이 너무 많아. 최악의 에블린으로 살고 있는 거야.<br>당신이 실패의 길을 택했기에 다른 에블린들이 성공한 거야.<br>당신은 무엇이든 할 수 있어'
+
 const fetchUser = async () => {
     const url = `http://127.0.0.1:8000/accounts/users/${username.value}/`;
-    console.log(token)
     try {
         const response = await axios.get(url, {
             headers: {
@@ -77,11 +141,16 @@ const fetchUser = async () => {
             }
         });
         user.value = response.data;
-        console.log(user.value);
+        console.log(user.value.liked_movies)
     } catch (error) {
         console.error(error);
     }
 }
+
+const handleUpdateSuccess = () => {
+    fetchUser(); // This should refresh the user data
+    toggleSettingModal(); // This should close the modal
+};
 
 onMounted(fetchUser)
 
@@ -178,6 +247,7 @@ onMounted(fetchUser)
     border-radius: 10px;
     padding: 10px;
     text-align: center;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 .comments-container {
@@ -186,6 +256,7 @@ onMounted(fetchUser)
     /* 테두리 */
     border-radius: 10px;
     padding: 10px;
+    font-family: 'Nanum Gothic', sans-serif;
     min-height: 100px;
     /* 최소 높이 설정 */
 }
@@ -210,10 +281,80 @@ onMounted(fetchUser)
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
 h3 {
     color: #333;
     font-family: 'Gowun Dodum', sans-serif;
+}
+
+h2 {
+    color: #333;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.user-info button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    /* Use inline-flex to align items within the button */
+    align-items: center;
+    /* Align the text vertically */
+    justify-content: center;
+    /* Center the content horizontally */
+    margin-right: 10px;
+    /* Add space to the right of the button */
+}
+
+.user-info button:last-child {
+    margin-right: 0;
+    /* Remove the margin from the last button */
+}
+
+.user-info button p {
+    margin: 0;
+    /* Remove default margin */
+    padding: 0;
+    /* Remove default padding */
+    color: #333;
+    /* Set text color */
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 1rem;
+    /* Set the font size as desired */
+}
+
+.settings-button {
+    position: absolute;
+    /* Position the button absolutely within the .profile-content */
+    top: 10px;
+    /* Adjust as needed */
+    right: 10px;
+    /* Adjust as needed */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    /* Add padding as necessary */
+}
+
+.settings-button img {
+    width: 48px;
+    /* Adjust as needed */
+    height: 48px;
+    /* Adjust as needed */
 }
 </style>
   
