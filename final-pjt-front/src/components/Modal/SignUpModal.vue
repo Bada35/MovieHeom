@@ -1,5 +1,5 @@
 <template>
-    <div class="signup-modal" @click.self="closeModal">
+    <div class="signup-modal">
         <h2 class="modal-title">회원가입</h2>
         <div class="signup-form">
             <form @submit.prevent="signUp">
@@ -9,6 +9,8 @@
                 <input type="date" v-model.trim="birth_date" placeholder="생년월일" />
                 <input type="password" v-model.trim="password1" placeholder="비밀번호" />
                 <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
+                <input type="text" v-model.trim="password1" placeholder="프로필사진" />
+                <input type="text" v-model.trim="password2" placeholder="좋아하는 명대사" />
                 <button type="submit">회원가입</button>
             </form>
             <div class="login-link">
@@ -24,14 +26,17 @@
 import { ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
-const emit = defineEmits(['closeModal'])
 const store = useCounterStore()
+
 const username = ref('')
 const email = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const nickname = ref('')
 const birth_date = ref('')
+const profile_picture = ref('')
+const favorite_quotes = ref('')
+
 const showSignUpModal = ref(false)
 
 function toggleSignUpModal() {
@@ -45,15 +50,13 @@ const signUp = async function () {
         password1: password1.value,
         password2: password2.value,
         nickname: nickname.value,
-        birth_date: birth_date.value
+        birth_date: birth_date.value,
+        profile_picture: profile_picture.value,
+        favorite_quotes: favorite_quotes.value
     };
     await store.signUp(payload); // signUp이 Promise를 반환하므로 await 사용
-    emit('close-modal')
 }
 
-function closeModal() {
-    emit('close-modal')
-}
 </script>
   
 
