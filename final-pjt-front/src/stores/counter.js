@@ -1,52 +1,42 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 export const useCounterStore = defineStore('counter', () => {
-  const router = useRouter()
-  // const articles = ref([])
   const API_URL = 'http://127.0.0.1:8000'
+
+  // state: 반응형 상태(데이터)
   const token = ref(null)
-  const username = ref('')
   const nickname = ref('')
-  const email = ref('')
-  const reviews = ref([])
-  const liked_movies = ref([])
-
-
+  const user_id = ref(null)
   const isLogin = ref(false)
+  const myInfo = ref(null)
 
-  // const isLogin = computed(() => {
-  //   if (token.value === null) {
-  //     return false
-  //   } else {
-  //     return true
-  //   }
-  // })
 
-  // DRF에 article 조회 요청을 보내는 action
-  // const getArticles = function () {
-  //   axios({
-  //     method: 'get',
-  //     url: `${API_URL}/api/v1/articles/`,
-  //     headers: {
-  //       Authorization: `Token ${token.value}`
-  //     }
-  //   })
-  //     .then((res) =>{
-  //       // console.log(res)
-  //       articles.value = res.data
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
+  // getters: 계산된 값
 
 
 
+
+  // actions: 메서드
+  // 1. 특정 유저 정보 조회 - GET 요청
+  const getUserInfo = async (nickname) => {
+    try {
+      const response = await axios.get(`${API_URL}/accounts/users/${nickname}/`, {
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      });
+      return response.data;
+    } catch (err) {
+      console.error('유저 정보 조회 오류', err);
+      return null;
+    }
+  };
+
+  // 11. 회원가입 - POST 요청
   const signUp = async (payload) => {
-    const { username, email, password1, password2, nickname, birth_date } = payload;
+    const { username, email, password1, password2, nickname, birth_date, profile_picture, favorite_quote } = payload;
 
     if (password1 !== password2) {
       alert('비밀번호가 일치하지 않습니다!');
@@ -54,119 +44,58 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     try {
+      console.log(payload)
       const response = await axios.post(`${API_URL}/accounts/signup/`, {
-        username, email, password1, password2, nickname, birth_date
+        username, email, password1, password2, nickname, birth_date, profile_picture, favorite_quote
       });
       alert('회원가입 성공!');
       token.value = response.data.key;
-      return true;
+      return true
     } catch (err) {
       console.error('회원가입 오류', err);
       return false
     }
-  };
+  }
 
+  // 12. 로그인 - POST 요청
   const logIn = async (payload) => {
     try {
       const response = await axios.post(`${API_URL}/accounts/auth/login/`, payload);
-      console.log(response.data);
-      // console.log(payload)
       token.value = response.data.key
-      username.value = response.data.username
-      console.log(token.value? token.value : '토큰없어');
-      console.log(username.value? username.value : '없어')
+      nickname.value = response.data.nickname
+      user_id.value = response.data.user_id
+      myInfo.value = await getUserInfo(nickname.value)
+      alert(`${nickname.value}님, 안녕하세요!🌊`)
       isLogin.value = ref(true)
-      // router.push({ name: 'home' })
-      // console.log(response.data)
     } catch (err) {
       console.error(err);
     }
-  };
+  }
 
+  // 13. 로그아웃 - 구현?
   const logOut = async () => {
     try {
       await axios.post(`${API_URL}/accounts/logout/`);
-      token.value = null;
+      alert('잘 가요!🙋🏻‍♀️')
+      token.value = null
       isLogin.value = ref(false)
-      // router.push({ name: 'home' });
+      myInfo.value = null
     } catch (err) {
       console.error(err);
     }
   };
 
-  const getReviews = function (movie_id) {
-    axios({
-      method: 'get',
-      url: `${API_URL}/movies/reviews/?movie_id=${movie_id}`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
 
-  const getFollowers = function (username) {
-    axios({
-      method: 'get',
-      url: `${API_URL}/accounts/users/${username}/followers/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-    .then((res) => {
-      return res.data
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
 
-  const getFollowings = function (username) {
-    axios({
-      method: 'get',
-      url: `${API_URL}/accounts/users/${username}/followings/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-    .then((res) => {
-      return res.data
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  return {
+    token,
+    nickname,
+    user_id,
+    isLogin,
+    myInfo,
+    getUserInfo,
+    signUp,
+    logIn,
+    logOut
   }
-
-  const getUserInfo = function (username) {
-    axios({
-      method: 'get',
-      url: `${API_URL}/accounts/users/${username}/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-    .then((res) => {
-      const user = {
-        'username': username,
-        'nickname': res.data.nickname,
-        'email': res.data.email,
-        'birth_date': res.data.birth_date,
-        'reviews': res.data.reviews,
-        'liked_movies': res.data.liked_movies,
-        'favorite_quotes': res.data.favorite_quotes,
-        'profile_picture': res.data.profile_picture
-      }
-      return user
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-
-  return { API_URL, signUp, logIn, token, isLogin, logOut, username, getReviews, getFollowers, getFollowings, nickname, email, reviews, liked_movies, getUserInfo }
 }, { persist: true })

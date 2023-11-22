@@ -3,7 +3,7 @@
         <h2 class="modal-title">회원정보 수정</h2>
         <div class="signup-form">
             <form @submit.prevent="editProfile">
-                <input type="test" v-model.trim="nickname" placeholder="수정할 닉네임" />
+                <!-- <input type="test" v-model.trim="nickname" placeholder="수정할 닉네임" /> -->
                 <input type="email" v-model.trim="email" placeholder="수정할 이메일" />
                 <input type="text" v-model.trim="favorite_quote" placeholder="수정할 명대사" />
                 <input type="test" v-model.trim="profile_picture" placeholder="수정할 이미지" />
@@ -32,7 +32,6 @@ const editProfile = async () => {
     const url = 'http://127.0.0.1:8000/accounts/profile/edit/';
     let data = {};
 
-    // Conditionally add fields to the data object
     if (nickname.value) data.nickname = nickname.value;
     if (email.value) data.email = email.value;
     if (favorite_quote.value) data.favorite_quote = favorite_quote.value;
@@ -47,10 +46,9 @@ const editProfile = async () => {
         });
         alert('회원정보 수정 완료!:', response.data);
         emit('update-successful');
-        // Handle success (e.g., show a message)
     } catch (error) {
         console.log('Error updating profile:', error);
-        // Handle error (e.g., show an error message)
+        alert('수정하는 중 오류가 발생했어요😰')
     }
 };
 </script>

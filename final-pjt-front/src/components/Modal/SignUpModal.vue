@@ -1,5 +1,5 @@
 <template>
-    <div class="signup-modal" @click.self="closeModal">
+    <div class="signup-modal">
         <h2 class="modal-title">회원가입</h2>
         <div class="signup-form">
             <form @submit.prevent="signUp">
@@ -9,6 +9,8 @@
                 <input type="date" v-model.trim="birth_date" placeholder="생년월일" />
                 <input type="password" v-model.trim="password1" placeholder="비밀번호" />
                 <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
+                <input type="text" v-model.trim="profile_picture" placeholder="프로필사진" />
+                <input type="text" v-model.trim="favorite_quote" placeholder="좋아하는 명대사" />
                 <button type="submit">회원가입</button>
             </form>
             <div class="login-link">
@@ -24,14 +26,17 @@
 import { ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
-const emit = defineEmits(['closeModal'])
 const store = useCounterStore()
+
 const username = ref('')
 const email = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const nickname = ref('')
 const birth_date = ref('')
+const profile_picture = ref('')
+const favorite_quote = ref('')
+
 const showSignUpModal = ref(false)
 
 function toggleSignUpModal() {
@@ -39,21 +44,22 @@ function toggleSignUpModal() {
 }
 
 const signUp = async function () {
-    const payload = {
-        username: username.value,
-        email: email.value,
-        password1: password1.value,
-        password2: password2.value,
-        nickname: nickname.value,
-        birth_date: birth_date.value
-    };
-    await store.signUp(payload); // signUp이 Promise를 반환하므로 await 사용
-    emit('close-modal')
+    // Optional Chaining과 삼항 연산자를 사용하여 null값 처리
+    let payload = {};
+
+    if (username.value) payload.username = username.value;
+    if (email.value) payload.email = email.value;
+    if (password1.value) payload.password1 = password1.value;
+    if (password2.value) payload.password2 = password2.value;
+    if (nickname.value) payload.nickname = nickname.value;
+    if (birth_date.value) payload.birth_date = birth_date.value;
+    if (profile_picture.value) payload.profile_picture = profile_picture.value;
+    if (favorite_quote.value) payload.favorite_quote = favorite_quote.value;
+
+    console.log(payload)
+    await store.signUp(payload)
 }
 
-function closeModal() {
-    emit('close-modal')
-}
 </script>
   
 

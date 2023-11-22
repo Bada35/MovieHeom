@@ -1,5 +1,5 @@
 <template>
-    <div class="login-modal" @click.self="closeModal">
+    <div class="login-modal">
         <h2 class="modal-title">로그인</h2>
         <div class="login-form">
             <input type="text" v-model.trim="username" placeholder="아이디" />
@@ -17,22 +17,16 @@
 <script setup>
 import { ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
-import { defineEmits } from 'vue'
-const emit = defineEmits(['closeModal'])
 const store = useCounterStore()
 const username = ref(null)
 const password = ref(null)
 
-function closeModal() {
-    emit('close-modal')
-}
-
 const logIn = function () {
-  const payload = {
-    username: username.value,
-    password: password.value
-  }
-  store.logIn(payload)
+    const payload = {
+        username: username.value,
+        password: password.value
+    }
+    store.logIn(payload)
 }
 
 </script>
@@ -40,13 +34,13 @@ const logIn = function () {
 
 
 <style scoped>
-
 .modal-title {
     color: #333;
     font-family: 'Nanum Gothic', sans-serif;
     font-size: 1.5em;
     margin-bottom: 20px;
 }
+
 .login-modal {
     display: flex;
     flex-direction: column;

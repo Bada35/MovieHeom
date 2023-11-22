@@ -8,9 +8,8 @@
                 <button class="YTbutton" @click="showTrailerModal">
                     <img src="@/assets/youtube.png" alt="유튜브 아이콘" />
                 </button>
-                <button :class="['like-button', { liked: isLiked }]" @click="toggleLike">
-                    {{ isLiked ? '좋아요' : '좋아요 안 함' }}
-                </button>
+                <button v-if="isLiked" class="like-button-liked" @click="toggleLike">좋아요</button>
+                <button v-else class="like-button" @click="toggleLike">좋아요 안 함</button>
             </div>
         </div>
         <p>개봉일: {{ movieDetail.release_date }}</p>
@@ -21,21 +20,19 @@
         <div class="comment-box">
             <textarea v-model="newComment" placeholder="코멘트 작성..."></textarea>
             <select v-model="newRating">
-      <option disabled value="">평점을 선택해주세요</option>
-      <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-    </select>
+                <option disabled value="">평점을 선택해주세요</option>
+                <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+            </select>
             <button @click="submitComment">제출</button>
         </div>
         <div class="comments">
             <h3>코멘트</h3>
             <div v-if="comments && comments.length > 0">
-            <div v-for="comment in comments" :key="comment.id">
-                <p>남긴 별점{{ comment.rating }}<br>{{ comment.content }}</p>
+                <commentCard :comment="comment" v-for="comment in comments" :key="comment.id"/>
             </div>
-        </div>
-        <div v-else>
-            <p>첫 코멘트를 남겨보세요!!</p>
-        </div>
+            <div v-else>
+                <p>첫 코멘트를 남겨보세요!!</p>
+            </div>
         </div>
         <p>공식 예고편</p>
         <TrailerModal v-if="showModal" :trailerUrl="trailerUrl" @close="showModal = false" />
@@ -49,17 +46,19 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import TrailerModal from '@/components/TrailerModal.vue';
 
+import commentCard from '@/views/Movie/commentCard.vue'
 
-const { token, username } = useCounterStore()
+
+const { token, myInfo } = useCounterStore()
 const route = useRoute();
 const movieDetail = ref({});
 const showModal = ref(false);
 const trailerUrl = ref('');
 const movie_id = ref(route.params.movie_id);  // Grave of the Fireflies (1988)
-const isLiked = ref(false);
 const newComment = ref('');
 const comments = ref([]);
 const newRating = ref('');
+
 
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -104,7 +103,6 @@ const genreNames = computed(() => {
 })
 
 const toggleLike = async () => {
-    isLiked.value = !isLiked.value;
     const url = `http://127.0.0.1:8000/movies/${movie_id.value}/liked/`;
     console.log(token)
     try {
@@ -119,6 +117,15 @@ const toggleLike = async () => {
     }
 
 };
+
+const isLiked = computed(() => {
+    if (!myInfo.value || !myInfo.value.liked_movies) {
+    return false;
+  }
+    // 현재 영화의 ID가 myInfo.liked_movies 배열에 존재하는지 확인
+    const likedMovieIds = myInfo.value.liked_movies.map(movie => movie.movie.id);
+    return likedMovieIds.includes(movie_id.value);
+})
 
 
 const submitComment = async () => {
@@ -248,7 +255,7 @@ onMounted(async () => {
     border-color: #ccc;
 }
 
-.like-button.liked {
+.like-button-liked {
     background-color: #007bff;
     color: white;
 }
@@ -262,6 +269,7 @@ onMounted(async () => {
     font-family: 'Nanum Gothic', sans-serif;
     background-color: white;
 }
+
 .comment-box textarea {
     width: 100%;
     padding: 10px;
