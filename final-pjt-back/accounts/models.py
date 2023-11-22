@@ -13,6 +13,7 @@ class User(AbstractUser):
     date_joined = models.DateField(auto_now_add=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     favorite_quote = models.TextField(blank=True, null=True)
+    bgm_url = models.TextField(blank=True, null=True)
 
     # superuser fields
     is_active = models.BooleanField(default=True)
@@ -37,6 +38,7 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         user.birth_date = data.get('birth_date', None)
         user.profile_picture = data.get('profile_picture', None)
         user.favorite_quote = data.get('favorite_quote', None)
+        user.bgm_url = data.get('bgm_url', None)
 
         if 'password1' in data:
             user.set_password(data['password1'])

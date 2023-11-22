@@ -51,13 +51,14 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['nickname', 'email', 'favorite_quote', 'profile_picture']
+        fields = ['nickname', 'email', 'favorite_quote', 'profile_picture', 'bgm_url']
 
     def update(self, instance, validated_data):
         instance.nickname = validated_data.get('nickname', instance.nickname)
         instance.email = validated_data.get('email', instance.email)
         instance.favorite_quote = validated_data.get('favorite_quote', instance.favorite_quote)
         instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+        instance.bgm_url = validated_data.get('bgm_url', instance.bgm_url)
 
         instance.save()
         return instance
@@ -69,7 +70,7 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
     liked_movies = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'email', 'birth_date', 'reviews', 'liked_movies', 'favorite_quote', 'profile_picture']
+        fields = ['id', 'nickname', 'email', 'birth_date', 'favorite_quote', 'bgm_url', 'profile_picture', 'reviews', 'liked_movies']
 
     def get_reviews(self, obj):
         from movies.models import Review
