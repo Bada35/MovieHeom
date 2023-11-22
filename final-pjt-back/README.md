@@ -30,6 +30,12 @@ http://127.0.0.1:8000/accounts/auth/login/
 }
 형태로 넘어오는 것을 볼 수 있다.
 
+- 로그아웃 - POST 요청
+http://127.0.0.1:8000/accounts/logout/
+해당 url로 post 요청을 하게 되면
+{"detail":"Successfully logged out."}
+형태로 로그아웃이 진행된다.
+
 - 회원 정보 수정 - PUT 요청
 http://127.0.0.1:8000/accounts/profile/edit/
 해당 url로 nickname, email, favorite_quote, profile_picture의 값을 담아 put 요청을 하게 되면
