@@ -3,10 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from .models import User, Guestbook
-from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer
+from .models import User, Guestbook, GuestbookComment
+from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer, GuestbookCommentSerializer
 from dj_rest_auth.views import LoginView
 from rest_framework import permissions
+from rest_framework.exceptions import PermissionDenied
 
 # 팔로우 기능
 class FollowUserView(APIView):
@@ -109,6 +110,7 @@ class GuestbookViewSet(viewsets.ModelViewSet):
     # 인증된 사용자만 리뷰 작성
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    # 방명록 작성
     def perform_create(self, serializer):
         user = self.request.user
         target_user_id = self.request.data.get('target_user')
@@ -125,3 +127,42 @@ class GuestbookViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(target_user__nickname=nickname)
 
         return queryset
+    
+    # 방명록 수정
+    def update(self, request, pk=None):
+        guestbook = self.get_object()
+
+        # 수정 권한 확인: 작성자만 수정 가능
+        if guestbook.user != request.user:
+            raise PermissionDenied("권한이 없습니다.")
+
+        serializer = self.get_serializer(guestbook, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    # 방명록 삭제
+    def destroy(self, request, pk=None):
+        guestbook = self.get_object()
+
+        # 삭제 권한 확인: 작성자와 방명록 주인만 삭제 가능
+        if guestbook.user != request.user and guestbook.target_user != request.user:
+            raise PermissionDenied("권한이 없습니다.")
+
+        self.perform_destroy(guestbook)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+# 방명록 대댓글 작성
+class GuestbookCommentViewSet(viewsets.ModelViewSet):
+    queryset = GuestbookComment.objects.all()
+    serializer_class = GuestbookCommentSerializer
+    # 인증된 사용자만 대댓글 작성
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # 대댓글 작성
+    def perform_create(self, serializer):
+        user = self.request.user
+        guestbook_id = self.request.data.get('guestbook')
+        guestbook = get_object_or_404(Guestbook, pk=guestbook_id)
+        serializer.save(user=user, guestbook=guestbook, user_nickname=user.nickname)
