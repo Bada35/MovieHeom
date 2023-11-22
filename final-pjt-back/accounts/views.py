@@ -7,6 +7,7 @@ from .models import User, Guestbook
 from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer
 from dj_rest_auth.views import LoginView
 from rest_framework import permissions
+from rest_framework.exceptions import PermissionDenied
 
 # 팔로우 기능
 class FollowUserView(APIView):
@@ -109,6 +110,7 @@ class GuestbookViewSet(viewsets.ModelViewSet):
     # 인증된 사용자만 리뷰 작성
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    # 방명록 작성
     def perform_create(self, serializer):
         user = self.request.user
         target_user_id = self.request.data.get('target_user')
@@ -125,3 +127,27 @@ class GuestbookViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(target_user__nickname=nickname)
 
         return queryset
+    
+    # 방명록 수정
+    def update(self, request, pk=None):
+        guestbook = self.get_object()
+
+        # 수정 권한 확인: 작성자만 수정 가능
+        if guestbook.user != request.user:
+            raise PermissionDenied("권한이 없습니다.")
+
+        serializer = self.get_serializer(guestbook, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    # 방명록 삭제
+    def destroy(self, request, pk=None):
+        guestbook = self.get_object()
+
+        # 삭제 권한 확인: 작성자와 방명록 주인만 삭제 가능
+        if guestbook.user != request.user and guestbook.target_user != request.user:
+            raise PermissionDenied("권한이 없습니다.")
+
+        self.perform_destroy(guestbook)
+        return Response(status=status.HTTP_204_NO_CONTENT)

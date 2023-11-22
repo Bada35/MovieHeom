@@ -12,7 +12,8 @@
 ## url 목록과 사용 방법
 ### 기본적으로 axios 요청시 header에 로그인한 유저의 Token 값을 같이 보내야 함
 ```
-23.11.21 15시 34분 수정
+오전 10:03 2023-11-22
+23.11.22 10시 03분 수정
 
 1. 특정 유저 정보 조회 - GET 요청
 http://127.0.0.1:8000/accounts/users/<str:nickname>/
@@ -269,3 +270,23 @@ http://127.0.0.1:8000/accounts/guestbook/?nickname=<str:nickname>
     }
 ]
 형태로 넘어오는 것을 볼 수 있다.
+
+15. 특정 방명록 수정 - PUT 요청
+http://127.0.0.1:8000/accounts/guestbook/<int:guestbook_id>/
+해당 url로 user ( 해당 방명록 작성자의 id ), target_user ( 현재 위치하고 있는 프로필의 주인 id ), content 값과 함께 post 요청을 하게 되면
+{
+    "id": 2,
+    "user": 1,
+    "target_user": 2,
+    "target_user_nickname": "test02_nick",
+    "content": "test12_update22",
+    "created_at": "2023-11-22T10:02:44.038628",
+    "updated_at": "2023-11-22T10:05:54.266830"
+}
+형태로 수정된 값이 넘어오는 것을 볼 수 있다.
+# 수정은 방명록의 작성자와 수정자가 같아야지만 수정이 가능하다.
+
+16. 특정 방명록 삭제 - DELETE 요청
+http://127.0.0.1:8000/accounts/guestbook/<int:guestbook_id>/
+해당 url로 delete 요청을 하게 되면 해당 방명록이 삭제되어 더 이상 나타나지 않는 것을 볼 수 있다.
+# 삭제는 해당 프로필 주인과 방명록의 작성자만 가능하다.
