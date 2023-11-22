@@ -2,10 +2,11 @@ from django.urls import path, include
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from django.conf.urls.static import static
-from .views import FollowUserView, FollowersListView, FollowingsListView, UserProfileEditView, UserProfileTotalView, CustomLoginView, GuestbookViewSet
+from .views import FollowUserView, FollowersListView, FollowingsListView, UserProfileEditView, UserProfileTotalView, CustomLoginView, GuestbookViewSet, GuestbookCommentViewSet
 
 router = DefaultRouter()
 router.register(r'guestbook', GuestbookViewSet, basename='guestbook')
+router.register(r'guestbook_comment', GuestbookCommentViewSet, basename='guestbook_comment')
 
 urlpatterns = [
     path('', include(router.urls)),

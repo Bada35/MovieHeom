@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from .models import User, Guestbook
-from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer
+from .models import User, Guestbook, GuestbookComment
+from .serializers import UserSerializer, UserProfileEditSerializer, UserProfileTotalSerializer, GuestbookSerializer, GuestbookCommentSerializer
 from dj_rest_auth.views import LoginView
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
@@ -151,3 +151,18 @@ class GuestbookViewSet(viewsets.ModelViewSet):
 
         self.perform_destroy(guestbook)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+# 방명록 대댓글 작성
+class GuestbookCommentViewSet(viewsets.ModelViewSet):
+    queryset = GuestbookComment.objects.all()
+    serializer_class = GuestbookCommentSerializer
+    # 인증된 사용자만 대댓글 작성
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # 대댓글 작성
+    def perform_create(self, serializer):
+        user = self.request.user
+        guestbook_id = self.request.data.get('guestbook')
+        guestbook = get_object_or_404(Guestbook, pk=guestbook_id)
+        serializer.save(user=user, guestbook=guestbook, user_nickname=user.nickname)

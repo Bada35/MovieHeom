@@ -65,3 +65,13 @@ class Guestbook(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+# 방명록 대댓글
+class GuestbookComment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='guestbook_comment')
+    user_nickname = models.TextField(editable=False)
+    guestbook = models.ForeignKey(Guestbook, on_delete=models.CASCADE, related_name='take_guestbook')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
