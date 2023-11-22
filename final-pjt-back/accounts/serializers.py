@@ -14,7 +14,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     email = serializers.EmailField(max_length=50, required=False, allow_blank=True)
     birth_date = serializers.DateField(required=False, allow_null=True)
     profile_picture = serializers.ImageField(required=False, allow_null=True, use_url=True)
-    favorite_quote = serializers.CharField(max_length=50, required=False, allow_null=True)
+    # favorite_quote = serializers.CharField(max_length=50, required=False, allow_null=True)
 
     def get_cleaned_data(self):
         return {
@@ -24,7 +24,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'birth_date': self.validated_data.get('birth_date', None),
             'profile_picture': self.validated_data.get('profile_picture', None),
-            'favorite_quote': self.validated_data.get('favorite_quote', None),
+            # 'favorite_quote': self.validated_data.get('favorite_quote', None),
         }
 
     def save(self, request):
@@ -92,5 +92,5 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
 class GuestbookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Guestbook
-        fields = ['id', 'user', 'target_user', 'target_user_nickname', 'content', 'created_at']
+        fields = ['id', 'user', 'target_user', 'target_user_nickname', 'content', 'created_at', 'updated_at']
         read_only_fields = ['target_user_nickname']
