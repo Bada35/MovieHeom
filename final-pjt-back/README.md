@@ -48,6 +48,9 @@ http://127.0.0.1:8000/accounts/profile/edit/
 와 같이 현재 로그인한 유저의 nickname과 email, favorite_quote, profile_picture를 변경할 수 있다
 # 만약 이전의 정보를 유지한 체 특정 항목만 변경을 원할 시,
 값을 입력하지 않은 필드의 값을 전송하지 않으면 이전의 값들이 유지된 체로 특정 필드만 변경이 가능하다.
+# bgm_url - PUT 요청
+해당 url을 통해 bgm_url 값과 함께 put 요청을 하게 되면
+현재 로그인한 유저의 bgm_url에 대한 링크가 저장된다.
 
 - 비밀번호 수정 - POST 요청
 http://127.0.0.1:8000/accounts/password/change/
