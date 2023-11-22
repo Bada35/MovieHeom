@@ -2,7 +2,8 @@ from rest_framework import serializers
 from allauth.account import app_settings as allauth_settings
 from allauth.utils import get_username_max_length
 from allauth.account.adapter import get_adapter
-from .models import User, Guestbook
+from .models import User, Guestbook, GuestbookComment
+
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth import get_user_model
 from movies.serializers import ReviewSerializer, MovieLikeSerializer
@@ -51,13 +52,14 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['nickname', 'email', 'favorite_quote', 'profile_picture']
+        fields = ['nickname', 'email', 'favorite_quote', 'profile_picture', 'bgm_url']
 
     def update(self, instance, validated_data):
         instance.nickname = validated_data.get('nickname', instance.nickname)
         instance.email = validated_data.get('email', instance.email)
         instance.favorite_quote = validated_data.get('favorite_quote', instance.favorite_quote)
         instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+        instance.bgm_url = validated_data.get('bgm_url', instance.bgm_url)
 
         instance.save()
         return instance
@@ -69,7 +71,7 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
     liked_movies = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'email', 'birth_date', 'reviews', 'liked_movies', 'favorite_quote', 'profile_picture']
+        fields = ['id', 'nickname', 'email', 'birth_date', 'favorite_quote', 'bgm_url', 'profile_picture', 'reviews', 'liked_movies']
 
     def get_reviews(self, obj):
         from movies.models import Review
@@ -90,7 +92,24 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
 
 # 방명록
 class GuestbookSerializer(serializers.ModelSerializer):
+    comments = serializers.SerializerMethodField()
+    
     class Meta:
         model = Guestbook
-        fields = ['id', 'user', 'target_user', 'target_user_nickname', 'content', 'created_at', 'updated_at']
+        fields = ['id', 'user', 'target_user', 'target_user_nickname', 'content', 'created_at', 'updated_at', 'comments']
         read_only_fields = ['target_user_nickname']
+
+    def get_comments(self, obj):
+        # from .serializers import GuestbookCommentSerializer
+        # comments = obj.take_guestbook.all()
+        # return GuestbookCommentSerializer(comments, many=True).data
+        from .models import GuestbookComment
+        comments = GuestbookComment.objects.filter(guestbook=obj)
+        return GuestbookCommentSerializer(comments, many=True).data
+
+# 방명록 대댓글
+class GuestbookCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GuestbookComment
+        fields = ['id', 'user', 'guestbook', 'user_nickname', 'content', 'created_at', 'updated_at']
+        read_only_fields = ['user_nickname']

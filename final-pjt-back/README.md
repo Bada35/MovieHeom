@@ -163,29 +163,57 @@ http://127.0.0.1:8000/accounts/guestbook/<int:guestbook_id>/
 
 - 특정 방명록 삭제 - DELETE 요청
 http://127.0.0.1:8000/accounts/guestbook/<int:guestbook_id>/
-해당 url로 원하는 리뷰의 id 값과 함께 delete 요청을 하게 되면
+해당 url로 원하는 방명록의 id 값과 함께 delete 요청을 하게 되면
 해당 방명록이 삭제되어 더 이상 나타나지 않는 것을 볼 수 있다.
 # 삭제는 해당 프로필 주인과 방명록의 작성자만 가능하다.
+
+- 방명록에 대한 대댓글 작성 - POST 요청
+http://127.0.0.1:8000/accounts/guestbook_comment/
+해당 url로 guestbook( 원하는 방명록의 id ), user( 작성자의 id ), content 값과 함께 post 요청을 하게 되면
+{
+    "id": 5,
+    "user": 1,
+    "guestbook": 1,
+    "user_nickname": "test01_nick",
+    "content": "test123",
+    "created_at": "2023-11-22T16:39:04.610250",
+    "updated_at": "2023-11-22T16:39:04.610250"
+}
+형태로 작성되는 것을 볼 수 있다.
 
 - 특정 유저의 방명록 목록 조회 - GET 요청
 http://127.0.0.1:8000/accounts/guestbook/?nickname=<str:nickname>
 해당 url로 원하는 유저의 nickname과 함께 get 요청을 보내면
 [
     {
-        "id": 6,
-        "user": 2,
-        "target_user": 1,
-        "target_user_nickname": "test01_nick",
-        "content": "test123",
-        "created_at": "2023-11-21T06:28:56.033407Z"
+        "id": 1,
+        "user": 1,
+        "target_user": 2,
+        "target_user_nickname": "test02_nick",
+        "content": "test",
+        "created_at": "2023-11-22T16:23:16.427385",
+        "updated_at": "2023-11-22T16:23:16.427385",
+        "comments": [
+            {
+                "id": 1,
+                "user": 1,
+                "guestbook": 1,
+                "user_nickname": "test01_nick",
+                "content": "test",
+                "created_at": "2023-11-22T16:34:19.906741",
+                "updated_at": "2023-11-22T16:34:19.906741"
+            }
+        ]
     },
     {
-        "id": 7,
-        "user": 2,
-        "target_user": 1,
-        "target_user_nickname": "test01_nick",
-        "content": "test12",
-        "created_at": "2023-11-21T06:28:57.848486Z"
+        "id": 2,
+        "user": 1,
+        "target_user": 2,
+        "target_user_nickname": "test02_nick",
+        "content": "test",
+        "created_at": "2023-11-22T16:23:27.412995",
+        "updated_at": "2023-11-22T16:23:27.412995",
+        "comments": []
     }
 ]
 형태로 넘어오는 것을 볼 수 있다.
