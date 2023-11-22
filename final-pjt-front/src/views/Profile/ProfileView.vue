@@ -5,9 +5,14 @@
             <img :src="coverImg" alt="User background" />
         </div>
         <div class="profile-content">
-            <button class="settings-button" @click="toggleSettingModal">
-                <img :src="gearImg" alt="Settings" />
-            </button>
+            <div v-if="isMyProfile">
+                <button class="settings-button" @click="toggleSettingModal">
+                    <img :src="gearImg" alt="Settings" />
+                </button>
+            </div>
+            <div v-else>
+                <p>팔로우 버튼</p>
+            </div>
             <div class="modal-overlay" v-if="showSettingModal" @click="toggleSettingModal">
                 <SettingModal @click.stop @update-successful="handleUpdateSuccess" />
             </div>
@@ -26,10 +31,10 @@
                     <p>{{ followerCount }} Followers</p>
                 </button>
                 <div class="modal-overlay" v-if="showFollowingModal" @click="toggleFollowingModal">
-                    <FollowingModal @click.stop />
+                    <FollowingModal :nickname="user.nickname" @click.stop />
                 </div>
                 <div class="modal-overlay" v-if="showFollowerModal" @click="toggleFollowerModal">
-                    <FollowerModal @click.stop />
+                    <FollowerModal :nickname="user.nickname" @click.stop />
                 </div>
             </div>
             <!-- 평가한 영화 -->
@@ -56,7 +61,7 @@
                     <div v-if="user.reviews && user.reviews.length > 0" class="films-grid">
                         <!-- 영화 목록 -->
                         <div class="film" v-for="review in user.reviews" :key="review.movie_id">
-                            {{ review.content }}
+                            {{ review.content }} {{ review.rating }}점 <br>작성일자 {{ review.created_at }}
                         </div>
 
                     </div>
@@ -68,8 +73,8 @@
             <div class="user-comments">
                 <h3>🌠{{ user.nickname }}님의 명대사</h3>
                 <div class="comments-container">
-                    <!-- <p>{{ user.favorite_quote? user.favorite_quote : '기본인용구문'}}</p> -->
-                    <p v-html="defaultQuote" :style="{ 'font-family': '\'Nanum Gothic\', sans-serif' }"></p>
+                    <p>{{ user.favorite_quote ? user.favorite_quote : '명대사를 설정해주세요!' }}</p>
+                    <!-- <p v-html="defaultQuote" :style="{ 'font-family': '\'Nanum Gothic\', sans-serif' }"></p> -->
                 </div>
             </div>
             <!-- 좋아하는 키워드 -->
@@ -84,6 +89,30 @@
                     </div>
                 </div>
             </div>
+            <!-- 방명록 -->
+            <div class="rated-films">
+                <h3>🎬{{ user.nickname }}님의 방명록</h3>
+                <div class="comments-container">
+                    <div v-if="GuestBooks && GuestBooks.length > 0" class="films-grid">
+                        <!-- 영화 목록 -->
+                        <div class="film" v-for="GuestBook in GuestBooks" :key="GuestBook.id">
+                            {{ GuestBook.user }}
+                            {{ GuestBook.content }}
+                            {{ GuestBook.created_at }}
+                        </div>
+
+                    </div>
+                    <div v-else>
+                        <h2> 방명록을 남겨주세요🙄</h2>
+                    </div>
+                </div>
+                <div v-if="!isMyProfile" class="guestbook-form">
+        <h3>방명록 남기기</h3>
+        <textarea v-model="guestbookContent" placeholder="방명록에 남길 메시지를 입력하세요."></textarea>
+        <button @click="submitGuestbook">방명록 작성</button>
+    </div>
+
+            </div>
         </div>
     </div>
 </template>
@@ -92,6 +121,7 @@
 <script setup>
 
 import { useRoute } from 'vue-router'
+const route = useRoute();
 import axios from 'axios'
 
 import { ref, onMounted } from 'vue'
@@ -105,10 +135,12 @@ import FollowerModal from '@/views/Profile/FollowerModal.vue'
 import SettingModal from '@/views/Profile/SettingModal.vue'
 
 
-const { token } = useCounterStore()
-const route = useRoute();
-const username = ref(route.params.username)
+const store = useCounterStore()
+const nickname = ref(route.params.nickname)
 const user = ref({})
+
+const GuestBooks = ref([])
+const guestbookContent = ref('');
 
 const showFollowingModal = ref(false);
 const showFollowerModal = ref(false);
@@ -130,29 +162,56 @@ function toggleSettingModal() {
 const followingCount = ref(0)
 const followerCount = ref(0)
 
-const defaultQuote = '에블린을 수천 명 봤지만 당신 같은 사람은 없었어.<br>이루지 못한 목표와 버린 꿈이 너무 많아. 최악의 에블린으로 살고 있는 거야.<br>당신이 실패의 길을 택했기에 다른 에블린들이 성공한 거야.<br>당신은 무엇이든 할 수 있어'
+const defaultQuote = ref('에블린을 수천 명 봤지만 당신 같은 사람은 없었어.<br>이루지 못한 목표와 버린 꿈이 너무 많아. 최악의 에블린으로 살고 있는 거야.<br>당신이 실패의 길을 택했기에 다른 에블린들이 성공한 거야.<br>당신은 무엇이든 할 수 있어')
 
-const fetchUser = async () => {
-    const url = `http://127.0.0.1:8000/accounts/users/${username.value}/`;
-    try {
-        const response = await axios.get(url, {
-            headers: {
-                Authorization: `Token ${token}`
-            }
-        });
-        user.value = response.data;
-        console.log(user.value.liked_movies)
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-const handleUpdateSuccess = () => {
-    fetchUser(); // This should refresh the user data
+const handleUpdateSuccess = async () => {
+    user.value = await store.getUserInfo(nickname.value)
     toggleSettingModal(); // This should close the modal
 };
 
-onMounted(fetchUser)
+const isMyProfile = () => {
+    if (store.nickname === nickname.value) {
+        return true
+    } else {
+        return false
+    }
+}
+
+const fetchGuestBook = async () => {
+        const url = `http://127.0.0.1:8000/accounts/guestbook/?nickname=${nickname.value}`
+        // 서버에서 팔로워 불러오는 로직
+        try {
+            const response = await axios.get(url);
+            GuestBooks.value = response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    const submitGuestbook = async () => {
+    try {
+        const payload = {
+            user: store.currentUserId, // 현재 로그인된 유저의 ID
+            target_user: user.value.id, // 프로필 주인의 ID
+            content: guestbookContent.value
+        };
+
+        await axios.post('http://127.0.0.1:8000/accounts/guestbook/', payload);
+        guestbookContent.value = ''; // 입력 필드 초기화
+        fetchGuestBook(); // 방명록 다시 가져오기
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+onMounted(async () => {
+    user.value = await store.getUserInfo(nickname.value)
+    defaultQuote.value = user.favorite_quote ? user.favorite_quote : defaultQuote.value
+    isMyProfile
+    fetchGuestBook()
+})
 
 </script>
 
@@ -355,6 +414,34 @@ h2 {
     /* Adjust as needed */
     height: 48px;
     /* Adjust as needed */
+}
+
+.guestbook-form {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.guestbook-form textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical; /* 사용자가 크기 조절 가능 */
+}
+
+.guestbook-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.guestbook-form button:hover {
+    background-color: #0056b3;
 }
 </style>
   

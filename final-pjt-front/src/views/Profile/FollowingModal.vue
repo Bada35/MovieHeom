@@ -14,26 +14,36 @@
   
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watchEffect } from 'vue'
 import axios from 'axios'
 import { useCounterStore } from '@/stores/counter.js'
 
-const { username } = useCounterStore()
+const { token } = useCounterStore()
+
 const followings = ref([])
 
+const props = defineProps({
+    nickname: String
+})
+
 const fetchFollowing = async () => {
-    const url = `http://127.0.0.1:8000/accounts/users/${username}/followings/`
-    // 서버에서 코멘트 불러오는 로직
-    try {
-        const response = await axios.get(url);
-        followings.value = response.data;
-    } catch (error) {
-        console.error(error);
+    if (props.nickname) {
+        const url = `http://127.0.0.1:8000/accounts/users/${props.nickname}/followings/`
+        // 서버에서 팔로워 불러오는 로직
+        try {
+            const response = await axios.get(url, {
+            headers: {
+                Authorization: `Token ${token}`
+            }});
+            followings.value = response.data;
+        } catch (error) {
+            console.error(error);
+        }
     }
 };
 
-onMounted(fetchFollowing)
-
+// props.nickname이 변경될 때마다 fetchFollower 함수를 실행합니다.
+watchEffect(fetchFollowing)
 </script>
   
 

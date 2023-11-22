@@ -17,14 +17,12 @@ import { useCounterStore } from '@/stores/counter.js'
 import NavBarLoggedIn from '@/components/NavBarLoggedIn.vue'
 import NavBarLoggedOut from '@/components/NavBarLoggedOut.vue'
 
-const { isLogin } = useCounterStore()
+const store = useCounterStore()
+const isLoggedIn = ref(store.isLogin.value)
 
-// 로그인 상태가 변경될 때 isLoggedIn을 업데이트
-const isLoggedIn = ref(isLogin.value);
-
-watch(() => isLogin, (newValue) => {
-  isLoggedIn.value = !isLoggedIn.value; 
-});
+watch(() => store.isLogin, (newValue) => {
+  isLoggedIn.value = !isLoggedIn.value
+})
 
 </script>
 

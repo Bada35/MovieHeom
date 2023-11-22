@@ -22,11 +22,11 @@ const username = ref(null)
 const password = ref(null)
 
 const logIn = function () {
-  const payload = {
-    username: username.value,
-    password: password.value
-  }
-  store.logIn(payload)
+    const payload = {
+        username: username.value,
+        password: password.value
+    }
+    store.logIn(payload)
 }
 
 </script>
@@ -34,13 +34,13 @@ const logIn = function () {
 
 
 <style scoped>
-
 .modal-title {
     color: #333;
     font-family: 'Nanum Gothic', sans-serif;
     font-size: 1.5em;
     margin-bottom: 20px;
 }
+
 .login-modal {
     display: flex;
     flex-direction: column;

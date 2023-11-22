@@ -12,7 +12,7 @@ import { useCounterStore } from '@/stores/counter.js'
 import userProfileImg from '@/assets/userProfileImg.png' 
 
 
-const { logOut, nickname } = useCounterStore()
+const { logOut, nickname, myInfo } = useCounterStore()
 
 </script>
 
