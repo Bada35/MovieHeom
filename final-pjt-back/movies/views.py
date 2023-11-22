@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.exceptions import PermissionDenied
 # import operator
 # from functools import reduce
 # from django.db.models import Q
@@ -102,3 +103,23 @@ class ReviewViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user__nickname=nickname)
         
         return queryset
+    
+    # 영화 리뷰 수정
+    def update(self, request, *args, **kwargs):
+        review = self.get_object()
+
+        # 수정 권한 확인: 작성자만 수정 가능
+        if review.user != request.user:
+            raise PermissionDenied("권한이 없습니다.")
+
+        return super().update(request, *args, **kwargs)
+    
+    # 영화 리뷰 삭제
+    def destroy(self, request, *args, **kwargs):
+        review = self.get_object()
+
+        # 삭제 권한 확인: 작성자만 삭제 가능
+        if review.user != request.user:
+            raise PermissionDenied("권한이 없습니다.")
+
+        return super().destroy(request, *args, **kwargs)
