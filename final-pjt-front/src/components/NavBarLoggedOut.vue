@@ -7,7 +7,7 @@
         <LoginModal @click.stop />
     </div>
     <div class="modal-overlay" v-if="showSignUpModal" @click="toggleSignUpModal">
-        <SignUpModal @click.stop />
+        <SignUpModal @click.stop @signup-successful="toggleSignUpModal" />
     </div>
 </template>
   
@@ -66,6 +66,7 @@ function toggleSignUpModal() {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 </style>
   

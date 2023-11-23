@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/Home/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '@/views/Home/HomeView.vue';
 
 
 const router = createRouter({
@@ -10,15 +10,27 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
+    {
+      path: '/profile/:nickname',
+      name: 'profile',
+      component: () => import('@/views/Profile/ProfileView.vue')
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('@/views/Search/SearchView.vue')
+    },
+    {
+      path: '/movie/:movie_id',
+      name: 'movieDetail',
+      component: () => import('@/views/Movie/MovieDetailView.vue')
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: () => import('@/views/Admin/AdminView.vue')
+    }
   ]
-})
+});
 
-export default router
+export default router;

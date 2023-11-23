@@ -6,27 +6,17 @@
       <button>Search</button>
     </div>
     <HomeNavigation />
-    <HomeLogin />
     </div>
 </template>
 
 
-<script>
-import { ref } from 'vue';
-import HomeNavigation from '@/views/Home/HomeNavigation.vue';
-import HomeLogin from '@/views/Home/HomeLogin.vue';
+<script setup>
+import { ref, watch } from 'vue';
+import HomeNavigation from '@/views/Home/HomeRank.vue'
+import { useCounterStore } from '@/stores/counter.js'
 
-export default {
-  name: 'HomeView',
-  components: {
-    HomeNavigation,
-    HomeLogin,
-  },
-  setup() {
-    return {
-    };
-  }
-};
+const store = useCounterStore();
+
 </script>
 
 

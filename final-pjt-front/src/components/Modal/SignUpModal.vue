@@ -1,16 +1,21 @@
 <template>
-    <div class="signup-modal" @click.self="closeModal">
+    <div class="signup-modal">
         <h2 class="modal-title">회원가입</h2>
         <div class="signup-form">
             <form @submit.prevent="signUp">
-                <input type="text" v-model.trim="username" placeholder="이름" />
+                <input type="text" v-model.trim="username" placeholder="아이디" />
+                <input type="email" v-model.trim="email" placeholder="이메일" />
+                <input type="text" v-model.trim="nickname" placeholder="닉네임" />
+                <input type="date" v-model.trim="birth_date" placeholder="생년월일" />
                 <input type="password" v-model.trim="password1" placeholder="비밀번호" />
                 <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
+                <input type="text" v-model.trim="profile_picture" placeholder="프로필사진" />
+                <input type="text" v-model.trim="favorite_quote" placeholder="좋아하는 명대사" />
                 <button type="submit">회원가입</button>
             </form>
             <div class="login-link">
                 <span>이미 가입하셨나요?</span>
-                <a href="#" @click="toggleSignUpModal">로그인</a>
+                <a href="#" @click.prevent="toggleSignUpModal">로그인</a>
             </div>
         </div>
     </div>
@@ -21,34 +26,42 @@
 import { ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
-const emit = defineEmits(['closeModal'])
-
 const store = useCounterStore()
-const username = ref(null)
-const password1 = ref(null)
-const password2 = ref(null)
-const showSignUpModal = ref(false) // 회원가입 -> 로그인
+
+const username = ref('')
+const email = ref('')
+const password1 = ref('')
+const password2 = ref('')
+const nickname = ref('')
+const birth_date = ref('')
+const profile_picture = ref('')
+const favorite_quote = ref('')
+
+const emit = defineEmits(['signup-successful'])
+
+const showSignUpModal = ref(false)
 
 function toggleSignUpModal() {
     showSignUpModal.value = !showSignUpModal.value
 }
 
-const signUp = function () {
-    if (password1.value !== password2.value) {
-        alert('패스워드가 일치하지 않아요!')
-        return
-    }
-    const payload = {
-        username: username.value,
-        password1: password1.value,
-        password2: password2.value
-    }
-    store.signUp(payload)
+const signUp = async function () {
+    // Optional Chaining과 삼항 연산자를 사용하여 null값 처리
+    let payload = {};
+
+    if (username.value) payload.username = username.value;
+    if (email.value) payload.email = email.value;
+    if (password1.value) payload.password1 = password1.value;
+    if (password2.value) payload.password2 = password2.value;
+    if (nickname.value) payload.nickname = nickname.value;
+    if (birth_date.value) payload.birth_date = birth_date.value;
+    if (profile_picture.value) payload.profile_picture = profile_picture.value;
+    if (favorite_quote.value) payload.favorite_quote = favorite_quote.value;
+
+    await store.signUp(payload)
+    emit('signup-successful')
 }
 
-function closeModal() {
-    emit('close-modal')
-}  
 </script>
   
 
@@ -121,6 +134,12 @@ function closeModal() {
 
 .login-link a:hover {
     text-decoration: underline;
+}
+
+.signup-form input[type='date']::-webkit-datetime-edit-fields-wrapper {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 0.9em;
+    color: #333;
 }
 </style>
   
