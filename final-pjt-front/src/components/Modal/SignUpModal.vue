@@ -37,6 +37,8 @@ const birth_date = ref('')
 const profile_picture = ref('')
 const favorite_quote = ref('')
 
+const emit = defineEmits(['signup-successful'])
+
 const showSignUpModal = ref(false)
 
 function toggleSignUpModal() {
@@ -56,8 +58,8 @@ const signUp = async function () {
     if (profile_picture.value) payload.profile_picture = profile_picture.value;
     if (favorite_quote.value) payload.favorite_quote = favorite_quote.value;
 
-    console.log(payload)
     await store.signUp(payload)
+    emit('signup-successful')
 }
 
 </script>

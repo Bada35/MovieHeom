@@ -5,13 +5,13 @@
             <img :src="coverImg" alt="User background" />
         </div>
         <div class="profile-content">
-            <div v-if="isMyProfile">
+            <div v-if="rendValue">
                 <button class="settings-button" @click="toggleSettingModal">
                     <img :src="gearImg" alt="Settings" />
                 </button>
             </div>
             <div v-else>
-                <p>팔로우 버튼</p>
+                <button class="settings-button" @click="toggleFollow">{{ followButtonText }}</button>
             </div>
             <div class="modal-overlay" v-if="showSettingModal" @click="toggleSettingModal">
                 <SettingModal @click.stop @update-successful="handleUpdateSuccess" />
@@ -103,10 +103,10 @@
 
                     </div>
                     <div v-else>
-                        <h2> 방명록을 남겨주세요🙄</h2>
+                        <h2> 아무도 방명록을 남기지 않았어요🙄</h2>
                     </div>
                 </div>
-                <div v-if="!isMyProfile" class="guestbook-form">
+                <div v-if="!rendValue" class="guestbook-form">
         <h3>방명록 남기기</h3>
         <textarea v-model="guestbookContent" placeholder="방명록에 남길 메시지를 입력하세요."></textarea>
         <button @click="submitGuestbook">방명록 작성</button>
@@ -146,6 +146,9 @@ const showFollowingModal = ref(false);
 const showFollowerModal = ref(false);
 const showSettingModal = ref(false);
 
+const isFollowing = ref(false); // 첫상태
+const followButtonText = ref(isFollowing.value ? 'Unfollow' : 'Follow')
+
 
 function toggleFollowingModal() {
     showFollowingModal.value = !showFollowingModal.value;
@@ -169,11 +172,14 @@ const handleUpdateSuccess = async () => {
     toggleSettingModal(); // This should close the modal
 };
 
+const rendValue = ref(false)
 const isMyProfile = () => {
+    console.log(store.nickname)
+    console.log(nickname.value)
     if (store.nickname === nickname.value) {
-        return true
+        rendValue.value = true
     } else {
-        return false
+        rendValue.value = false
     }
 }
 
@@ -192,24 +198,51 @@ const fetchGuestBook = async () => {
     const submitGuestbook = async () => {
     try {
         const payload = {
-            user: store.currentUserId, // 현재 로그인된 유저의 ID
+            user: store.user_id, // 현재 로그인된 유저의 ID
             target_user: user.value.id, // 프로필 주인의 ID
             content: guestbookContent.value
         };
 
-        await axios.post('http://127.0.0.1:8000/accounts/guestbook/', payload);
+        await axios.post('http://127.0.0.1:8000/accounts/guestbook/', payload, {
+            headers: {
+                Authorization: `Token ${store.token}`
+            }
+        });
         guestbookContent.value = ''; // 입력 필드 초기화
         fetchGuestBook(); // 방명록 다시 가져오기
     } catch (error) {
         console.error(error);
     }
-};
+}
+
+
+const toggleFollow = async () => {
+    const url = `http://127.0.0.1:8000/accounts/follow/${user.value.nickname}/`
+    console.log(url)
+    try {
+        const response = await axios.post(url, {}, {
+            headers: {
+                Authorization: `Token ${store.token}`
+            }
+        });
+        console.log(response.data);
+        if (response.data.status === 'followed') {
+            isFollowing.value = true;
+            followButtonText.value = 'Unfollow';
+        } else if (response.data.status === 'unfollowed') {
+            isFollowing.value = false;
+            followButtonText.value = 'Follow';
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 
 onMounted(async () => {
     user.value = await store.getUserInfo(nickname.value)
     defaultQuote.value = user.favorite_quote ? user.favorite_quote : defaultQuote.value
-    isMyProfile
+    isMyProfile()
     fetchGuestBook()
 })
 

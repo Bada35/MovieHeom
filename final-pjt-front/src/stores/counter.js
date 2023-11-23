@@ -44,7 +44,6 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     try {
-      console.log(payload)
       const response = await axios.post(`${API_URL}/accounts/signup/`, {
         username, email, password1, password2, nickname, birth_date, profile_picture, favorite_quote
       });
