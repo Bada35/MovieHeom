@@ -65,7 +65,7 @@ export const useCounterStore = defineStore('counter', () => {
       user_id.value = response.data.user_id
       myInfo.value = await getUserInfo(nickname.value)
       alert(`${nickname.value}님, 안녕하세요!🌊`)
-      isLogin.value = ref(true)
+      isLogin.value = true
     } catch (err) {
       console.error(err);
     }
@@ -75,10 +75,12 @@ export const useCounterStore = defineStore('counter', () => {
   const logOut = async () => {
     try {
       await axios.post(`${API_URL}/accounts/logout/`);
-      alert('잘 가요!🙋🏻‍♀️')
       token.value = null
-      isLogin.value = ref(false)
+      nickname.value = ''
+      user_id.value = null
       myInfo.value = null
+      alert('잘 가요!🙋🏻‍♀️')
+      isLogin.value = false
     } catch (err) {
       console.error(err);
     }

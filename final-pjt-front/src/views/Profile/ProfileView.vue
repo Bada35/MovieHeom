@@ -47,8 +47,8 @@
                             {{ film.movie.title }}
                         </div>
 
-                    </div>
-                    <div v-else>
+                        </div>
+                        <div v-else>
                         <h2> 평가한 영화가 없어요ㅠㅠ</h2>
                     </div>
                 </div>
