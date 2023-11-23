@@ -69,9 +69,10 @@ class UserProfileEditSerializer(serializers.ModelSerializer):
 class UserProfileTotalSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField()
     liked_movies = serializers.SerializerMethodField()
+    followers_nickname = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'email', 'birth_date', 'favorite_quote', 'bgm_url', 'profile_picture', 'reviews', 'liked_movies']
+        fields = ['id', 'nickname', 'email', 'birth_date', 'favorite_quote', 'bgm_url', 'profile_picture', 'reviews', 'liked_movies', 'followers_nickname']
 
     def get_reviews(self, obj):
         from movies.models import Review
@@ -82,6 +83,9 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
         from movies.models import MovieLike
         liked_movies = MovieLike.objects.filter(user=obj)
         return MovieLikeSerializer(liked_movies, many=True).data
+    
+    def get_followers_nickname(self, obj):
+        return obj.followings.values_list('nickname', flat=True)
     
 # 영화 명대사와 프로필 이미지
 

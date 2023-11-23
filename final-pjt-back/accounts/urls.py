@@ -13,8 +13,8 @@ urlpatterns = [
     # 팔로우 url
     path('follow/<str:nickname>/', FollowUserView.as_view(), name='follow-user'),
     # 팔로워, 팔로잉 목록 반환 url
-    path('users/<str:nickname>/followings/', FollowingsListView.as_view(), name='followings-list'),
-    path('users/<str:nickname>/followers/', FollowersListView.as_view(), name='followers-list'),
+    path('users/<str:nickname>/followers/', FollowingsListView.as_view(), name='followings-list'),
+    path('users/<str:nickname>/followings/', FollowersListView.as_view(), name='followers-list'),
     # path('profile/', UserProfileView.as_view(), name='user-profile'),
     # 회원정보 수정 url
     path('profile/edit/', UserProfileEditView.as_view(), name='user-profile-edit'),
