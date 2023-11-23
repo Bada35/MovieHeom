@@ -40,7 +40,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['nickname',]
+        fields = ['nickname', 'profile_picture']
 
 # 프로필 조회용
 # class UserProfileSerializer(serializers.ModelSerializer):
@@ -93,11 +93,12 @@ class UserProfileTotalSerializer(serializers.ModelSerializer):
 # 방명록
 class GuestbookSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
+    user_profile_picture = serializers.SerializerMethodField()
     
     class Meta:
         model = Guestbook
-        fields = ['id', 'user', 'target_user', 'target_user_nickname', 'content', 'created_at', 'updated_at', 'comments']
-        read_only_fields = ['target_user_nickname']
+        fields = ['id', 'user', 'user_nickname','user_profile_picture', 'target_user', 'target_user_nickname', 'content', 'created_at', 'updated_at', 'comments']
+        read_only_fields = ['user_nickname', 'user_profile_picture', 'target_user_nickname']
 
     def get_comments(self, obj):
         # from .serializers import GuestbookCommentSerializer
@@ -106,10 +107,14 @@ class GuestbookSerializer(serializers.ModelSerializer):
         from .models import GuestbookComment
         comments = GuestbookComment.objects.filter(guestbook=obj)
         return GuestbookCommentSerializer(comments, many=True).data
+    def get_user_profile_picture(self, obj):
+        if obj.user.profile_picture:
+            return obj.user.profile_picture.url
+        return None
 
 # 방명록 대댓글
 class GuestbookCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = GuestbookComment
-        fields = ['id', 'user', 'guestbook', 'user_nickname', 'content', 'created_at', 'updated_at']
-        read_only_fields = ['user_nickname']
+        fields = ['id', 'user', 'guestbook', 'user_nickname', 'user_profile_picture', 'content', 'created_at', 'updated_at']
+        read_only_fields = ['user_nickname', 'user_profile_picture']
