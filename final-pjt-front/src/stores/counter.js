@@ -11,7 +11,7 @@ export const useCounterStore = defineStore('counter', () => {
   const user_id = ref(null)
   const isLogin = ref(false)
   const myInfo = ref(null)
-
+  const bada = ref([])
 
   // getters: 계산된 값
 

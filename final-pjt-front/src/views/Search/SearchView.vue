@@ -7,43 +7,53 @@
             </button>
         </div>
         <div class="movie-cards">
-            <MovieCard v-for="id in movie_ids" :key="id" :movie-id="id" />
+            <MovieCard @click="startFlow(id)" v-for="id in movie_ids" :key="id" :movie-id="id" />
         </div>
     </div>
 </template>
-  
-<script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import MovieCard from '@/components/MovieCard.vue';
 
-const route = useRoute()
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import MovieCard from '@/components/MovieCard.vue'
+import axios from 'axios'
+
 const router = useRouter()
+
+const route = useRoute();
+const TMDB_ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN
+const searchword = ref(route.params.searchword)
 const movie_ids = ref([])
 
-// 검색 결과를 URL 쿼리에 저장
-const searchMovies = () => {
-  movie_ids.value = [545611, 19913, 313369, 122906]
-  router.push({ name: 'search', query: { ids: movie_ids.value.join(',') } })
+const searchMovies = async () => {
+    const url = `https://api.themoviedb.org/3/search/movie?query=${searchword.value}&include_adult=false&language=ko-KR&page=1`;
+    const options = {
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`
+        }
+    };
+
+    try {
+        const response = await axios.get(url, options);
+        console.log(response.data);
+        movie_ids.value = response.data.results.map(movie => movie.id);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-// 마운트 시 URL 쿼리에서 검색 결과를 불러오기
-onMounted(() => {
-  const ids = route.query.ids;
-  if (ids) {
-    movie_ids.value = ids.split(',').map(Number);
-  }
-})
+const startFlow = (movie_id) => {
+    const isConfirmed = window.confirm("이 영화로 헤엄쳐볼까요?🏊🏻‍♀️");
+    if (!isConfirmed) {
+        return
+    } 
+}
 
-// 라우터에서 쿼리 변경을 감시하여 검색 결과를 업데이트
-watch(() => route.query.ids, (newIds) => {
-  if (newIds) {
-    movie_ids.value = newIds.split(',').map(Number);
-  }
-})
+onMounted(searchMovies)
 
 </script>
-  
+
 <style scoped>
 .search-view {
     display: flex;
@@ -93,4 +103,3 @@ watch(() => route.query.ids, (newIds) => {
     height: auto;
 }
 </style>
-  

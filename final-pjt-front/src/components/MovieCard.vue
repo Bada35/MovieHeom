@@ -45,6 +45,7 @@ const getPosterImg = (backURL) => {
 
 const goToMovieDetail = () => {
   router.push(`/movie/${props.movieId}`)
+  fetchMovieDetails(props.movieId)
 }
 
 onMounted(() => fetchMovieDetails(props.movieId));

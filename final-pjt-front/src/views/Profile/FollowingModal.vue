@@ -37,6 +37,7 @@ const fetchFollowing = async () => {
                 Authorization: `Token ${token}`
             }});
             followings.value = response.data;
+            console.log(response.data);
         } catch (error) {
             console.error(error);
         }
