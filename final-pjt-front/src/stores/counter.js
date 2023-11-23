@@ -11,7 +11,7 @@ export const useCounterStore = defineStore('counter', () => {
   const user_id = ref(null)
   const isLogin = ref(false)
   const myInfo = ref(null)
-
+  const bada = ref([])
 
   // getters: 계산된 값
 
@@ -27,6 +27,7 @@ export const useCounterStore = defineStore('counter', () => {
           Authorization: `Token ${token.value}`
         }
       });
+      console.log(response.data.followers_nickname)
       return response.data;
     } catch (err) {
       console.error('유저 정보 조회 오류', err);
@@ -65,7 +66,7 @@ export const useCounterStore = defineStore('counter', () => {
       user_id.value = response.data.user_id
       myInfo.value = await getUserInfo(nickname.value)
       alert(`${nickname.value}님, 안녕하세요!🌊`)
-      isLogin.value = true
+      isLogin.value = ref(true)
     } catch (err) {
       console.error(err);
     }
@@ -80,7 +81,7 @@ export const useCounterStore = defineStore('counter', () => {
       user_id.value = null
       myInfo.value = null
       alert('잘 가요!🙋🏻‍♀️')
-      isLogin.value = false
+      isLogin.value = ref(false)
     } catch (err) {
       console.error(err);
     }

@@ -25,30 +25,42 @@
             <button @click="submitComment">제출</button>
         </div>
         <div class="comments">
-            <h3>코멘트</h3>
-            <div v-if="comments && comments.length > 0">
-                <commentCard :comment="comment" v-for="comment in comments" :key="comment.id"/>
-            </div>
+        <h3>코멘트</h3>
+        <div v-if="comments && comments.length > 0">
+            <commentCard 
+                :comment="comment" 
+                v-for="comment in comments" 
+                :key="comment.id"
+                @comment-edited="handleCommentEdited"
+                @comment-deleted="fetchComments" />
+        </div>
             <div v-else>
                 <p>첫 코멘트를 남겨보세요!!</p>
             </div>
         </div>
-        <p>공식 예고편</p>
+        <!--다음헤엄-->
+        <div class="movie-cards">
+            <h3>다음은 어디로 헤엄칠까요?</h3>
+            <MovieCard v-for="id in movieRecommendations" :key="id" :movie-id="id" />
+        </div>
         <TrailerModal v-if="showModal" :trailerUrl="trailerUrl" @close="showModal = false" />
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useCounterStore } from '@/stores/counter'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios';
 import TrailerModal from '@/views/Movie/TrailerModal.vue';
 
 import commentCard from '@/views/Movie/commentCard.vue'
+import MovieCard from '@/components/MovieCard.vue'
+
+const router = useRouter()
 
 
-const { token, myInfo } = useCounterStore()
+const { token, myInfo, nickname } = useCounterStore()
 const route = useRoute();
 const movieDetail = ref({});
 const showModal = ref(false);
@@ -57,14 +69,29 @@ const movie_id = ref(route.params.movie_id);  // Grave of the Fireflies (1988)
 const newComment = ref('');
 const comments = ref([]);
 const newRating = ref('');
+const movieRecommendations = ref([]);
+
 
 
 const isLiking = ref(false); // 첫상태
 const likeButtonText = ref(isLiking.value ? '안좋아요' : '좋아요')
+const checkLike = async () => {
+    console.log(comments.value.liked_users_nickname)
+    console.log(nickname)
+    if (comments.value.liked_users_nickname && comments.value.liked_users_nickname.includes(nickname)) {
+        alert('좋아요 한 영화에요')
+        return true
+    } else {
+        alert('좋아요 안 한 영화에요')
+        return false
+    }
+}
 
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 const YT_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
+const TMDB_ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN
+
 
 
 const fetchMovieDetails = async () => {
@@ -74,6 +101,7 @@ const fetchMovieDetails = async () => {
     try {
         const response = await axios.get(url);
         movieDetail.value = response.data
+        await fetchComments()
     } catch (error) {
         console.error(error)
     }
@@ -161,27 +189,64 @@ const submitComment = async () => {
     }
 };
 
+const handleCommentEdited = (editedComment) => {
+    const index = comments.value.findIndex(c => c.id === editedComment.id);
+    if (index !== -1) {
+        comments.value[index] = { ...comments.value[index], ...editedComment };
+    }
+}
+
+
 const fetchComments = async () => {
     const url = `http://127.0.0.1:8000/movies/reviews/?movie_id=${movie_id.value}`
     // 서버에서 코멘트 불러오는 로직
     try {
         const response = await axios.get(url);
-        comments.value = response.data;
+        comments.value = response.data
     } catch (error) {
+        console.error(error);
         console.error(error);
     }
     // comments.value = fetchedComments;
 };
 
 
+const startFlow = (movie_id) => {
+    const isConfirmed = window.confirm("이 영화로 헤엄쳐볼까요?🏊🏻‍♀️");
+    if (!isConfirmed) {
+        return
+    } else {
+        router.push(`/movie/${movie_id}`)
+    }
+}
 
-// https://api.themoviedb.org/3/movie/12477?api_key=0c29fadf6f60100379e8867c18df1169&language=ko-KR&append_to_response=credits
 
-onMounted(async () => {
-    await fetchMovieDetails()
-    await fetchComments()
-});
 
+const fetchMovieRecommendations = async () => {
+    const url = 'https://api.themoviedb.org/3/movie/313369/recommendations?language=ko-KR&page=1';
+    const options = {
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`
+        }
+    };
+
+    try {
+        const response = await axios.get(url, options);
+        movieRecommendations.value = response.data.results.map(movie => movie.id).slice(0, 5);
+    } catch (error) {
+        console.error('Error fetching movie recommendations:', error);
+    }
+};
+
+
+
+watch(() => route.params.movie_id, async (newMovieId) => {
+    movie_id.value = newMovieId;
+    await fetchMovieDetails();
+    await fetchComments();
+    await fetchMovieRecommendations();
+}, { immediate: true });
 
 </script>
 
@@ -307,4 +372,6 @@ onMounted(async () => {
     border-radius: 4px;
     margin-bottom: 10px;
 }
+
+
 </style>

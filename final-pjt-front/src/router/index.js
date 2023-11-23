@@ -16,7 +16,7 @@ const router = createRouter({
       component: () => import('@/views/Profile/ProfileView.vue')
     },
     {
-      path: '/search',
+      path: '/search/:searchword',
       name: 'search',
       component: () => import('@/views/Search/SearchView.vue')
     },
@@ -30,7 +30,11 @@ const router = createRouter({
       name: 'Admin',
       component: () => import('@/views/Admin/AdminView.vue')
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 };
+  },
 });
 
 export default router;

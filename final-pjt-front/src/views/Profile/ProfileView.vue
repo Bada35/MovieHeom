@@ -18,7 +18,8 @@
             </div>
             <!-- 프로필 이미지 -->
             <div class="profile-image">
-                <img :src="userProfileImg" alt="${username}의 프로필" />
+                <img :src="getImgUrl(user.profile_picture)" alt="${username}의 프로필" />
+                {{ user.profile_picture }}
             </div>
             <!-- 사용자 정보 -->
             <div class="user-info">
@@ -28,7 +29,7 @@
                     <p>{{ followingCount }} Following </p>
                 </button>
                 <button @click="toggleFollowerModal">
-                    <p>{{ followerCount }} Followers</p>
+                    <p>{{ user.followers_nickname ? user.followers_nickname.length : 0 }} Followers</p>
                 </button>
                 <div class="modal-overlay" v-if="showFollowingModal" @click="toggleFollowingModal">
                     <FollowingModal :nickname="user.nickname" @click.stop />
@@ -47,8 +48,8 @@
                             {{ film.movie.title }}
                         </div>
 
-                        </div>
-                        <div v-else>
+                    </div>
+                    <div v-else>
                         <h2> 평가한 영화가 없어요ㅠㅠ</h2>
                     </div>
                 </div>
@@ -96,9 +97,18 @@
                     <div v-if="GuestBooks && GuestBooks.length > 0" class="films-grid">
                         <!-- 영화 목록 -->
                         <div class="film" v-for="GuestBook in GuestBooks" :key="GuestBook.id">
-                            {{ GuestBook.user }}
-                            {{ GuestBook.content }}
-                            {{ GuestBook.created_at }}
+                            <div v-if="editingGuestBookId !== GuestBook.id">
+                                {{ GuestBook.content }}
+                                <div v-if="GuestBook.user_nickname === store.nickname" class="guestbook-actions">
+                                    <button @click="startEditing(GuestBook)">Edit</button>
+                                    <button @click="deleteGuestBook(GuestBook)">Delete</button>
+                                </div>
+                            </div>
+
+                            <div v-else>
+                                <textarea v-model="GuestBook.content"></textarea>
+                                <button @click="editGuestBook(GuestBook)">OK</button>
+                            </div>
                         </div>
 
                     </div>
@@ -107,10 +117,10 @@
                     </div>
                 </div>
                 <div v-if="!rendValue" class="guestbook-form">
-        <h3>방명록 남기기</h3>
-        <textarea v-model="guestbookContent" placeholder="방명록에 남길 메시지를 입력하세요."></textarea>
-        <button @click="submitGuestbook">방명록 작성</button>
-    </div>
+                    <h3>방명록 남기기</h3>
+                    <textarea v-model="guestbookContent" placeholder="방명록에 남길 메시지를 입력하세요."></textarea>
+                    <button @click="submitGuestbook">방명록 작성</button>
+                </div>
 
             </div>
         </div>
@@ -133,6 +143,11 @@ import gearImg from '@/assets/gear.png'
 import FollowingModal from '@/views/Profile/FollowingModal.vue'
 import FollowerModal from '@/views/Profile/FollowerModal.vue'
 import SettingModal from '@/views/Profile/SettingModal.vue'
+
+const editingGuestBookId = ref(null);
+const startEditing = (GuestBook) => {
+    editingGuestBookId.value = GuestBook.id;
+}
 
 
 const store = useCounterStore()
@@ -184,18 +199,18 @@ const isMyProfile = () => {
 }
 
 const fetchGuestBook = async () => {
-        const url = `http://127.0.0.1:8000/accounts/guestbook/?nickname=${nickname.value}`
-        // 서버에서 팔로워 불러오는 로직
-        try {
-            const response = await axios.get(url);
-            GuestBooks.value = response.data;
-        } catch (error) {
-            console.error(error);
-        }
+    const url = `http://127.0.0.1:8000/accounts/guestbook/?nickname=${nickname.value}`
+    // 서버에서 팔로워 불러오는 로직
+    try {
+        const response = await axios.get(url);
+        GuestBooks.value = response.data;
+    } catch (error) {
+        console.error(error);
     }
+}
 
 
-    const submitGuestbook = async () => {
+const submitGuestbook = async () => {
     try {
         const payload = {
             user: store.user_id, // 현재 로그인된 유저의 ID
@@ -237,6 +252,51 @@ const toggleFollow = async () => {
         console.error(error);
     }
 }
+
+const getImgUrl = (imgUrl) => {
+    return `http://127.0.0.1:8000${imgUrl}`
+}
+
+
+const editGuestBook = async (GuestBook) => {
+    try {
+        const payload = {
+            user: GuestBook.user,
+            target_user: user.value.id,
+            content: GuestBook.content
+        };
+
+        await axios.put(`http://127.0.0.1:8000/accounts/guestbook/${GuestBook.id}/`, payload, {
+            headers: {
+                Authorization: `Token ${store.token}`
+            }
+        });
+        fetchGuestBook();
+        editingGuestBookId.value = null
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+const deleteGuestBook = async (guestBook) => {
+    const isConfirmed = window.confirm("방명록을 정말 지우시겠어요?😲");
+    if (!isConfirmed) {
+        return
+    }
+ 
+    try {
+        await axios.delete(`http://127.0.0.1:8000/accounts/guestbook/${guestBook.id}/`, {
+            headers: {
+                Authorization: `Token ${store.token}`
+            }
+        });
+        fetchGuestBook()
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 
 onMounted(async () => {
@@ -461,7 +521,8 @@ h2 {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    resize: vertical; /* 사용자가 크기 조절 가능 */
+    resize: vertical;
+    /* 사용자가 크기 조절 가능 */
 }
 
 .guestbook-form button {
@@ -475,6 +536,25 @@ h2 {
 
 .guestbook-form button:hover {
     background-color: #0056b3;
+}
+
+.guestbook-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.guestbook-actions button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.guestbook-actions button:hover {
+    background-color: #e0e0e0;
 }
 </style>
   

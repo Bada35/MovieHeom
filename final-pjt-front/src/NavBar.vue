@@ -1,10 +1,9 @@
 <template>
   <header>
     <nav>
-      <router-link to="/">Home</router-link>
-      <router-link :to="{ name: 'movieDetail', params: { movie_id: 637 } }">Movie</router-link>
-      <router-link to="/search">Search</router-link>
-      <router-link to="/admin">Admin</router-link>
+      <router-link to="/">
+        <img :src="HomeIcon" alt="MovieHeeom">
+      </router-link>
       <NavBarLoggedIn v-if="isLoggedIn"/>
       <NavBarLoggedOut v-if="!isLoggedIn"/>
     </nav>
@@ -16,12 +15,14 @@ import { ref, watch } from 'vue'
 import { useCounterStore } from '@/stores/counter.js'
 import NavBarLoggedIn from '@/components/NavBarLoggedIn.vue'
 import NavBarLoggedOut from '@/components/NavBarLoggedOut.vue'
+import HomeIcon from '@/assets/MovieHeeom_1.png'
 
 const store = useCounterStore()
 const isLoggedIn = ref(store.isLogin.value)
 
 watch(() => store.isLogin, (newValue) => {
   isLoggedIn.value = !isLoggedIn.value
+  console.log('바꼈어용')
 })
 
 </script>
@@ -38,5 +39,10 @@ nav a {
 
 nav a:hover {
   color: #3498db;
+}
+
+nav a img {
+  height: 60px;
+  width: auto;
 }
 </style>

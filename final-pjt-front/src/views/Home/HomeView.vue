@@ -1,64 +1,41 @@
 <template>
-  <div class="home">
-    <h1>MovieHeeom</h1>
-    <div class="search">
-      <input type="text" placeholder="어떤 영화로 헤엄치고 싶으세요?" />
-      <button>Search</button>
+  <div class="home font-eczar text-center text-gray-800 relative">
+    <video class="absolute right-0 bottom-0 min-w-full min-h-full -z-10" autoplay loop muted>
+      <source :src="OceanBackground" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <h1 class="text-5xl mb-5">MovieHeum</h1>
+    <div class="search mb-5">
+      <input type="text" v-model="searchword" 
+             class="mr-2 font-gowun py-2 px-3 w-72 border-2 border-gray-300 rounded-md text-lg" 
+             placeholder="어떤 영화로 헤엄치고 싶으세요?" />
+      <button @click="goToSearch" 
+              class="py-2 px-5 font-eczar text-lg bg-purple-300 text-white border-none rounded-md cursor-pointer hover:bg-purple-400">Search</button>
     </div>
     <HomeNavigation />
-    </div>
+  </div>
 </template>
 
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 import HomeNavigation from '@/views/Home/HomeRank.vue'
-import { useCounterStore } from '@/stores/counter.js'
+import OceanBackground from '@/assets/ocean.mp4'
 
-const store = useCounterStore();
+const router = useRouter()
+const searchword = ref('')
+
+const goToSearch = () => {
+  if (searchword.value) {
+    router.push(`/search/${searchword.value}`);
+  } else {
+    alert('검색어를 입력해주세요!');
+  }
+}
+
 
 </script>
 
+<style scoped></style>
 
-<style scoped>
-.home {
-  font-family: 'Eczar', serif;
-  text-align: center;
-  color: #333;
-  position: relative;
-}
-
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-}
-
-.search {
-  margin-bottom: 20px;
-}
-
-.search input {
-  margin-right: 10px;
-  font-family: 'Gowun Dodum', sans-serif;
-  font-size: 1.1em;
-  padding: 10px;
-  width: 300px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-}
-
-.search button {
-  padding: 10px 20px;
-  font-family: 'Eczar', serif;
-  font-size: 1.1em;
-  background-color: #9a9ae3;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.search button:hover {
-  background-color: #ba68ed;
-}
-</style>
