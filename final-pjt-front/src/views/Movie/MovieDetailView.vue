@@ -73,11 +73,11 @@ const fetchMovieDetails = async () => {
 
     try {
         const response = await axios.get(url);
-        movieDetail.value = response.data;
+        movieDetail.value = response.data
     } catch (error) {
-        console.error(error);
+        console.error(error)
     }
-};
+}
 
 const showTrailerModal = async () => {
     try {
