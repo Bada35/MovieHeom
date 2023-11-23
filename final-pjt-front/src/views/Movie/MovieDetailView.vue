@@ -8,8 +8,7 @@
                 <button class="YTbutton" @click="showTrailerModal">
                     <img src="@/assets/youtube.png" alt="유튜브 아이콘" />
                 </button>
-                <button v-if="isLiked" class="like-button-liked" @click="toggleLike">좋아요</button>
-                <button v-else class="like-button" @click="toggleLike">좋아요 안 함</button>
+                <button class="like-button-liked" @click="toggleLike">{{ likeButtonText }}</button>
             </div>
         </div>
         <p>개봉일: {{ movieDetail.release_date }}</p>
@@ -44,7 +43,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useCounterStore } from '@/stores/counter'
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import TrailerModal from '@/components/TrailerModal.vue';
+import TrailerModal from '@/views/Movie/TrailerModal.vue';
 
 import commentCard from '@/views/Movie/commentCard.vue'
 
@@ -59,6 +58,9 @@ const newComment = ref('');
 const comments = ref([]);
 const newRating = ref('');
 
+
+const isLiking = ref(false); // 첫상태
+const likeButtonText = ref(isLiking.value ? '안좋아요' : '좋아요')
 
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -112,20 +114,27 @@ const toggleLike = async () => {
             }
         });
         console.log(response.data);
+        if (response.data.status === 'like added') {
+            isLiking.value = true;
+            likeButtonText.value = '안좋아요';
+        } else if (response.data.status === 'like removed') {
+            isLiking.value = false;
+            likeButtonText.value = 'Follow';
+        }
     } catch (error) {
         console.error(error);
     }
 
 };
 
-const isLiked = computed(() => {
-    if (!myInfo.value || !myInfo.value.liked_movies) {
-    return false;
-  }
-    // 현재 영화의 ID가 myInfo.liked_movies 배열에 존재하는지 확인
-    const likedMovieIds = myInfo.value.liked_movies.map(movie => movie.movie.id);
-    return likedMovieIds.includes(movie_id.value);
-})
+// const isLiked = computed(() => {
+//     if (!myInfo.value || !myInfo.value.liked_movies) {
+//     return false;
+//   }
+//     // 현재 영화의 ID가 myInfo.liked_movies 배열에 존재하는지 확인
+//     const likedMovieIds = myInfo.value.liked_movies.map(movie => movie.movie.id);
+//     return likedMovieIds.includes(movie_id.value);
+// })
 
 
 const submitComment = async () => {

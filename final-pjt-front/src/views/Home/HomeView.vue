@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import HomeNavigation from '@/views/Home/HomeNavigation.vue'
+import HomeNavigation from '@/views/Home/HomeRank.vue'
 import { useCounterStore } from '@/stores/counter.js'
 
 const store = useCounterStore();

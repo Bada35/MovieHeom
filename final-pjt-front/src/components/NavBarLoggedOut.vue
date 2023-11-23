@@ -7,7 +7,7 @@
         <LoginModal @click.stop />
     </div>
     <div class="modal-overlay" v-if="showSignUpModal" @click="toggleSignUpModal">
-        <SignUpModal @click.stop />
+        <SignUpModal @click.stop @signup-successful="toggleSignUpModal" />
     </div>
 </template>
   
