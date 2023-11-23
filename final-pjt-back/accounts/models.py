@@ -36,7 +36,9 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         # 사용자 정의 필드
         user.nickname = data.get('nickname', '')
         user.birth_date = data.get('birth_date', None)
-        user.profile_picture = data.get('profile_picture', None)
+        # user.profile_picture = data.get('profile_picture', None)
+        if 'profile_picture' in request.FILES:
+            user.profile_picture = request.FILES['profile_picture']
         user.favorite_quote = data.get('favorite_quote', None)
         user.bgm_url = data.get('bgm_url', None)
 
@@ -60,6 +62,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 # 방명록
 class Guestbook(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='guestbook')
+    user_nickname = models.TextField(editable=False)
+    user_profile_picture = models.TextField(editable=False)
     target_user_nickname = models.TextField(editable=False)
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_guestbook')
     content = models.TextField()
@@ -70,6 +74,7 @@ class Guestbook(models.Model):
 class GuestbookComment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='guestbook_comment')
     user_nickname = models.TextField(editable=False)
+    user_profile_picture = models.TextField(editable=False)
     guestbook = models.ForeignKey(Guestbook, on_delete=models.CASCADE, related_name='take_guestbook')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

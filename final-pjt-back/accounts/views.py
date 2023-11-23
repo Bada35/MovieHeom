@@ -99,6 +99,7 @@ class CustomLoginView(LoginView):
         mydata = {
             "nickname": self.user.nickname,
             "user_id": self.user.id,
+            "profile_picture" : self.user.profile_picture.url if self.user.profile_picture else None
             }
         original_response.data.update(mydata)
         return original_response
@@ -113,18 +114,20 @@ class GuestbookViewSet(viewsets.ModelViewSet):
     # 방명록 작성
     def perform_create(self, serializer):
         user = self.request.user
+        user_nickname = user.nickname
+        user_profile_picture = user.profile_picture
         target_user_id = self.request.data.get('target_user')
         target_user = User.objects.get(id=target_user_id)
         
-        serializer.save(user=user, target_user=target_user, target_user_nickname=target_user.nickname)
+        serializer.save(user=user, user_nickname=user_nickname, user_profile_picture=user_profile_picture, target_user=target_user, target_user_nickname=target_user.nickname)
 
     # 방명록 목록
     def get_queryset(self):
         queryset = Guestbook.objects.all()
-        nickname = self.request.query_params.get('nickname')
+        target_nickname = self.request.query_params.get('nickname')
 
-        if nickname is not None:
-            queryset = queryset.filter(target_user__nickname=nickname)
+        if target_nickname is not None:
+            queryset = queryset.filter(target_user__nickname=target_nickname)
 
         return queryset
     
@@ -163,6 +166,7 @@ class GuestbookCommentViewSet(viewsets.ModelViewSet):
     # 대댓글 작성
     def perform_create(self, serializer):
         user = self.request.user
+        user_profile_picture = user.profile_picture
         guestbook_id = self.request.data.get('guestbook')
         guestbook = get_object_or_404(Guestbook, pk=guestbook_id)
-        serializer.save(user=user, guestbook=guestbook, user_nickname=user.nickname)
+        serializer.save(user=user, user_profile_picture=user_profile_picture, guestbook=guestbook, user_nickname=user.nickname)
