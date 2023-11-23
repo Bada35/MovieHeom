@@ -18,7 +18,8 @@
             </div>
             <!-- 프로필 이미지 -->
             <div class="profile-image">
-                <img :src="userProfileImg" alt="${username}의 프로필" />
+                <img :src="getImgUrl(user.profile_picture)" alt="${username}의 프로필" />
+                {{ user.profile_picture }}
             </div>
             <!-- 사용자 정보 -->
             <div class="user-info">
@@ -28,7 +29,7 @@
                     <p>{{ followingCount }} Following </p>
                 </button>
                 <button @click="toggleFollowerModal">
-                    <p>{{ followerCount }} Followers</p>
+                    <p>{{ user.followers_nickname? user.followers_nickname.length : 0 }} Followers</p>
                 </button>
                 <div class="modal-overlay" v-if="showFollowingModal" @click="toggleFollowingModal">
                     <FollowingModal :nickname="user.nickname" @click.stop />
@@ -96,6 +97,7 @@
                     <div v-if="GuestBooks && GuestBooks.length > 0" class="films-grid">
                         <!-- 영화 목록 -->
                         <div class="film" v-for="GuestBook in GuestBooks" :key="GuestBook.id">
+                            {{ GuestBook.profile_ }}
                             {{ GuestBook.user }}
                             {{ GuestBook.content }}
                             {{ GuestBook.created_at }}
@@ -236,6 +238,11 @@ const toggleFollow = async () => {
     } catch (error) {
         console.error(error);
     }
+}
+
+const getImgUrl = (imgUrl) => {
+    console.log(imgUrl);
+    return `http://127.0.0.1:8000${imgUrl}`
 }
 
 

@@ -4,6 +4,7 @@
         <div v-if="followers && followers.length > 0">
             <p v-for="follower in followers" :key="follower.nickname">
                 당신의 팔로워 {{ follower.nickname }}님
+                {{ follower.profile_picture }}
             </p>
         </div>
         <div v-else>

@@ -27,7 +27,7 @@
         <div class="comments">
             <h3>코멘트</h3>
             <div v-if="comments && comments.length > 0">
-                <commentCard :comment="comment" v-for="comment in comments" :key="comment.id"/>
+                <commentCard :comment="comment" v-for="comment in comments" :key="comment.id" />
             </div>
             <div v-else>
                 <p>첫 코멘트를 남겨보세요!!</p>
@@ -48,7 +48,7 @@ import TrailerModal from '@/views/Movie/TrailerModal.vue';
 import commentCard from '@/views/Movie/commentCard.vue'
 
 
-const { token, myInfo } = useCounterStore()
+const { token, myInfo, nickname } = useCounterStore()
 const route = useRoute();
 const movieDetail = ref({});
 const showModal = ref(false);
@@ -61,6 +61,17 @@ const newRating = ref('');
 
 const isLiking = ref(false); // 첫상태
 const likeButtonText = ref(isLiking.value ? '안좋아요' : '좋아요')
+const checkLike = async () => {
+    console.log(comments.value.liked_users_nickname)
+    console.log(nickname)
+    if (comments.value.liked_users_nickname && comments.value.liked_users_nickname.includes(nickname)) {
+        alert('좋아요 한 영화에요')
+        return true
+    } else {
+        alert('좋아요 안 한 영화에요')
+        return false
+    }
+}
 
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -74,6 +85,7 @@ const fetchMovieDetails = async () => {
     try {
         const response = await axios.get(url);
         movieDetail.value = response.data
+        await fetchComments()
     } catch (error) {
         console.error(error)
     }
@@ -166,8 +178,9 @@ const fetchComments = async () => {
     // 서버에서 코멘트 불러오는 로직
     try {
         const response = await axios.get(url);
-        comments.value = response.data;
+        comments.value = response.data
     } catch (error) {
+        console.error(error);
         console.error(error);
     }
     // comments.value = fetchedComments;

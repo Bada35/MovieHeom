@@ -4,6 +4,7 @@
         <div v-if="followings && followings.length > 0">
             <p v-for="following in followings" :key="following.nickname">
                 {{ following.nickname }}님 팔로잉 중
+                {{ following.profile_picture }}
             </p>
         </div>
         <div v-else>

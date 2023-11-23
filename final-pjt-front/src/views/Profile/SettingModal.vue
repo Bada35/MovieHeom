@@ -6,7 +6,7 @@
                 <!-- <input type="test" v-model.trim="nickname" placeholder="수정할 닉네임" /> -->
                 <input type="email" v-model.trim="email" placeholder="수정할 이메일" />
                 <input type="text" v-model.trim="favorite_quote" placeholder="수정할 명대사" />
-                <input type="test" v-model.trim="profile_picture" placeholder="수정할 이미지" />
+                <input type="file" @change="handleFileUpload" placeholder="수정할 이미지" />
                 <button type="submit">수정</button>
             </form>
         </div>
@@ -27,20 +27,24 @@ const favorite_quote = ref('')
 const profile_picture = ref('')
 const { token } = useCounterStore()
 
+const handleFileUpload = event => {
+    profile_picture.value = event.target.files[0];
+}
+
 
 const editProfile = async () => {
     const url = 'http://127.0.0.1:8000/accounts/profile/edit/';
-    let data = {};
+    let formData = new FormData();
 
-    if (nickname.value) data.nickname = nickname.value;
-    if (email.value) data.email = email.value;
-    if (favorite_quote.value) data.favorite_quote = favorite_quote.value;
-    if (profile_picture.value) data.profile_picture = profile_picture.value;
-    console.log(data)
+    if (nickname.value) formData.append('nickname', nickname.value);
+    if (email.value) formData.append('email', email.value);
+    if (favorite_quote.value) formData.append('favorite_quote', favorite_quote.value);
+    if (profile_picture.value) formData.append('profile_picture', profile_picture.value);
 
     try {
-        const response = await axios.put(url, data, {
+        const response = await axios.put(url, formData, {
             headers: {
+                'Content-Type': 'multipart/form-data',
                 Authorization: `Token ${token}`
             }
         });
@@ -50,7 +54,7 @@ const editProfile = async () => {
         console.log('Error updating profile:', error);
         alert('수정하는 중 오류가 발생했어요😰')
     }
-};
+}
 </script>
   
 

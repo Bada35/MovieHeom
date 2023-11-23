@@ -22,6 +22,7 @@ const isLoggedIn = ref(store.isLogin.value)
 
 watch(() => store.isLogin, (newValue) => {
   isLoggedIn.value = !isLoggedIn.value
+  console.log('바꼈어용')
 })
 
 </script>
