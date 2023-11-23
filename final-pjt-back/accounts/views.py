@@ -23,24 +23,43 @@ class FollowUserView(APIView):
             request.user.followers.add(target_user)
             return Response({"status": "followed"})
 
-# 팔로워 목록        
+# # 팔로워 목록        
+# class FollowingsListView(APIView):
+#     permission_classes = [IsAuthenticated]
+
+#     def get(self, request, nickname):
+#         user = get_object_or_404(User, nickname=nickname)
+#         followers = user.followers.all()
+#         serializer = UserSerializer(followers, many=True)
+#         return Response(serializer.data)
+
+# # 팔로잉 목록
+# class FollowersListView(APIView):
+#     permission_classes = [IsAuthenticated]
+
+#     def get(self, request, nickname):
+#         user = get_object_or_404(User, nickname=nickname)
+#         followings = user.followings.all()
+#         serializer = UserSerializer(followings, many=True)
+#         return Response(serializer.data)
+
 class FollowingsListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, nickname):
-        user = get_object_or_404(User, nickname=nickname)
-        followers = user.followers.all()
-        serializer = UserSerializer(followers, many=True)
-        return Response(serializer.data)
-
-# 팔로잉 목록
-class FollowersListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, nickname):
         user = get_object_or_404(User, nickname=nickname)
         followings = user.followings.all()
         serializer = UserSerializer(followings, many=True)
+        return Response(serializer.data)
+
+# 팔로워 목록
+class FollowersListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, nickname):
+        user = get_object_or_404(User, nickname=nickname)
+        followers = user.followers.all()
+        serializer = UserSerializer(followers, many=True)
         return Response(serializer.data)
 
 # 프로필    
