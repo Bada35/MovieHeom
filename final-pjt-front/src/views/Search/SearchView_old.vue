@@ -80,8 +80,8 @@ watch(() => route.query.ids, (newIds) => {
 .movie-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Align items to the start */
-    align-items: flex-start; /* Align items to the top */
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
     padding: 0 20px; /* Add horizontal padding */
     padding-top: 50px;

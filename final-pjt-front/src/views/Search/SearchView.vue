@@ -1,7 +1,7 @@
 <template>
     <div class="search-view">
         <div class="search-box">
-            <input type="text" placeholder="어떤 영화를 찾으시나요?" />
+            <input  type="text" v-model="searchword" placeholder="어떤 영화를 찾으시나요?" />
             <button @click="searchMovies">
                 <img src="@/assets/MagnifyingGlass.png" alt="검색아이콘" />
             </button>
@@ -72,6 +72,8 @@ onMounted(searchMovies)
 }
 
 .search-box input {
+    font-family: 'Gowun Dodum', sans-serif;
+    color : #333;
     flex: 1;
     padding: 10px;
     border: none;
@@ -90,10 +92,10 @@ onMounted(searchMovies)
 .movie-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Align items to the start */
-    align-items: flex-start; /* Align items to the top */
+    justify-content: center;
+    align-items: flex-start;
     width: 100%;
-    padding: 0 20px; /* Add horizontal padding */
+    padding: 0 20px;
     padding-top: 50px;
 }
 

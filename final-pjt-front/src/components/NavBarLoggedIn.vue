@@ -1,11 +1,11 @@
 <template>
-    <div class="top-right-menu">
-        <button class="auth-button" @click="logOut">로그아웃</button>
-        <router-link :to="{ name: 'profile', params: { nickname } }">
-      <img :src="userProfileImg" alt="ProfileImg" class="profile-img"/>
-    </router-link>
+    <div class="absolute top-5 right-5 flex items-center">
+        <button class="auth-button" @click="logOut">Logout</button>
+      <router-link :to="{ name: 'profile', params: { nickname } }">
+        <img :src="userProfileImg" alt="ProfileImg" class="w-10 h-10 rounded-full object-cover ml-2 opacity-75"/>
+      </router-link>
     </div>
-</template>
+  </template>
 
 <script setup>
 import { useCounterStore } from '@/stores/counter.js'
@@ -17,35 +17,7 @@ const { logOut, nickname, myInfo } = useCounterStore()
 </script>
 
 <style scoped>
-.top-right-menu {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-}
-
 .auth-button {
-    padding: 5px 10px;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-size: 0.8em;
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.auth-button:hover {
-    background-color: #e0e0e0;
-    border-color: #ccc;
-}
-.profile-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-left: 10px;
+    @apply py-1 px-2 font-Gowun font-thin text-xl text-Heum-Secondary bg-transparent cursor-pointer ml-4 hover:text-gray-300 mr-2 text-opacity-90;
 }
 </style>

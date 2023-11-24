@@ -1,77 +1,55 @@
 <template>
-    <div class="flex">
-        <!-- Poster Image -->
-        <div class="relative">
-            <img :src="getPosterImg(movieDetail.poster_path)" :alt="`${movieDetail.title}영화 포스터`"
-                class="h-[60vh] object-cover object-left mt-[5vh]">
-        </div>
-
-        <!-- Backdrop Image and Content Overlay -->
-        <div class="relative flex-grow">
-            <img :src="getBackdropImg(movieDetail.backdrop_path)" alt="백드롭이미지"
-                class="h-[60vh] object-cover object-right mt-[5vh] w-full">
-            <div class="overlay"></div>
-
-            <!-- Title and Like Button -->
-            <div class="absolute top-[10vh] left-[4%] m-4 z-20">
-                <h1 class="text-white text-4xl font-bold shadow-lg font-Gowun inline-block mr-2">{{ movieDetail.title }}
-                </h1>
-                <button @click="toggleLike"
-                    class="text-white text-2xl font-semibold bg-Heum-Secondary hover:bg-Heum-Third transition-colors duration-300 py-1 px-3 rounded-lg shadow">{{
-                        likeButtonText }}</button>
-            </div>
-
-            <div class="absolute top-[20vh] left-[5%] bottom-10 z-20">
-                <div class="mb-4">
-                    <button @click="showTrailerModal" class="YTbutton">
-                        <img src="@/assets/youtube.png" alt="유튜브 아이콘" />
-                    </button>
-                </div>
-                <p class="text-white mb-2">개봉일: {{ movieDetail.release_date }}</p>
-                <p class="text-white mb-2">TMDB 평점: {{ movieDetail.vote_average }}</p>
-                <p class="text-white mb-2">장르: {{ genreNames }}</p>
-                <p class="text-white mb-2">줄거리 <br>{{ movieDetail.overview }}</p>
+    <div class="movie-details">
+        <img :src="getPosterImg(movieDetail.poster_path)" :alt="`${movieDetail.title}영화 포스터`">
+        <img :src="getBackdropImg(movieDetail.backdrop_path)" alt="백드롭이미지">
+        <div>
+            <h1>{{ movieDetail.title }}</h1>
+            <div class="buttons">
+                <button class="YTbutton" @click="showTrailerModal">
+                    <img src="@/assets/youtube.png" alt="유튜브 아이콘" />
+                </button>
+                <button class="like-button-liked" @click="toggleLike">{{ likeButtonText }}</button>
             </div>
         </div>
-    </div>
-    <div class="z-50">
-        <TrailerModal v-if="showModal" :trailerUrl="trailerUrl" @close="showModal = false" />
-    </div>
-    <div class="mt-10 px-5">
-        <h3 class="text-2xl font-bold mb-4 text-Heum-Fourth font-Gowun">다음은 어디로 헤엄칠까요?👀</h3>
-        <div class="movie-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <MovieCard v-for="id in movieRecommendations" :key="id" :movie-id="id" class="transform hover:scale-105 transition duration-300 ease-in-out"/>
-        </div>
-    </div>
-    <div class="mt-8 px-6">
-        <h3 class="text-2xl font-semibold mb-4">코멘트</h3>
-        <div class="comment-box bg-white shadow rounded-lg p-4 mb-6">
-            <textarea v-model="newComment" class="w-full p-2 border border-gray-300 rounded-md mb-4" placeholder="코멘트 작성..."></textarea>
-            <select v-model="newRating" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+        <p>개봉일: {{ movieDetail.release_date }}</p>
+        <p>TMDB 평점: {{ movieDetail.vote_average }}</p>
+        <p>장르: {{ genreNames }}</p>
+        <p>줄거리 <br>{{ movieDetail.overview }}</p>
+        <p>코멘트 </p>
+        <div class="comment-box">
+            <textarea v-model="newComment" placeholder="코멘트 작성..."></textarea>
+            <select v-model="newRating">
                 <option disabled value="">평점을 선택해주세요</option>
                 <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
             </select>
-            <button @click="submitComment" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">제출</button>
+            <button @click="submitComment">제출</button>
         </div>
         <div class="comments">
-            <h3 class="text-2xl font-semibold mb-4">코멘트</h3>
-            <div v-if="comments && comments.length > 0" class="bg-white shadow rounded-lg p-4">
-                <commentCard 
-                    :comment="comment" 
-                    v-for="comment in comments" 
-                    :key="comment.id"
-                    @comment-edited="handleCommentEdited"
-                    @comment-deleted="fetchComments" />
-            </div>
-            <div v-else class="text-center py-4">
+        <h3>코멘트</h3>
+        <div v-if="comments && comments.length > 0">
+            <commentCard 
+                :comment="comment" 
+                v-for="comment in comments" 
+                :key="comment.id"
+                @comment-edited="handleCommentEdited"
+                @comment-deleted="fetchComments" />
+        </div>
+            <div v-else>
                 <p>첫 코멘트를 남겨보세요!!</p>
             </div>
         </div>
+        <!--다음헤엄-->
+        <h3>다음은 어디로 헤엄칠까요?</h3>
+        <div class="movie-cards">
+            
+            <MovieCard v-for="id in movieRecommendations" :key="id" :movie-id="id" />
+        </div>
+        <TrailerModal v-if="showModal" :trailerUrl="trailerUrl" @close="showModal = false" />
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useCounterStore } from '@/stores/counter'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios';
@@ -274,16 +252,29 @@ watch(() => route.params.movie_id, async (newMovieId) => {
 </script>
 
 <style scoped>
-.overlay {
-    position: absolute;
-    top: 5vh;
-    height: 60vh;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 5;
-    /* Lower z-index than the title and like button */
+.movie-details {
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.movie-details img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.movie-details h1 {
+    margin-bottom: 10px;
+    color: #333;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 2em;
+}
+
+.movie-details p {
+    font-family: 'Nanum Gothic', sans-serif;
+    margin-bottom: 10px;
+    color: #666;
 }
 
 .YTbutton {
@@ -303,13 +294,92 @@ watch(() => route.params.movie_id, async (newMovieId) => {
     opacity: 0.8;
 }
 
+.buttons {
+    display: flex;
+    align-items: center;
+    /* Align the buttons vertically */
+    justify-content: center;
+    /* Center the buttons horizontally */
+    width: 100%;
+    /* Set the width to take full container width */
+    gap: 10px;
+}
+
+.like-button {
+    padding: 5px 10px;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 1em;
+    /* Adjust font size to match YT button text height */
+    line-height: 1;
+    /* Ensures the button height matches the text size */
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    /* Align the text vertically */
+    justify-content: center;
+    /* Center the text horizontally */
+}
+
+.like-button:hover {
+    background-color: #e0e0e0;
+    border-color: #ccc;
+}
+
+.like-button-liked {
+    background-color: #007bff;
+    color: white;
+}
+
+.comment-box select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: white;
+}
+
+.comment-box textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.comment-box button {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+}
+
+.comments h3 {
+    margin-bottom: 15px;
+}
+
+.comments p {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
 .movie-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     width: 100%;
-    padding: 0 20px; /* Add horizontal padding */
+    padding: 0 20px;
+    padding-top: 50px;
 }
-
 </style>
