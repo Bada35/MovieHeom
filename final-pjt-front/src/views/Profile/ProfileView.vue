@@ -18,7 +18,7 @@
             </div>
             <!-- 프로필 이미지 -->
             <div class="profile-image">
-                <img :src="getImgUrl(user.profile_picture)" alt="${username}의 프로필" />
+                <img :src="userProfileImg" alt="${username}의 프로필" />
                 {{ user.profile_picture }}
             </div>
             <!-- 사용자 정보 -->
@@ -315,15 +315,16 @@ onMounted(async () => {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    max-width: 640px;
     margin: auto;
 }
 
 .profile-background img {
     width: 100vw;
-    height: 250px;
+    height: 30vh; /* Adjust height to maintain aspect ratio */
     object-fit: cover;
     object-position: center;
+    z-index: -1; /* Set to lowest to ensure it's behind everything else */
+    position: relative; /* Needed for z-index to take effect */
 }
 
 .profile-content {
@@ -333,12 +334,11 @@ onMounted(async () => {
     padding: 20px;
     background-color: rgb(255, 255, 255);
     width: 120%;
-    max-width: 100vw;
+    max-width: 80vw;
     position: relative;
-    top: -50px;
+    top: -60px; /* Increased negative value to move up */
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* 그림자 효과 */
 }
 
 .profile-image {

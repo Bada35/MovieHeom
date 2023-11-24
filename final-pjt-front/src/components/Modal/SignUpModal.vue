@@ -9,8 +9,8 @@
                 <input type="date" v-model.trim="birth_date" placeholder="생년월일" />
                 <input type="password" v-model.trim="password1" placeholder="비밀번호" />
                 <input type="password" v-model.trim="password2" placeholder="비밀번호 확인" />
-                <input type="text" v-model.trim="profile_picture" placeholder="프로필사진" />
-                <input type="text" v-model.trim="favorite_quote" placeholder="좋아하는 명대사" />
+                <!-- <input type="text" v-model.trim="profile_picture" placeholder="프로필사진" />
+                <input type="text" v-model.trim="favorite_quote" placeholder="좋아하는 명대사" /> -->
                 <button type="submit">회원가입</button>
             </form>
             <div class="login-link">

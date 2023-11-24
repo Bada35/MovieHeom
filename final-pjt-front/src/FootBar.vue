@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div style="background-color:rgb(230, 230, 230); font-size: 13px; ">
-      <div style="text-align:center;  margin-top:20px; color:grey">
+      <div style="text-align:center; color:grey">
         <div style="padding-top: 5px; padding-bottom: 2px;">무비헤엄🌊</div>
         <div style="padding-bottom: 2px;">SSAFY 10기</div>
         <div class="name" style="width:12.5%; font-size: 15px;"><a href="https://github.com/hluuy">Yeongjun Ryu</a> | <a

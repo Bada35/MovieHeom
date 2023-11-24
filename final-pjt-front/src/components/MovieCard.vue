@@ -50,6 +50,7 @@ const goToMovieDetail = () => {
 
 onMounted(() => fetchMovieDetails(props.movieId));
 </script>
+
   
 <style scoped>
 .movie-card {
